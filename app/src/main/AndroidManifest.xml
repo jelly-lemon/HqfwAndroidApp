@@ -19,12 +19,7 @@
         <activity android:name=".View.Login.AgreementActivity"></activity>
         <activity android:name=".View.Login.LocationActivity" />
         <activity android:name=".View.Login.SignUpActivity" />
-        <activity android:name=".View.Login.LoginActivity" />
-        <activity android:name=".View.test.TestActivity" />
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".View.Login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

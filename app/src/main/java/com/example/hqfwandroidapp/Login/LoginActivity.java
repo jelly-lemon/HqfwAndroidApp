@@ -18,6 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+//test
 
 public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.et_phone_login) EditText etPhone;

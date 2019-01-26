@@ -1,4 +1,4 @@
-package com.example.hqfwandroidapp.View.Login;
+package com.example.hqfwandroidapp.Login;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

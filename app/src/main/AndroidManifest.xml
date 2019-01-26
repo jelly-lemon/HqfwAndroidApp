@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.hqfwandroidapp">
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -17,10 +18,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".View.Login.AgreementActivity"  />
-        <activity android:name=".View.Login.LocationActivity"   />
-        <activity android:name=".View.Login.SignUpActivity"     />
-        <activity android:name=".View.Login.LoginActivity">
+        <activity android:name=".Login.AgreementActivity"  />
+        <activity android:name=".Login.LocationActivity"   />
+        <activity android:name=".Login.SignUpActivity"     />
+        <activity android:name=".Login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

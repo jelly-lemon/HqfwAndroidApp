@@ -1,9 +1,11 @@
 package com.example.hqfwandroidapp;
 
-import androidx.appcompat.app.AppCompatActivity;
+
+import me.yokeyword.fragmentation.SupportActivity;
+
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends SupportActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

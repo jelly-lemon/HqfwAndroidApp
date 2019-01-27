@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,14 +76,27 @@ public class LoginActivity extends AppCompatActivity {
 
                         showToast(response.body());
                         goMainActivity();
+                        showToast("登录成功");
+
+                        /*Log.d("lm", "onSuccess->body:" + response.body());
+                        Log.d("lm", "onSuccess->message:" + response.message());
+                        Log.d("lm", "onSuccess->code:" + response.code());*/
                     }
 
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        showToast("网络故障，请检查网络");
+
+                        showToast("服务器故障");
+
+                        /*Log.d("lm", "onError->body:" + response.body());
+                        Log.d("lm", "onError->message:" + response.message());
+                        Log.d("lm", "onError->code:" + response.code());*/
+
                     }
                 });
+
+
     }
 
     private void saveUser(String phone, String password) {

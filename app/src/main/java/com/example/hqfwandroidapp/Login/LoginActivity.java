@@ -1,12 +1,14 @@
 package com.example.hqfwandroidapp.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.hqfwandroidapp.Interface.CallBack;
+import com.example.hqfwandroidapp.MainActivity;
 import com.example.hqfwandroidapp.R;
 import com.example.hqfwandroidapp.Urls;
 import com.lzy.okgo.OkGo;
@@ -34,13 +36,16 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Response<String> response) {
                         showToast(response.body());
+                        goMainActivity();
                     }
 
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
-                        showToast(response.body());
+                        showToast("网络故障，请检查网络");
                     }
+
+
                 });
     }
 
@@ -53,8 +58,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    public void showToast(String msg) {
+    private void showToast(String msg) {
         Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    private void goMainActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        this.finish();
     }
 }

@@ -2,23 +2,39 @@ package com.example.hqfwandroidapp.global;
 
 import android.app.Application;
 
-import com.example.hqfwandroidapp.BuildConfig;
+
 import com.lzy.okgo.OkGo;
 
-import me.yokeyword.fragmentation.Fragmentation;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
+
 
 public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
 
-        // 初始化 OkGo
-        OkGo.getInstance().init(this);
 
-        // 初始化 Fragmentation
+
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        //全局的读取超时时间
+        builder.readTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);
+        //全局的写入超时时间
+        builder.writeTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);
+        //全局的连接超时时间
+        builder.connectTimeout(3000L, TimeUnit.MILLISECONDS);
+
+
+        // 初始化 OkGo
+        OkGo.getInstance().init(this)
+                .setOkHttpClient(builder.build())
+                .setRetryCount(0);
+
+        /*// 初始化 Fragmentation
         Fragmentation.builder()
                 .stackViewMode(Fragmentation.BUBBLE)
                 .debug(BuildConfig.DEBUG)
-                .install();
+                .install();*/
     }
 }

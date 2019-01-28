@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,9 +47,9 @@ public class LoginActivity extends AppCompatActivity {
         // ButterKnife 绑定生效
         ButterKnife.bind(this);
         // 自动登录
-        //autoLogin();
+        autoLogin();
 
-        goHomeActivity();
+        //goHomeActivity();
     }
 
 
@@ -98,8 +99,13 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onError(Response<String> response) {
                         super.onError(response);
+                        if (response.code() == -1) {
+                            showToast("找不到服务器");
+                        } else {
+                            showToast("服务器故障：code:" + response.code() + " message:" + response.message());
+                        }
 
-                        showToast("服务器故障");
+
 
                         /*Log.d("lm", "onError->body:" + response.body());
                         Log.d("lm", "onError->message:" + response.message());

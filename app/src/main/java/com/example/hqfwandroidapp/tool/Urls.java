@@ -1,4 +1,4 @@
-package com.example.hqfwandroidapp;
+package com.example.hqfwandroidapp.tool;
 
 public class Urls {
     private static String HOST = "http://192.168.43.15:8080/lmJavaEEWebAppHqfw";

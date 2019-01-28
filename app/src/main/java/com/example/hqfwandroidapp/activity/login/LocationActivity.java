@@ -1,4 +1,4 @@
-package com.example.hqfwandroidapp.Login;
+package com.example.hqfwandroidapp.activity.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;

@@ -1,27 +1,31 @@
-package com.example.hqfwandroidapp.Login;
+package com.example.hqfwandroidapp.activity.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.hqfwandroidapp.MainActivity;
+import com.example.hqfwandroidapp.activity.HomeActivity;
 import com.example.hqfwandroidapp.R;
-import com.example.hqfwandroidapp.SaveSharedPreference;
-import com.example.hqfwandroidapp.Urls;
+import com.example.hqfwandroidapp.tool.SaveSharedPreference;
+import com.example.hqfwandroidapp.tool.Urls;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class LoginActivity extends AppCompatActivity {
+
+
     @BindView(R.id.et_phone_login) EditText etPhone;
     @BindView(R.id.et_password_login) EditText etPassword;
     @BindView(R.id.tv_find_password) TextView tvFindPassword;
@@ -42,8 +46,9 @@ public class LoginActivity extends AppCompatActivity {
         // ButterKnife 绑定生效
         ButterKnife.bind(this);
         // 自动登录
-        autoLogin();
+        //autoLogin();
 
+        goHomeActivity();
     }
 
 
@@ -52,8 +57,8 @@ public class LoginActivity extends AppCompatActivity {
         toast.show();
     }
 
-    private void goMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
+    private void goHomeActivity() {
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         this.finish();
     }
@@ -74,9 +79,16 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Response<String> response) {
 
+                        //showToast(response.body());
+                        try {
+                            JSONObject jsonObject = new JSONObject(response.body());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         showToast(response.body());
-                        goMainActivity();
                         showToast("登录成功");
+                        goHomeActivity();
+
 
                         /*Log.d("lm", "onSuccess->body:" + response.body());
                         Log.d("lm", "onSuccess->message:" + response.message());
@@ -94,6 +106,8 @@ public class LoginActivity extends AppCompatActivity {
                         Log.d("lm", "onError->code:" + response.code());*/
 
                     }
+
+
                 });
 
 

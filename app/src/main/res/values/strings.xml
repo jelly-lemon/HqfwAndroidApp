@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">CUITServer</string>
     <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_register">register</string>
+    <string name="title_activity_find_password">find password</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>

@@ -1,5 +1,6 @@
 package com.example.hqfwandroidapp.activity.login;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -32,12 +33,25 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.tv_find_password) TextView tvFindPassword;
     @BindView(R.id.tv_register) TextView tvRegister;
 
+    // 登录
     @OnClick(R.id.btn_login) void submit() {
         String phone = etPhone.getText().toString();
         String password = etPassword.getText().toString();
 
         saveUser(phone, password);
         login(phone, password);
+    }
+
+    // 注册
+    @OnClick(R.id.tv_register) void goRegisterActivity() {
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+    }
+
+    // 找回密码
+    @OnClick(R.id.tv_find_password) void goFindPassword() {
+        Intent intent = new Intent(this, FindPasswordActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -50,6 +64,9 @@ public class LoginActivity extends AppCompatActivity {
         autoLogin();
 
         //goHomeActivity();
+
+        /*ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);*/
     }
 
 

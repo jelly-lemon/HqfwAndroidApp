@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import com.example.hqfwandroidapp.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.MenuItem;
@@ -22,14 +23,14 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                case R.id.navigation_discovery:
+                    mTextMessage.setText(R.string.title_discovery);
                     return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                case R.id.navigation_service:
+                    mTextMessage.setText(R.string.title_service);
                     return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                case R.id.navigation_person:
+                    mTextMessage.setText(R.string.title_person);
                     return true;
             }
             return false;
@@ -44,6 +45,14 @@ public class HomeActivity extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        initUI();
     }
 
+
+    private void initUI() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+        //actionBar.setDisplayHomeAsUpEnabled(true);
+    }
 }

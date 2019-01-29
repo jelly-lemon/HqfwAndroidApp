@@ -39,7 +39,9 @@ public class LoginActivity extends AppCompatActivity {
         String password = etPassword.getText().toString();
 
         saveUser(phone, password);
-        login(phone, password);
+        //login(phone, password);
+        // 测试，跳过登录
+        goHomeActivity();
     }
 
     // 注册
@@ -62,11 +64,6 @@ public class LoginActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         // 自动登录
         autoLogin();
-
-        //goHomeActivity();
-
-        /*ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);*/
     }
 
 

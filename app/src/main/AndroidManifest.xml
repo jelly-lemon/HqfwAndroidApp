@@ -36,6 +36,7 @@
 
         <activity android:name=".activity.login.AgreementActivity" />
         <activity android:name=".activity.login.LocationActivity" />
+        <activity android:name=".activity.HomeActivity"/>
 
     </application>
 

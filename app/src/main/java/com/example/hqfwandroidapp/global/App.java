@@ -23,7 +23,7 @@ public class App extends Application {
         //全局的写入超时时间
         builder.writeTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);
         //全局的连接超时时间
-        builder.connectTimeout(3000L, TimeUnit.MILLISECONDS);
+        builder.connectTimeout(2000L, TimeUnit.MILLISECONDS);
 
 
         // 初始化 OkGo

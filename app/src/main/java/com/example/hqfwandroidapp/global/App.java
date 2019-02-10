@@ -24,12 +24,11 @@ public class App extends Application {
         builder.writeTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);
         //全局的连接超时时间
         builder.connectTimeout(2000L, TimeUnit.MILLISECONDS);
-
-
         // 初始化 OkGo
         OkGo.getInstance().init(this)
                 .setOkHttpClient(builder.build())
                 .setRetryCount(0);
+
 
         /*// 初始化 Fragmentation
         Fragmentation.builder()

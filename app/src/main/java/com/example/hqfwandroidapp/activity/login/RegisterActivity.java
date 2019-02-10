@@ -24,6 +24,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void initUI() {
         ActionBar actionBar = getSupportActionBar();
+        // 显示返回箭头 <--
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
@@ -31,6 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            // 返回键
             case android.R.id.home:
                 onBackPressed();
                 break;

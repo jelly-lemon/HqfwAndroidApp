@@ -33,6 +33,12 @@ android {
     }
 }
 
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
@@ -47,10 +53,13 @@ dependencies {
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
 
-
-
     // To get SwipeBack feature, rely on both fragmentation & fragmentation-swipeback
-    implementation 'me.yokeyword:fragmentation:1.3.6'
+    //implementation 'me.yokeyword:fragmentation:1.3.6'
     // Swipeback is based on fragmentation. Refer to SwipeBackActivity/Fragment for your Customized SupportActivity/Fragment
-    implementation 'me.yokeyword:fragmentation-swipeback:1.3.6'
+    //implementation 'me.yokeyword:fragmentation-swipeback:1.0.0'
+    api (name:'fragmentation-debug', ext:'aar')
+    api (name:'fragmentation_core-debug', ext:'aar')
+    api (name:'fragmentation_swipeback-debug', ext:'aar')
+    api (name:'eventbus_activity_scope-debug', ext:'aar')
+
 }

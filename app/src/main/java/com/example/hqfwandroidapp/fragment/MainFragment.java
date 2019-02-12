@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.hqfwandroidapp.R;
+import com.example.hqfwandroidapp.ui.BottomBar;
+import com.example.hqfwandroidapp.ui.BottomBarTab;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
@@ -25,16 +27,10 @@ public class MainFragment extends SupportFragment {
     public static int PERSON = 2;
 
     private SupportFragment[] mFragment = new SupportFragment[3];
+    @BindView(R.id.bottom_bar) BottomBar mBottomBar;
 
-    @OnClick(R.id.navigation_discovery) void showDiscoveryFragment() {
-        Toast.makeText(getContext(), "navigation_discovery", Toast.LENGTH_SHORT).show();
-    }
-    @OnClick(R.id.navigation_service) void showServiceFragment() {
-        Toast.makeText(getContext(), "navigation_service", Toast.LENGTH_SHORT).show();
-    }
-    @OnClick(R.id.navigation_person) void showPersonFragment() {
-        Toast.makeText(getContext(), "navigation_person", Toast.LENGTH_SHORT).show();
-    }
+
+
 
     public static MainFragment newInstance() {
         MainFragment mainFragment = new MainFragment();
@@ -48,6 +44,9 @@ public class MainFragment extends SupportFragment {
 
         // ButterKnife 绑定生效
         ButterKnife.bind(this, view);
+
+        initView(view);
+
 
         return view;
     }
@@ -68,5 +67,29 @@ public class MainFragment extends SupportFragment {
         }
     }
 
+    private void initView(View view) {
+        mBottomBar
+                .addItem(new BottomBarTab(getContext(), R.drawable.ic_discovery_black_24dp, "发现"))
+                .addItem(new BottomBarTab(getContext(), R.drawable.ic_service_black_24dp, "服务"))
+                .addItem(new BottomBarTab(getContext(), R.drawable.ic_person_black_24dp, "个人"));
+
+        mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(int position, int prePosition) {
+                showHideFragment(mFragment[position], mFragment[prePosition]);
+            }
+
+            @Override
+            public void onTabUnselected(int position) {
+
+            }
+
+            @Override
+            public void onTabReselected(int position) {
+
+            }
+        });
+
+    }
 
 }

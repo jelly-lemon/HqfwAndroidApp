@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         saveUser(phone, password);
         //login(phone, password);
         // 测试，跳过登录
-        goHomeActivity();
+        //goHomeActivity();
     }
 
     // 注册
@@ -70,13 +70,13 @@ public class LoginActivity extends AppCompatActivity {
         toast.show();
     }
 
-    private void goHomeActivity() {
+    private void goMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         this.finish();
     }
 
-    private void autoLogin() {
+    public void autoLogin() {
         if (SaveSharedPreference.getPhone(this).length() != 0) {
             String phone = SaveSharedPreference.getPhone(this);
             String password = SaveSharedPreference.getPassword(this);
@@ -84,15 +84,13 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void login(String phone, String password) {
+    public void login(String phone, String password) {
         OkGo.<String>post(Urls.getLogin())
                 .params("phone", phone)
                 .params("password", password)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-
-                        //showToast(response.body());
                         try {
                             JSONObject jsonObject = new JSONObject(response.body());
                         } catch (JSONException e) {
@@ -100,12 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                         }
                         showToast(response.body());
                         showToast("登录成功");
-                        goHomeActivity();
-
-
-                        /*Log.d("lm", "onSuccess->body:" + response.body());
-                        Log.d("lm", "onSuccess->message:" + response.message());
-                        Log.d("lm", "onSuccess->code:" + response.code());*/
+                        //goMainActivity();
                     }
 
                     @Override
@@ -116,13 +109,6 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             showToast("服务器故障：code:" + response.code() + " message:" + response.message());
                         }
-
-
-
-                        /*Log.d("lm", "onError->body:" + response.body());
-                        Log.d("lm", "onError->message:" + response.message());
-                        Log.d("lm", "onError->code:" + response.code());*/
-
                     }
 
 
@@ -131,7 +117,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void saveUser(String phone, String password) {
+    public void saveUser(String phone, String password) {
         SaveSharedPreference.setPhone(this, phone);
         SaveSharedPreference.setPassword(this, password);
     }

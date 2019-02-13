@@ -4,6 +4,7 @@ import android.app.Application;
 
 
 import com.lzy.okgo.OkGo;
+import com.mob.MobSDK;
 
 import java.util.concurrent.TimeUnit;
 
@@ -13,12 +14,15 @@ import okhttp3.OkHttpClient;
 
 
 public class App extends Application {
+
+    public static User user;
+
     @Override
     public void onCreate() {
         super.onCreate();
 
 
-
+        // 初始化 OkGo
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         //全局的读取超时时间
         builder.readTimeout(OkGo.DEFAULT_MILLISECONDS, TimeUnit.MILLISECONDS);
@@ -37,5 +41,8 @@ public class App extends Application {
                 .stackViewMode(Fragmentation.BUBBLE)
                 .debug(BuildConfig.DEBUG)
                 .install();
+
+        // 初始化 MobSDK
+        MobSDK.init(this);
     }
 }

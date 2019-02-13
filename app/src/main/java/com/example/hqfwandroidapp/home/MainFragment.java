@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.hqfwandroidapp.R;
+import com.example.hqfwandroidapp.global.App;
 import com.example.hqfwandroidapp.ui.BottomBar;
 import com.example.hqfwandroidapp.ui.BottomBarTab;
 
@@ -41,6 +42,9 @@ public class MainFragment extends SupportFragment {
         ButterKnife.bind(this, view);
 
         initView(view);
+
+
+
 
         return view;
     }

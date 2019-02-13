@@ -1,11 +1,21 @@
 package com.example.hqfwandroidapp.home;
 
 
+import android.content.Context;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.hqfwandroidapp.R;
+import com.example.hqfwandroidapp.global.App;
+import com.example.hqfwandroidapp.login.LoginActivity;
+import com.mob.ums.gui.UMSGUI;
+
+import java.util.HashMap;
 
 import androidx.annotation.Nullable;
+import cn.smssdk.EventHandler;
+import cn.smssdk.SMSSDK;
+import cn.smssdk.gui.RegisterPage;
 import me.yokeyword.fragmentation.SupportActivity;
 
 
@@ -19,7 +29,63 @@ public class MainActivity extends SupportActivity {
         if (findFragment(MainFragment.class) == null) {
             loadRootFragment(R.id.fl_container, MainFragment.newInstance());
         }
+
+        // 正在加载
+        showLoading();
+        // 自动登录过程
+        //App.user.autoLogin(this);
+
+
+
+
+        //sendCode(this);
+        //UMSGUI.showProfilePage();
+    }
+
+    private void finishLoading(boolean result) {
+        // TODO 登录成功
+
+        // TODO 登录失败
+
     }
 
 
+    private void showLoading() {
+        // TODO 显示正在加载
+
+    }
+
+    private void refresh() {
+
+    }
+
+    private void loginSuccess() {
+
+    }
+
+
+
+
+    // 使用 Mob 提供的短信验证 UI
+    public void sendCode(Context context) {
+        RegisterPage page = new RegisterPage();
+        //如果使用我们的ui，没有申请模板编号的情况下需传null
+        page.setTempCode(null);
+        page.setRegisterCallback(new EventHandler() {
+            public void afterEvent(int event, int result, Object data) {
+                if (result == SMSSDK.RESULT_COMPLETE) {
+                    // 处理成功的结果
+                    HashMap<String,Object> phoneMap = (HashMap<String, Object>) data;
+                    String country = (String) phoneMap.get("country"); // 国家代码，如“86”
+                    String phone = (String) phoneMap.get("phone"); // 手机号码，如“13800138000”
+                    // TODO 利用国家代码和手机号码进行后续的操作
+                    Toast.makeText(context, "验证成功", Toast.LENGTH_SHORT).show();
+                } else{
+                    // TODO 处理错误的结果
+                    Toast.makeText(context, "验证失败", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        page.show(context);
+    }
 }

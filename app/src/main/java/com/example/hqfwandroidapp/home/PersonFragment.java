@@ -1,4 +1,4 @@
-package com.example.hqfwandroidapp.fragment;
+package com.example.hqfwandroidapp.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,18 +11,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import me.yokeyword.fragmentation.SupportFragment;
 
-public class DiscoveryFragment extends SupportFragment {
-
-    public static DiscoveryFragment newInstance() {
-        DiscoveryFragment discoveryFragment = new DiscoveryFragment();
-        return discoveryFragment;
+public class PersonFragment extends SupportFragment {
+    public static PersonFragment newInstance() {
+        PersonFragment personFragment = new PersonFragment();
+        return personFragment;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //return super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_discovery, container, false);
+        View view = inflater.inflate(R.layout.fragment_person, container, false);
         return view;
     }
 }

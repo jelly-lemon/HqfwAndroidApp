@@ -1,4 +1,12 @@
 apply plugin: 'com.android.application'
+// mob
+apply plugin: 'com.mob.sdk'
+
+MobSDK {
+    appKey "22a3dcda66160"
+    appSecret "a29752d35c1935b21bd8e6d94ad31cd2"
+    SMSSDK {}
+}
 
 android {
     compileOptions {

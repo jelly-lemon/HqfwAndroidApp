@@ -1,4 +1,4 @@
-package com.example.hqfwandroidapp.fragment;
+package com.example.hqfwandroidapp.home;
 
 
 import android.os.Bundle;

@@ -7,6 +7,8 @@ import com.lzy.okgo.OkGo;
 
 import java.util.concurrent.TimeUnit;
 
+import me.yokeyword.fragmentation.BuildConfig;
+import me.yokeyword.fragmentation.Fragmentation;
 import okhttp3.OkHttpClient;
 
 
@@ -30,10 +32,10 @@ public class App extends Application {
                 .setRetryCount(0);
 
 
-        /*// 初始化 Fragmentation
+        // 初始化 Fragmentation
         Fragmentation.builder()
                 .stackViewMode(Fragmentation.BUBBLE)
                 .debug(BuildConfig.DEBUG)
-                .install();*/
+                .install();
     }
 }

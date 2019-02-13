@@ -1,17 +1,15 @@
-package com.example.hqfwandroidapp.activity.login;
+package com.example.hqfwandroidapp.login;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.hqfwandroidapp.activity.HomeActivity;
 import com.example.hqfwandroidapp.R;
+import com.example.hqfwandroidapp.home.MainActivity;
 import com.example.hqfwandroidapp.tool.SaveSharedPreference;
 import com.example.hqfwandroidapp.tool.Urls;
 import com.lzy.okgo.OkGo;
@@ -73,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void goHomeActivity() {
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         this.finish();
     }

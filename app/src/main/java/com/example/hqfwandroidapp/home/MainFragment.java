@@ -1,24 +1,19 @@
-package com.example.hqfwandroidapp.fragment;
+package com.example.hqfwandroidapp.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.hqfwandroidapp.R;
 import com.example.hqfwandroidapp.ui.BottomBar;
 import com.example.hqfwandroidapp.ui.BottomBarTab;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.OnItemClick;
-import butterknife.OnItemSelected;
 import me.yokeyword.fragmentation.SupportFragment;
 
 public class MainFragment extends SupportFragment {
@@ -46,7 +41,6 @@ public class MainFragment extends SupportFragment {
         ButterKnife.bind(this, view);
 
         initView(view);
-
 
         return view;
     }

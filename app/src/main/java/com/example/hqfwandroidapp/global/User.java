@@ -2,8 +2,8 @@ package com.example.hqfwandroidapp.global;
 
 import android.content.Context;
 
-import com.example.hqfwandroidapp.tool.SaveSharedPreference;
-import com.example.hqfwandroidapp.tool.Urls;
+import com.example.hqfwandroidapp.utils.SaveSharedPreference;
+import com.example.hqfwandroidapp.utils.Urls;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;

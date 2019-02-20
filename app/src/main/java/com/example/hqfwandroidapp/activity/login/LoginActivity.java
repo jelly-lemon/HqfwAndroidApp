@@ -1,4 +1,4 @@
-package com.example.hqfwandroidapp.login;
+package com.example.hqfwandroidapp.activity.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,9 +9,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hqfwandroidapp.R;
-import com.example.hqfwandroidapp.home.MainActivity;
-import com.example.hqfwandroidapp.tool.SaveSharedPreference;
-import com.example.hqfwandroidapp.tool.Urls;
+import com.example.hqfwandroidapp.activity.home.MainActivity;
+import com.example.hqfwandroidapp.utils.SaveSharedPreference;
+import com.example.hqfwandroidapp.utils.Urls;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;

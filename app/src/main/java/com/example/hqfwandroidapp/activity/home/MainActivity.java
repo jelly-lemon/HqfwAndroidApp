@@ -1,4 +1,4 @@
-package com.example.hqfwandroidapp.home;
+package com.example.hqfwandroidapp.activity.home;
 
 
 import android.content.Context;
@@ -6,9 +6,6 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.hqfwandroidapp.R;
-import com.example.hqfwandroidapp.global.App;
-import com.example.hqfwandroidapp.login.LoginActivity;
-import com.mob.ums.gui.UMSGUI;
 
 import java.util.HashMap;
 

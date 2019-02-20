@@ -1,4 +1,4 @@
-package com.example.hqfwandroidapp.login;
+package com.example.hqfwandroidapp.activity.login;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;

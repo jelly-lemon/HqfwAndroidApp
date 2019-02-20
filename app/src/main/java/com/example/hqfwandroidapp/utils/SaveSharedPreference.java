@@ -1,4 +1,4 @@
-package com.example.hqfwandroidapp.tool;
+package com.example.hqfwandroidapp.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;

@@ -22,22 +22,22 @@
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor">
         <activity
-            android:name=".login.LoginActivity">
+            android:name=".activity.login.LoginActivity">
 
         </activity>
 
         <activity
-            android:name=".login.FindPasswordActivity"
+            android:name=".activity.login.FindPasswordActivity"
             android:label="@string/title_activity_find_password" />
 
         <activity
-            android:name=".login.RegisterActivity"
+            android:name=".activity.login.RegisterActivity"
             android:label="@string/title_activity_register" />
 
-        <activity android:name=".login.AgreementActivity" />
-        <activity android:name=".login.LocationActivity" />
+        <activity android:name=".activity.login.AgreementActivity" />
+        <activity android:name=".activity.login.LocationActivity" />
 
-        <activity android:name=".home.MainActivity">
+        <activity android:name=".activity.home.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

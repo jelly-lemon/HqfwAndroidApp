@@ -1,4 +1,4 @@
-package com.example.hqfwandroidapp.home;
+package com.example.hqfwandroidapp.activity.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.hqfwandroidapp.R;
-import com.example.hqfwandroidapp.global.App;
 import com.example.hqfwandroidapp.ui.BottomBar;
 import com.example.hqfwandroidapp.ui.BottomBarTab;
 

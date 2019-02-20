@@ -1,4 +1,4 @@
-package com.example.hqfwandroidapp.Interface;
+package com.example.hqfwandroidapp.interfaces;
 
 public interface CallBack {
     void showToast(String msg);

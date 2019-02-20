@@ -16,7 +16,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
 
-        initUI();
+        //initUI();
     }
 
     private void initUI() {

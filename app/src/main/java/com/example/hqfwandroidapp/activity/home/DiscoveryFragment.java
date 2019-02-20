@@ -8,6 +8,7 @@ import android.widget.ProgressBar;
 
 import com.example.hqfwandroidapp.R;
 import com.example.hqfwandroidapp.interfaces.DiscoveryFragmentInterface;
+import com.example.hqfwandroidapp.presenter.DiscoveryPresenter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,7 +31,7 @@ public class DiscoveryFragment extends SupportFragment implements DiscoveryFragm
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //return super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_discovery, container, false);
-        ButterKnife.bind(this, view);
+        ButterKnife.bind(this, view); // 视图和控件绑定
 
         initView(view);
         return view;
@@ -44,7 +45,7 @@ public class DiscoveryFragment extends SupportFragment implements DiscoveryFragm
     @Override
     public void showProgressBar() {
         progressBar.setVisibility(View.VISIBLE);
-        progressBar.setIndeterminate(true);
+        progressBar.setIndeterminate(true);     // 不确定时间，一直旋转
     }
 
     @Override

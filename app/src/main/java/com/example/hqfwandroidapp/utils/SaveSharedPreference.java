@@ -33,5 +33,12 @@ public class SaveSharedPreference {
         return getSharedPreferences(ctx).getString(PASSWORD, "");
     }
 
+    public static void saveAccount(Context ctx, String phone, String password) {
+        SharedPreferences.Editor editor = getSharedPreferences(ctx).edit();
+        editor.putString(PHONE, phone);
+        editor.putString(PASSWORD, password);
+        editor.apply();
+    }
+
 
 }

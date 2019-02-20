@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import com.example.hqfwandroidapp.R;
 import com.example.hqfwandroidapp.activity.home.MainActivity;
+import com.example.hqfwandroidapp.interfaces.LoginInterface;
+import com.example.hqfwandroidapp.presenter.LoginPresenter;
 import com.example.hqfwandroidapp.utils.SaveSharedPreference;
 import com.example.hqfwandroidapp.utils.Urls;
 import com.lzy.okgo.OkGo;
@@ -23,23 +25,21 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements LoginInterface {
 
 
     @BindView(R.id.et_phone_login) EditText etPhone;
     @BindView(R.id.et_password_login) EditText etPassword;
     @BindView(R.id.tv_find_password) TextView tvFindPassword;
     @BindView(R.id.tv_register) TextView tvRegister;
+    private LoginPresenter mLoginPresenter = new LoginPresenter(this);
 
     // 登录
     @OnClick(R.id.btn_login) void submit() {
         String phone = etPhone.getText().toString();
         String password = etPassword.getText().toString();
 
-        saveUser(phone, password);
-        //login(phone, password);
-        // 测试，跳过登录
-        //goHomeActivity();
+        mLoginPresenter.checkAccount(phone, password);
     }
 
     // 注册
@@ -60,66 +60,38 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         // ButterKnife 绑定生效
         ButterKnife.bind(this);
+
+
         // 自动登录
         autoLogin();
     }
 
 
-    private void showToast(String msg) {
+    @Override
+    public void showToast(String msg) {
         Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
         toast.show();
     }
 
-    private void goMainActivity() {
+    @Override
+    public void goToMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         this.finish();
     }
 
+    // 保存账号密码
+    @Override
+    public void saveAccount(String phone, String password) {
+        SaveSharedPreference.saveAccount(this, phone, password);
+    }
+
+    // 获取账号密码并自动登录
     public void autoLogin() {
         if (SaveSharedPreference.getPhone(this).length() != 0) {
             String phone = SaveSharedPreference.getPhone(this);
             String password = SaveSharedPreference.getPassword(this);
-            login(phone, password);
+            mLoginPresenter.checkAccount(phone, password);
         }
     }
-
-    public void login(String phone, String password) {
-        OkGo.<String>post(Urls.getLogin())
-                .params("phone", phone)
-                .params("password", password)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response.body());
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        showToast(response.body());
-                        showToast("登录成功");
-                        //goMainActivity();
-                    }
-
-                    @Override
-                    public void onError(Response<String> response) {
-                        super.onError(response);
-                        if (response.code() == -1) {
-                            showToast("找不到服务器");
-                        } else {
-                            showToast("服务器故障：code:" + response.code() + " message:" + response.message());
-                        }
-                    }
-
-
-                });
-
-
-    }
-
-    public void saveUser(String phone, String password) {
-        SaveSharedPreference.setPhone(this, phone);
-        SaveSharedPreference.setPassword(this, password);
-    }
-
 }

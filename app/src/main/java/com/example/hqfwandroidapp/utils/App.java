@@ -1,8 +1,9 @@
-package com.example.hqfwandroidapp.global;
+package com.example.hqfwandroidapp.utils;
 
 import android.app.Application;
 
 
+import com.example.hqfwandroidapp.entity.User;
 import com.lzy.okgo.OkGo;
 import com.mob.MobSDK;
 
@@ -15,13 +16,22 @@ import okhttp3.OkHttpClient;
 
 public class App extends Application {
 
-    public static User user;
+    public static User user = new User();
 
     @Override
     public void onCreate() {
         super.onCreate();
 
+        initOkGo();
 
+        initFragmentation();
+
+        // 初始化 MobSDK
+        initMob();
+    }
+
+
+    private void initOkGo() {
         // 初始化 OkGo
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         //全局的读取超时时间
@@ -34,15 +44,21 @@ public class App extends Application {
         OkGo.getInstance().init(this)
                 .setOkHttpClient(builder.build())
                 .setRetryCount(0);
+    }
 
-
+    private void initFragmentation() {
         // 初始化 Fragmentation
         Fragmentation.builder()
                 .stackViewMode(Fragmentation.BUBBLE)
                 .debug(BuildConfig.DEBUG)
                 .install();
+    }
 
-        // 初始化 MobSDK
+    private void initMob() {
         MobSDK.init(this);
+    }
+
+    public static User getUser() {
+        return user;
     }
 }

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.example.hqfwandroidapp.R;
 import com.example.hqfwandroidapp.adapter.DiscoveryAdapter;
-import com.example.hqfwandroidapp.entity.ArticleCard;
+import com.example.hqfwandroidapp.activity.viewdata.DiscoveryCard;
 import com.example.hqfwandroidapp.interfaces.IDiscoveryFragment;
 import com.example.hqfwandroidapp.presenter.DiscoveryPresenter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -29,7 +29,7 @@ public class DiscoveryFragment extends SupportFragment implements IDiscoveryFrag
     @BindView(R.id.rl_discovery) RefreshLayout mRefreshLayout;
     @BindView(R.id.rv_discovery) RecyclerView mRecyclerView;
 
-    DiscoveryAdapter mAdapter;
+    DiscoveryAdapter mAdapter = new DiscoveryAdapter(getContext(), new ArrayList<DiscoveryCard>());
     DiscoveryPresenter mPresenter = new DiscoveryPresenter(this);
 
 
@@ -57,9 +57,8 @@ public class DiscoveryFragment extends SupportFragment implements IDiscoveryFrag
     }
 
 
-    private void initView() {
 
-        mRefreshLayout.autoRefresh();// 自动刷新
+    private void initView() {
         // 设置下拉刷新监听
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -79,13 +78,16 @@ public class DiscoveryFragment extends SupportFragment implements IDiscoveryFrag
             }
         });
 
+        mRefreshLayout.autoRefresh();// 自动刷新一次
+
         // RecyclerView 自适应尺寸
         mRecyclerView.setHasFixedSize(true);
         // 布局管理器
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
+
         // 初始化适配器
-        ArrayList<String> testList = new ArrayList<>();
+        /*ArrayList<String> testList = new ArrayList<>();
         testList.add("one");
         testList.add("two");
         testList.add("three");
@@ -95,17 +97,20 @@ public class DiscoveryFragment extends SupportFragment implements IDiscoveryFrag
         testList.add("seven");
         testList.add("eight");
         testList.add("nine");
-        testList.add("ten");
-        mAdapter = new DiscoveryAdapter(testList);
-        // RecyclerView 添加适配器
-        mRecyclerView.setAdapter(mAdapter);
+        testList.add("ten");*/
+        //mAdapter = new DiscoveryAdapter(testList);
+
+
+        mRecyclerView.setAdapter(mAdapter); // RecyclerView 添加适配器
     }
 
 
     @Override
-    public void showRefreshResult(ArrayList<ArticleCard> articleCardList) {
-        // TODO mRecyclerView 更新
+    public void showRefreshResult(ArrayList<DiscoveryCard> discoveryCardList) {
 
+        mAdapter.setList(discoveryCardList);// 重新设置数据集
+
+        mAdapter.notifyDataSetChanged();// 发出数据集改变的通知
     }
 
     @Override

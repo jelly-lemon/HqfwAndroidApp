@@ -1,6 +1,6 @@
 package com.example.hqfwandroidapp.presenter;
 
-import com.example.hqfwandroidapp.entity.ArticleCard;
+import com.example.hqfwandroidapp.activity.viewdata.DiscoveryCard;
 import com.example.hqfwandroidapp.interfaces.IDiscoveryFragment;
 import com.example.hqfwandroidapp.interfaces.IDiscoveryPresenter;
 import com.example.hqfwandroidapp.model.DiscoveryModel;
@@ -24,12 +24,11 @@ public class DiscoveryPresenter implements IDiscoveryPresenter {
     }
 
     @Override
-    public void showRefreshResult(ArrayList<ArticleCard> articleCardList) {
-        // 处理业务逻辑
+    public void showRefreshResult(ArrayList<DiscoveryCard> discoveryCardList) {
 
 
-        // 完成之后
-        iDiscoveryFragment.showRefreshResult(articleCardList);
+
+        iDiscoveryFragment.showRefreshResult(discoveryCardList);
     }
 
     @Override

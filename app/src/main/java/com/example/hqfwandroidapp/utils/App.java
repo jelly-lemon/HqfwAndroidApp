@@ -4,6 +4,7 @@ import android.app.Application;
 
 
 import com.example.hqfwandroidapp.entity.User;
+import com.lzy.ninegrid.NineGridView;
 import com.lzy.okgo.OkGo;
 import com.mob.MobSDK;
 
@@ -28,6 +29,9 @@ public class App extends Application {
 
         // 初始化 MobSDK
         initMob();
+
+        // 初始化九宫格图片加载器
+        initNineGridView();
     }
 
 
@@ -60,5 +64,10 @@ public class App extends Application {
 
     public static User getUser() {
         return user;
+    }
+
+
+    private void initNineGridView() {
+        NineGridView.setImageLoader(new PicassoImageLoader());
     }
 }

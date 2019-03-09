@@ -1,5 +1,7 @@
 package com.example.hqfwandroidapp.entity;
 
+
+
 public class User {
     // 属性命名与数据库保持一致
     private String phone;

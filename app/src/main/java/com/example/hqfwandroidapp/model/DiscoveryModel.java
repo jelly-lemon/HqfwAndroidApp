@@ -1,7 +1,9 @@
 package com.example.hqfwandroidapp.model;
 
 
-import com.example.hqfwandroidapp.entity.ArticleCard;
+import com.example.hqfwandroidapp.activity.viewdata.DiscoveryCard;
+import com.example.hqfwandroidapp.entity.Article;
+import com.example.hqfwandroidapp.entity.User;
 import com.example.hqfwandroidapp.interfaces.IDiscoveryPresenter;
 import com.example.hqfwandroidapp.presenter.DiscoveryPresenter;
 import com.example.hqfwandroidapp.utils.Urls;
@@ -29,17 +31,27 @@ public class DiscoveryModel {
                     @Override
                     public void onSuccess(Response<String> response) {
                         try {
+                            // 获取到的字符串转化为 JSONArray
                             JSONArray jsonArray = new JSONArray(response.body());
 
-                            // 将 ArticleCard 对象取出来放入 List 中
-                            ArrayList<ArticleCard> articleCardList = new ArrayList<>();
-                            /*
+
+                            ArrayList<DiscoveryCard> discoveryCardList = new ArrayList<>(); // 保存所有 DiscoveryCard
+
+                            // 提取内容，创建 DiscoveryCard 对象
                             int len = jsonArray.length();
                             for (int i = 0; i < len; i++) {
-                                ArticleCard articleCard = (ArticleCard) jsonArray.get(i);
-                                articleCardList.add(articleCard);
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                                User user = (User) jsonObject.get("user");
+                                Article article = (Article) jsonObject.get("article");
+                                DiscoveryCard discoveryCard = new DiscoveryCard(user, article);
+
+                                discoveryCardList.add(discoveryCard);   // 放入 discoveryCardList 中
                             }
-                            iDiscoveryPresenter.showRefreshResult(articleCardList);*/
+
+
+
+                            iDiscoveryPresenter.showRefreshResult(discoveryCardList);   // 接口回调，通知界面显示结果
 
                         } catch (JSONException e) {
                             e.printStackTrace();

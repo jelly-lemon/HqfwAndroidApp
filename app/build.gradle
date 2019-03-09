@@ -99,6 +99,14 @@ dependencies {
     //1.1.0 androidx 版本
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-3'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-3'
+
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
+
+    implementation 'com.lzy.widget:ninegridview:0.2.0'
+
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //implementation 'com.jaeger.ninegridimageview:library:1.0.2'
 
 }

@@ -1,6 +1,6 @@
 package com.example.hqfwandroidapp.model;
 
-import com.example.hqfwandroidapp.interfaces.LoginCallBack;
+import com.example.hqfwandroidapp.interfaces.ILoginPresenter;
 import com.example.hqfwandroidapp.utils.App;
 import com.example.hqfwandroidapp.utils.Urls;
 import com.lzy.okgo.OkGo;
@@ -11,11 +11,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginModel {
-    private LoginCallBack mLoginCallBack;
+    private ILoginPresenter mILoginPresenter;
 
 
-    public LoginModel(LoginCallBack loginCallBack) {
-        mLoginCallBack = loginCallBack;
+    public LoginModel(ILoginPresenter ILoginPresenter) {
+        mILoginPresenter = ILoginPresenter;
     }
 
 
@@ -39,7 +39,7 @@ public class LoginModel {
                             switch (code) {
                                 case 0:
                                 case 1:
-                                    mLoginCallBack.showToast(msg);
+                                    mILoginPresenter.showToast(msg);
                                     break;
                                 case 2:
                                     // 保存 user 相关属性到对象里
@@ -55,10 +55,10 @@ public class LoginModel {
                                     App.getUser().setHead(head);
                                     App.getUser().setGender(gender);
 
-                                    mLoginCallBack.showToast(msg);
+                                    mILoginPresenter.showToast(msg);
                                     // 跳转页面之前存储密码
-                                    mLoginCallBack.saveAccount(phone, password);
-                                    mLoginCallBack.goToMainActivity();
+                                    mILoginPresenter.saveAccount(phone, password);
+                                    mILoginPresenter.goToMainActivity();
                                     break;
                             }
                         } catch (JSONException e) {
@@ -72,12 +72,12 @@ public class LoginModel {
                         // TODO 无法连接到服务器时返回代码是什么？
                         switch (response.code()) {
                             case -1:
-                                mLoginCallBack.showToast("找不到服务器");
+                                mILoginPresenter.showToast("找不到服务器");
                                 break;
                         }
                         // 测试使用，跳转到 MainActivity
-                        mLoginCallBack.showToast("测试跳转，未登录");
-                        mLoginCallBack.goToMainActivity();
+                        mILoginPresenter.showToast("测试跳转，未登录");
+                        mILoginPresenter.goToMainActivity();
                     }
 
 

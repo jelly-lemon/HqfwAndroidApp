@@ -10,29 +10,28 @@ import android.widget.Toast;
 
 import com.example.hqfwandroidapp.R;
 import com.example.hqfwandroidapp.activity.home.MainActivity;
-import com.example.hqfwandroidapp.interfaces.LoginInterface;
 import com.example.hqfwandroidapp.presenter.LoginPresenter;
 import com.example.hqfwandroidapp.utils.SaveSharedPreference;
-import com.example.hqfwandroidapp.utils.Urls;
-import com.lzy.okgo.OkGo;
-import com.lzy.okgo.callback.StringCallback;
-import com.lzy.okgo.model.Response;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class LoginActivity extends AppCompatActivity implements LoginInterface {
+public class LoginActivity extends AppCompatActivity implements com.example.hqfwandroidapp.interfaces.ILoginActivity {
 
 
     @BindView(R.id.et_phone_login) EditText etPhone;
     @BindView(R.id.et_password_login) EditText etPassword;
     @BindView(R.id.tv_find_password) TextView tvFindPassword;
     @BindView(R.id.tv_register) TextView tvRegister;
+
     private LoginPresenter mLoginPresenter = new LoginPresenter(this);
+
+
+    // 测试登录
+    @OnClick(R.id.btn_login_test) void submitTest() {
+        goToMainActivity();
+    }
 
     // 登录
     @OnClick(R.id.btn_login) void submit() {

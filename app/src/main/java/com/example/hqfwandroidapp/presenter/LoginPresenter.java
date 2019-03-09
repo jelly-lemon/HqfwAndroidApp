@@ -1,16 +1,15 @@
 package com.example.hqfwandroidapp.presenter;
 
-import com.example.hqfwandroidapp.interfaces.LoginCallBack;
-import com.example.hqfwandroidapp.interfaces.LoginInterface;
+import com.example.hqfwandroidapp.interfaces.ILoginActivity;
+import com.example.hqfwandroidapp.interfaces.ILoginPresenter;
 import com.example.hqfwandroidapp.model.LoginModel;
-import com.example.hqfwandroidapp.utils.SaveSharedPreference;
 
-public class LoginPresenter implements LoginCallBack {
-    private LoginInterface mLoginInterface;
+public class LoginPresenter implements ILoginPresenter {
+    private ILoginActivity mILoginActivity;
     private LoginModel mLoginModel = new LoginModel(this);
 
-    public LoginPresenter(LoginInterface loginInterface) {
-        mLoginInterface = loginInterface;
+    public LoginPresenter(ILoginActivity ILoginActivity) {
+        mILoginActivity = ILoginActivity;
     }
 
     public void checkAccount(String phone, String password) {
@@ -21,17 +20,17 @@ public class LoginPresenter implements LoginCallBack {
 
     @Override
     public void showToast(String msg) {
-        mLoginInterface.showToast(msg);
+        mILoginActivity.showToast(msg);
     }
 
     @Override
     public void goToMainActivity() {
-        mLoginInterface.goToMainActivity();
+        mILoginActivity.goToMainActivity();
     }
 
     @Override
     public void saveAccount(String phone, String password) {
-        mLoginInterface.saveAccount(phone, password);
+        mILoginActivity.saveAccount(phone, password);
     }
 
 

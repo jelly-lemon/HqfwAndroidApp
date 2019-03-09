@@ -93,4 +93,12 @@ dependencies {
     api (name:'fragmentation_swipeback-debug', ext:'aar')
     api (name:'eventbus_activity_scope-debug', ext:'aar')
 
+    // BRVAH 的 RecyclerView
+    //implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
+
+    //1.1.0 androidx 版本
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-3'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-3'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
 }

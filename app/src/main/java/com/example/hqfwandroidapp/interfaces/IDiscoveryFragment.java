@@ -6,5 +6,5 @@ import java.util.ArrayList;
 
 public interface IDiscoveryFragment {
     void showRefreshResult(ArrayList<DiscoveryCard> discoveryCardList);
-    void showLoadMoreResult();
+    void showLoadMoreResult(ArrayList<DiscoveryCard> discoveryCardList);
 }

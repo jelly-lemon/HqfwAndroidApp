@@ -19,21 +19,20 @@ public class DiscoveryPresenter implements IDiscoveryPresenter {
         discoveryModel.refresh();
     }
 
-    public void loadMore() {
-        discoveryModel.loadMore();
+    public void loadMore(int start) {
+        discoveryModel.loadMore(start);
     }
 
+    // 刷新界面数据
     @Override
     public void showRefreshResult(ArrayList<DiscoveryCard> discoveryCardList) {
-
-
-
-        iDiscoveryFragment.showRefreshResult(discoveryCardList);
+        iDiscoveryFragment.showRefreshResult(discoveryCardList);    // 接口回调，显示结果
     }
 
+    // 加载更多
     @Override
-    public void showLoadMoreResult() {
-        iDiscoveryFragment.showLoadMoreResult();
+    public void showLoadMoreResult(ArrayList<DiscoveryCard> discoveryCardList) {
+        iDiscoveryFragment.showLoadMoreResult(discoveryCardList);   // 接口回调，显示结果
     }
 
 

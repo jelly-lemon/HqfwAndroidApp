@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/include"
-        layout="@layout/toolbar" />
+        layout="@layout/toolbar_fragment" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/rl_discovery"

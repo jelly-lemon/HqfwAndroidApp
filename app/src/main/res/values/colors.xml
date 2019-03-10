@@ -6,4 +6,7 @@
 
     <color name="ic_launcher_background">#FFFFFF</color>
     <color name="tab_unselected">#c9c9c9</color>
+
+    <color name="tag_background">#FFC000</color>
+
 </resources>

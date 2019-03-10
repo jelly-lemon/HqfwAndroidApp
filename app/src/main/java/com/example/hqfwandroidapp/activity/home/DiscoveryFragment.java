@@ -1,9 +1,12 @@
 package com.example.hqfwandroidapp.activity.home;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 
 import com.example.hqfwandroidapp.R;
@@ -29,7 +32,7 @@ public class DiscoveryFragment extends SupportFragment implements IDiscoveryFrag
     @BindView(R.id.rl_discovery) RefreshLayout mRefreshLayout;
     @BindView(R.id.rv_discovery) RecyclerView mRecyclerView;
 
-    DiscoveryAdapter mAdapter = new DiscoveryAdapter(getContext(), new ArrayList<DiscoveryCard>());
+    DiscoveryAdapter mAdapter;
     DiscoveryPresenter mPresenter = new DiscoveryPresenter(this);
 
 
@@ -47,74 +50,62 @@ public class DiscoveryFragment extends SupportFragment implements IDiscoveryFrag
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //return super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_discovery, container, false);
-
+        View view = inflater.inflate(R.layout.fragment_discovery, container, false);    // 加载视图
         ButterKnife.bind(this, view); // 对象和视图绑定
 
-        initView(); // 初始化界面
+        initView(); // 初始化该界面
+
         return view;
     }
 
 
 
     private void initView() {
+         mAdapter = new DiscoveryAdapter(getContext(), new ArrayList<DiscoveryCard>()); // 初始化 Adapter
         // 设置下拉刷新监听
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.refresh();
-
-                refreshLayout.finishRefresh(2000);
+                mPresenter.refresh();   // 中间人刷新
             }
         });
         // 设置上拉加载更多监听
         mRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mPresenter.loadMore();
-
-                refreshLayout.finishLoadMore(2000);
+                mPresenter.loadMore();  // 中间人加载更多
             }
         });
 
-        mRefreshLayout.autoRefresh();// 自动刷新一次
+        mRefreshLayout.autoRefresh();   // 自动刷新一次
 
-        // RecyclerView 自适应尺寸
-        mRecyclerView.setHasFixedSize(true);
+
+        mRecyclerView.setHasFixedSize(true);    // RecyclerView 自适应尺寸
         // 布局管理器
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
-
-        // 初始化适配器
-        /*ArrayList<String> testList = new ArrayList<>();
-        testList.add("one");
-        testList.add("two");
-        testList.add("three");
-        testList.add("four");
-        testList.add("five");
-        testList.add("six");
-        testList.add("seven");
-        testList.add("eight");
-        testList.add("nine");
-        testList.add("ten");*/
-        //mAdapter = new DiscoveryAdapter(testList);
-
-
         mRecyclerView.setAdapter(mAdapter); // RecyclerView 添加适配器
     }
 
 
     @Override
     public void showRefreshResult(ArrayList<DiscoveryCard> discoveryCardList) {
-
-        mAdapter.setList(discoveryCardList);// 重新设置数据集
-
-        mAdapter.notifyDataSetChanged();// 发出数据集改变的通知
+        mAdapter.setList(discoveryCardList);    // 重新设置数据集
+        mAdapter.notifyDataSetChanged();        // 发出数据集改变的通知
+        mRefreshLayout.finishRefresh();         // 结束下拉刷新
+        showToast("刷新成功");  // toast 提示
     }
 
     @Override
     public void showLoadMoreResult() {
         // TODO mRecyclerView 加载更多
+
+        mRefreshLayout.finishLoadMore(); // 结束上拉加载更多
+    }
+
+    private void showToast(String str) {
+        Context context = getContext();
+
+        Toast.makeText(context, str, Toast.LENGTH_SHORT).show();
     }
 }

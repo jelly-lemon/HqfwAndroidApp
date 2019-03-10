@@ -74,6 +74,7 @@ public class LoginActivity extends AppCompatActivity implements com.example.hqfw
 
     @Override
     public void goToMainActivity() {
+        //showToast("不行吗？");
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         this.finish();

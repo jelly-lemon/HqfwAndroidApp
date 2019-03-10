@@ -1,19 +1,21 @@
 package com.example.hqfwandroidapp.entity;
 
+import java.sql.Timestamp;
+
 public class Article {
     private String article_id;
     private String phone;
     String content;
     String tag;
-    String time;
-    String allImgStr;
+    Timestamp time;
+    String img_url_json;
 
-    public String getAllImgStr() {
-        return allImgStr;
+    public String getImg_url_json() {
+        return img_url_json;
     }
 
-    public void setAllImgStr(String allImgStr) {
-        this.allImgStr = allImgStr;
+    public void setImg_url_json(String img_url_json) {
+        this.img_url_json = img_url_json;
     }
 
     public Article() {
@@ -56,11 +58,11 @@ public class Article {
         this.tag = tag;
     }
 
-    public String getTime() {
+    public Timestamp getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(Timestamp time) {
         this.time = time;
     }
 }

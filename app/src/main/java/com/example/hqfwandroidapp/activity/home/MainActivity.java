@@ -27,6 +27,8 @@ public class MainActivity extends SupportActivity {
             loadRootFragment(R.id.fl_container, MainFragment.newInstance());
         }
 
+
+
         // 正在加载
         showLoading();
         // 自动登录过程

@@ -5,7 +5,6 @@ import com.example.hqfwandroidapp.entity.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -21,7 +20,7 @@ public class DiscoveryCard {
     public ArrayList<String> getImgURL() {
         ArrayList<String> imgURLList = new ArrayList<>();
         try {
-            JSONArray jsonArray = new JSONArray(article.getAllImgStr());
+            JSONArray jsonArray = new JSONArray(article.getImg_url_json());
             int length = jsonArray.length();
             for (int i = 0; i < length; i++) {
                 String url = jsonArray.getString(i);

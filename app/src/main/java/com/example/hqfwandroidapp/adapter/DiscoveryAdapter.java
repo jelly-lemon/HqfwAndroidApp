@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.hqfwandroidapp.R;
-import com.example.hqfwandroidapp.activity.viewdata.DiscoveryCard;
+import com.example.hqfwandroidapp.viewdata.DiscoveryCard;
 import com.example.hqfwandroidapp.utils.Urls;
 import com.lzy.ninegrid.ImageInfo;
 import com.lzy.ninegrid.NineGridView;

@@ -1,7 +1,7 @@
 package com.example.hqfwandroidapp.model;
 
 
-import com.example.hqfwandroidapp.activity.viewdata.DiscoveryCard;
+import com.example.hqfwandroidapp.viewdata.DiscoveryCard;
 import com.example.hqfwandroidapp.entity.Article;
 import com.example.hqfwandroidapp.entity.User;
 import com.example.hqfwandroidapp.interfaces.IDiscoveryPresenter;
@@ -41,7 +41,6 @@ public class DiscoveryModel {
 
     // 加载更多
     public void loadMore(int start) {
-        // TODO start?
         OkGo.<String>post(Urls.DiscoverServlet())
                 .params("start", start)
                 .execute(new StringCallback() {

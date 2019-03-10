@@ -1,4 +1,4 @@
-package com.example.hqfwandroidapp.activity.viewdata;
+package com.example.hqfwandroidapp.viewdata;
 
 import com.example.hqfwandroidapp.entity.Article;
 import com.example.hqfwandroidapp.entity.User;
@@ -9,14 +9,15 @@ import org.json.JSONException;
 import java.util.ArrayList;
 
 public class DiscoveryCard {
-    User user;
-    Article article;
+    User user;          // 用户对象
+    Article article;    // 文章对象
 
     public DiscoveryCard(User user, Article article) {
         this.user = user;
         this.article = article;
     }
 
+    // 获取某文章里面所有图片的 URL
     public ArrayList<String> getImgURL() {
         ArrayList<String> imgURLList = new ArrayList<>();
         try {
@@ -26,16 +27,12 @@ public class DiscoveryCard {
                 String url = jsonArray.getString(i);
                 imgURLList.add(url);
             }
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return imgURLList;
     }
 
-    public void setImgURL(ArrayList<String> imgURL) {
-        //this.imgURLList = imgURL;
-    }
 
     public User getUser() {
         return user;

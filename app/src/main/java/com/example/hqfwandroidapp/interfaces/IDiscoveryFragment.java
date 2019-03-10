@@ -1,6 +1,6 @@
 package com.example.hqfwandroidapp.interfaces;
 
-import com.example.hqfwandroidapp.activity.viewdata.DiscoveryCard;
+import com.example.hqfwandroidapp.viewdata.DiscoveryCard;
 
 import java.util.ArrayList;
 

@@ -88,25 +88,25 @@ dependencies {
     //implementation 'me.yokeyword:fragmentation:1.3.6'
     // Swipeback is based on fragmentation. Refer to SwipeBackActivity/Fragment for your Customized SupportActivity/Fragment
     //implementation 'me.yokeyword:fragmentation-swipeback:1.0.0'
-    api (name:'fragmentation-debug', ext:'aar')
-    api (name:'fragmentation_core-debug', ext:'aar')
-    api (name:'fragmentation_swipeback-debug', ext:'aar')
-    api (name:'eventbus_activity_scope-debug', ext:'aar')
+    api(name: 'fragmentation-debug', ext: 'aar')
+    api(name: 'fragmentation_core-debug', ext: 'aar')
+    api(name: 'fragmentation_swipeback-debug', ext: 'aar')
+    api(name: 'eventbus_activity_scope-debug', ext: 'aar')
 
     // BRVAH 的 RecyclerView
     //implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
 
     //1.1.0 androidx 版本
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-3'
-    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-3'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-3'    // 智能刷新布局
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-3'    // 头
 
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
 
 
-    implementation 'com.lzy.widget:ninegridview:0.2.0'
+    implementation 'com.lzy.widget:ninegridview:0.2.0'      // 九宫格图片显示控件
 
-    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.squareup.picasso:picasso:2.71828'   // 图片加载器
 
-    //implementation 'com.jaeger.ninegridimageview:library:1.0.2'
+    implementation 'com.lzy.widget:imagepicker:0.6.1'       // 微信图片选择器
 
 }

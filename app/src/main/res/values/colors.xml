@@ -9,4 +9,14 @@
 
     <color name="tag_background">#FFC000</color>
 
+
+    <color name="success">#8BC34A</color>
+    <color name="in_progress">#000000</color>
+    <color name="fail">#FF0000</color>
+
+    <color name="red">#FF0000</color>
+    <color name="black">#000000</color>
+    <color name="gray">#FFFFFF</color>
+    <color name="white">#FFF</color>
+
 </resources>

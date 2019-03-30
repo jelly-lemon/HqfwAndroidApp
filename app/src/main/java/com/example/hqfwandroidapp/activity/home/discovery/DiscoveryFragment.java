@@ -1,4 +1,4 @@
-package com.example.hqfwandroidapp.activity.home;
+package com.example.hqfwandroidapp.activity.home.discovery;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.example.hqfwandroidapp.R;
-import com.example.hqfwandroidapp.adapter.DiscoveryAdapter;
+import com.example.hqfwandroidapp.adapter.DiscoveryRecyclerViewAdapter;
 import com.example.hqfwandroidapp.viewdata.DiscoveryCard;
 import com.example.hqfwandroidapp.interfaces.IDiscoveryFragment;
 import com.example.hqfwandroidapp.presenter.DiscoveryPresenter;
@@ -35,13 +35,15 @@ public class DiscoveryFragment extends SupportFragment implements IDiscoveryFrag
     @BindView(R.id.rl_discovery) RefreshLayout mRefreshLayout;
     @BindView(R.id.rv_discovery) RecyclerView mRecyclerView;
 
+    @BindView(R.id.tv_title)
+    TextView tv_title;  // 标题
 
-    DiscoveryAdapter mAdapter;  // 适配器
+    DiscoveryRecyclerViewAdapter mAdapter;  // 适配器
     DiscoveryPresenter mPresenter = new DiscoveryPresenter(this);   // 中间人
 
-    // 启动 NewDiscoveryActivity
+    // 启动 PublishDiscoveryActivity
     @OnClick(R.id.btn_add) void goToNewDiscoveryFragment() {
-        Intent intent = new Intent(getContext(), NewDiscoveryActivity.class);   // 创建意图
+        Intent intent = new Intent(getContext(), PublishDiscoveryActivity.class);   // 创建意图
         startActivity(intent);  // 启动 Activity
     }
 
@@ -73,7 +75,9 @@ public class DiscoveryFragment extends SupportFragment implements IDiscoveryFrag
 
 
     private void initView() {
-         mAdapter = new DiscoveryAdapter(getContext(), new ArrayList<DiscoveryCard>());     // 初始化 Adapter
+        tv_title.setText("发现");
+
+         mAdapter = new DiscoveryRecyclerViewAdapter(getContext(), new ArrayList<DiscoveryCard>());     // 初始化 Adapter
         // 设置下拉刷新监听
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -102,6 +106,7 @@ public class DiscoveryFragment extends SupportFragment implements IDiscoveryFrag
     }
 
 
+    // 显示刷新结果
     @Override
     public void showRefreshResult(ArrayList<DiscoveryCard> discoveryCardList) {
         mAdapter.setList(discoveryCardList);    // 重新设置数据集
@@ -110,6 +115,7 @@ public class DiscoveryFragment extends SupportFragment implements IDiscoveryFrag
         showToast("刷新成功");              // toast 提示
     }
 
+    // 显示加载更多的结果
     @Override
     public void showLoadMoreResult(ArrayList<DiscoveryCard> discoveryCardList) {
         if (discoveryCardList.isEmpty() | discoveryCardList == null) {

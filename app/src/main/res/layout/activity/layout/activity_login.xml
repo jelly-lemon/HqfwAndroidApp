@@ -26,8 +26,9 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:drawableLeft="@drawable/ic_account_box_black_24dp"
+        android:drawableLeft="@drawable/ic_phone_android_black_24dp"
         android:ems="10"
+        android:hint="手机号"
         android:inputType="phone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
@@ -42,6 +43,7 @@
         android:layout_marginEnd="32dp"
         android:drawableLeft="@drawable/ic_password"
         android:ems="10"
+        android:hint="密码"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -76,37 +78,38 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:layout_marginBottom="32dp"
+        android:id="@+id/iv_qq"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/tv_find_password"
-        app:layout_constraintEnd_toStartOf="@+id/imageView3"
+        app:layout_constraintEnd_toStartOf="@+id/iv_wechat"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_qq" />
 
     <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        android:id="@+id/iv_wechat"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_qq"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toTopOf="@+id/imageView2"
+        app:layout_constraintStart_toEndOf="@+id/iv_qq"
+        app:layout_constraintTop_toTopOf="@+id/iv_qq"
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_wechat" />
 
     <TextView
         android:id="@+id/tv_find_password"
         android:layout_width="wrap_content"
-        android:layout_height="31dp"
-        android:layout_marginBottom="16dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
         android:text="找回密码"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/tv_register"
+        app:layout_constraintEnd_toStartOf="@+id/view2"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -114,11 +117,25 @@
         android:id="@+id/tv_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:text="注册账号"
         android:textSize="24sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tv_find_password"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_find_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tv_find_password" />
+        app:layout_constraintStart_toEndOf="@+id/view2"
+        app:layout_constraintTop_toTopOf="@+id/tv_find_password" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_find_password"
+        app:layout_constraintEnd_toStartOf="@+id/tv_register"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tv_find_password"
+        app:layout_constraintTop_toTopOf="@+id/tv_find_password"
+        android:background="@color/black"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

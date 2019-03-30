@@ -1,4 +1,4 @@
-package com.example.hqfwandroidapp.activity.home;
+package com.example.hqfwandroidapp.activity.home.person;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

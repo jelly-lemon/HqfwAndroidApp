@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
-// mob
-apply plugin: 'com.mob.sdk'
+apply plugin: 'com.mob.sdk' // mob 插件
 
 MobSDK {
-    appKey "22a3dcda66160"
+    appKey "22a3dcda66160"          // 在 mob 注册的
     appSecret "a29752d35c1935b21bd8e6d94ad31cd2"
 
     // UMSSDK 依赖于 ShareSDK 和 SMSSDK
-    UMSSDK {}
+    UMSSDK {}   // 用户管理
+    // 分享功能
     ShareSDK {
         devInfo {
             SinaWeibo {
@@ -27,8 +27,8 @@ MobSDK {
         }
     }
 
-    SMSSDK {}
-    PaySDK {}
+    SMSSDK {}   // 短信
+    PaySDK {}   // 支付
 }
 
 android {
@@ -36,11 +36,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    compileSdkVersion 28
+    compileSdkVersion 28    // 用来编译的 SDK 版本
     defaultConfig {
         applicationId "com.example.hqfwandroidapp"
-        minSdkVersion 24
-        targetSdkVersion 28
+        minSdkVersion 24    // 最小可运行 SDK 版本 7.0
+        targetSdkVersion 28 // 目标版本 9.0
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.layout.runner.AndroidJUnitRunner"
@@ -51,6 +51,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    // 源目录设置
     sourceSets {
         main {
             res.srcDirs =
@@ -64,49 +65,52 @@ android {
     }
 }
 
+// 依赖库目录
 repositories {
     flatDir {
-        dirs 'libs'
+        dirs 'libs' // app\libs 目录
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha03'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.google.android.material:material:1.1.0-alpha02'
+    implementation 'com.google.android.material:material:1.1.0-alpha05'
     testImplementation 'junit:junit:4.12'
-    //androidTestImplementation 'androidx.layout:runner:1.1.1'
-    //androidTestImplementation 'androidx.layout.espresso:espresso-core:3.1.1'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
 
+    // okgo 网络请求库
     implementation 'com.lzy.net:okgo:3.0.4'
 
+    // butterknife 注解库
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
 
-    // To get SwipeBack feature, rely on both fragmentation & fragmentation-swipeback
-    //implementation 'me.yokeyword:fragmentation:1.3.6'
-    // Swipeback is based on fragmentation. Refer to SwipeBackActivity/Fragment for your Customized SupportActivity/Fragment
-    //implementation 'me.yokeyword:fragmentation-swipeback:1.0.0'
+    // fragmentation 管理库，本地
     api(name: 'fragmentation-debug', ext: 'aar')
     api(name: 'fragmentation_core-debug', ext: 'aar')
     api(name: 'fragmentation_swipeback-debug', ext: 'aar')
     api(name: 'eventbus_activity_scope-debug', ext: 'aar')
 
-    // BRVAH 的 RecyclerView
-    //implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.46'
-
-    //1.1.0 androidx 版本
+    // 智能刷新布局
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-3'    // 智能刷新布局
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-3'    // 头
 
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    // 权限管理
+    //implementation 'org.permissionsdispatcher:permissionsdispatcher:4.3.0'
+    //annotationProcessor "org.permissionsdispatcher:permissionsdispatcher-processor:4.3.0"
 
+    // glide
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
-    implementation 'com.lzy.widget:ninegridview:0.2.0'      // 九宫格图片显示控件
+    // ninegridview
+    implementation(name: 'ninegridview-debug', ext: 'aar')
+    implementation 'com.github.chrisbanes.photoview:library:1.2.4'  // 必须要添加这句
 
-    implementation 'com.squareup.picasso:picasso:2.71828'   // 图片加载器
+    // imagePicker
+    //implementation(name: 'imagepicker-debug', ext: 'aar')
 
-    implementation 'com.lzy.widget:imagepicker:0.6.1'       // 微信图片选择器
 
 }

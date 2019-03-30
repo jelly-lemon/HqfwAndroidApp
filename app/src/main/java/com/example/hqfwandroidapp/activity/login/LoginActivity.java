@@ -20,13 +20,27 @@ import butterknife.OnClick;
 public class LoginActivity extends AppCompatActivity implements com.example.hqfwandroidapp.interfaces.ILoginActivity {
 
 
-    @BindView(R.id.et_phone_login) EditText etPhone;
-    @BindView(R.id.et_password_login) EditText etPassword;
-    @BindView(R.id.tv_find_password) TextView tvFindPassword;
-    @BindView(R.id.tv_register) TextView tvRegister;
+    @BindView(R.id.et_phone_login) EditText etPhone;                // 电话
+    @BindView(R.id.et_password_login) EditText etPassword;          // 密码
+    @BindView(R.id.tv_find_password) TextView tvFindPassword;       // 找回密码
+    @BindView(R.id.tv_register) TextView tvRegister;                // 注册
 
-    private LoginPresenter mLoginPresenter = new LoginPresenter(this);
 
+    private LoginPresenter mLoginPresenter = new LoginPresenter(this);  // 中间人
+
+
+    // QQ 登录
+    @OnClick(R.id.iv_qq) void goQQLogin() {
+        // TODO QQ 登录
+        showToast("暂未实现");
+    }
+
+
+    // 微信登录
+    @OnClick(R.id.iv_wechat) void goWechatLogin() {
+        // TODO 微信登录
+        showToast("暂未实现");
+    }
 
     // 测试登录
     @OnClick(R.id.btn_login_test) void submitTest() {
@@ -66,15 +80,18 @@ public class LoginActivity extends AppCompatActivity implements com.example.hqfw
     }
 
 
+    // 气泡显示
     @Override
     public void showToast(String msg) {
         Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
         toast.show();
     }
 
+    /**
+     * 跳转到 MainActivity
+     */
     @Override
     public void goToMainActivity() {
-        //showToast("不行吗？");
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         this.finish();

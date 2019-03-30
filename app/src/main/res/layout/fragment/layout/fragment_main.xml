@@ -27,13 +27,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.example.hqfwandroidapp.ui.BottomBar
+    <com.example.hqfwandroidapp.widget.BottomBar
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="52dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"></com.example.hqfwandroidapp.ui.BottomBar>
+        app:layout_constraintStart_toStartOf="parent"></com.example.hqfwandroidapp.widget.BottomBar>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,8 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.hqfwandroidapp.R;
-import com.example.hqfwandroidapp.ui.BottomBar;
-import com.example.hqfwandroidapp.ui.BottomBarTab;
+import com.example.hqfwandroidapp.activity.home.discovery.DiscoveryFragment;
+import com.example.hqfwandroidapp.activity.home.person.PersonFragment;
+import com.example.hqfwandroidapp.activity.home.service.ServiceFragment;
+import com.example.hqfwandroidapp.widget.BottomBar;
+import com.example.hqfwandroidapp.widget.BottomBarTab;
 
 
 import androidx.annotation.NonNull;

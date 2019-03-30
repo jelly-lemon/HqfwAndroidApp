@@ -6,4 +6,71 @@
     android:layout_height="match_parent"
     tools:context=".activity.login.RegisterActivity">
 
+    <include
+        android:id="@+id/include4"
+        layout="@layout/toolbar_back" />
+
+    <include
+        android:id="@+id/include6"
+        layout="@layout/view_get_code"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include4" />
+
+
+    <EditText
+        android:id="@+id/edt_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:drawableLeft="@drawable/ic_person_black_24dp"
+        android:ems="10"
+        android:hint="昵称"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/include6"
+        app:layout_constraintStart_toStartOf="@+id/include6"
+        app:layout_constraintTop_toBottomOf="@+id/include6" />
+
+    <EditText
+        android:id="@+id/edt_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:drawableLeft="@drawable/ic_password"
+        android:ems="10"
+        android:hint="输入密码"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/edt_name"
+        app:layout_constraintStart_toStartOf="@+id/edt_name"
+        app:layout_constraintTop_toBottomOf="@+id/edt_name" />
+
+    <EditText
+        android:id="@+id/edt_password_again"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:drawableLeft="@drawable/ic_password"
+        android:ems="10"
+        android:hint="确认密码"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="@+id/edt_password"
+        app:layout_constraintStart_toStartOf="@+id/edt_password"
+        app:layout_constraintTop_toBottomOf="@+id/edt_password" />
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="立即注册"
+        app:layout_constraintEnd_toEndOf="@+id/edt_password_again"
+        app:layout_constraintStart_toStartOf="@+id/edt_password_again"
+        app:layout_constraintTop_toBottomOf="@+id/edt_password_again" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

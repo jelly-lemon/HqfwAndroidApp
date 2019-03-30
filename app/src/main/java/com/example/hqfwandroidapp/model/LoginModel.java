@@ -19,6 +19,7 @@ public class LoginModel {
     }
 
 
+    // 检查账户
     public void checkAccount(String phone, String password) {
         OkGo.<String>post(Urls.LoginServlet())
                 .params("phone", phone)

@@ -8,6 +8,10 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
+    <!-- 知乎图片选择器需要 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <dist:module dist:instant="true" />
 
     <application
@@ -22,7 +26,7 @@
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:name">
 
-        <activity android:name=".activity.home.NewDiscoveryActivity"></activity>
+        <activity android:name=".activity.home.discovery.PublishDiscoveryActivity"></activity>
 
         <activity android:name=".activity.login.LoginActivity">
             <intent-filter>
@@ -32,11 +36,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.login.FindPasswordActivity"
-            android:label="@string/title_activity_find_password" />
+            android:name=".activity.login.FindPasswordActivity" />
         <activity
-            android:name=".activity.login.RegisterActivity"
-            android:label="@string/title_activity_register" />
+            android:name=".activity.login.RegisterActivity" />
         <activity android:name=".activity.login.AgreementActivity" />
         <activity android:name=".activity.login.LocationActivity" />
         <activity android:name=".activity.home.MainActivity"></activity>

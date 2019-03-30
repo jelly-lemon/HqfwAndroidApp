@@ -1,4 +1,4 @@
-package com.example.hqfwandroidapp.ui;
+package com.example.hqfwandroidapp.widget;
 
 import android.content.Context;
 import android.graphics.Color;

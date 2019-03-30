@@ -4,11 +4,13 @@ import android.app.Application;
 
 
 import com.example.hqfwandroidapp.entity.User;
+/*import com.example.ninegridviewapp.ui.NineGridView;
 import com.lzy.imagepicker.ImagePicker;
-import com.lzy.imagepicker.view.CropImageView;
-import com.lzy.ninegrid.NineGridView;
+import com.lzy.imagepicker.view.CropImageView;*/
+import com.example.ninegridview.ui.NineGridView;
 import com.lzy.okgo.OkGo;
 import com.mob.MobSDK;
+import com.mob.ums.gui.pickers.ImagePicker;
 
 import java.util.concurrent.TimeUnit;
 
@@ -19,23 +21,17 @@ import okhttp3.OkHttpClient;
 
 public class App extends Application {
 
-    public static User user = new User();
+    public static User user = new User();   // 保存用户
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        initOkGo();
-
-        initFragmentation();
-
-        // 初始化 MobSDK
-        initMob();
-
-        // 初始化九宫格图片加载器
-        initNineGridView();
-
-        initImagePicker();  // 初始化微信图片加载器
+        initOkGo();             // 初始化 OkGo
+        initFragmentation();    // 初始化 Fragmentation
+        initMob();              // 初始化 MobSDK
+        initNineGridView();     // 初始化九宫格图片加载器
+        initImagePicker();      // 初始化微信图片加载器
     }
 
 
@@ -72,12 +68,13 @@ public class App extends Application {
 
 
     private void initNineGridView() {
-        NineGridView.setImageLoader(new PicassoImageLoader());
+        NineGridView.setImageLoader(new NineGridViewGlideImageLoader());    // 为九宫格图片显示器设置图片加载器
+
     }
 
     private void initImagePicker() {
-        ImagePicker imagePicker = ImagePicker.getInstance();
-        imagePicker.setImageLoader(new PicassoImageLoader());   //设置图片加载器
+        /*ImagePicker imagePicker = ImagePicker.getInstance();
+        imagePicker.setImageLoader(new ImagePickerGlideImageLoader());   //设置图片加载器
         imagePicker.setShowCamera(true);                        //显示拍照按钮
         imagePicker.setCrop(true);                              //允许裁剪（单选才有效）
         imagePicker.setSaveRectangle(true);                     //是否按矩形区域保存
@@ -86,6 +83,6 @@ public class App extends Application {
         imagePicker.setFocusWidth(800);                         //裁剪框的宽度。单位像素（圆形自动取宽高最小值）
         imagePicker.setFocusHeight(800);                        //裁剪框的高度。单位像素（圆形自动取宽高最小值）
         imagePicker.setOutPutX(1000);                           //保存文件的宽度。单位像素
-        imagePicker.setOutPutY(1000);                           //保存文件的高度。单位像素
+        imagePicker.setOutPutY(1000);                           //保存文件的高度。单位像素*/
     }
 }

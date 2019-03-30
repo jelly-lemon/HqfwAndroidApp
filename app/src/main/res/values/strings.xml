@@ -19,4 +19,5 @@
     <string name="title_discovery">discovery</string>
     <string name="title_service">service</string>
     <string name="title_person">person</string>
+    <string name="title_find_password"></string>
 </resources>

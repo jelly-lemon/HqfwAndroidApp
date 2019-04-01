@@ -12,6 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hqfwandroidapp.R;
+import com.example.hqfwandroidapp.utils.GlideImageLoader;
+import com.lwkandroid.widget.ninegridview.NineGirdImageContainer;
+import com.lwkandroid.widget.ninegridview.NineGridBean;
+import com.lwkandroid.widget.ninegridview.NineGridView;
 /*import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.activity.ImageGridActivity;
 import com.lzy.imagepicker.activity.ImagePreviewDelActivity;
@@ -24,18 +28,23 @@ public class PublishDiscoveryActivity extends AppCompatActivity {
     static final int REQUEST_CODE_CHOOSE_IMAGE = 2;
     public static final int IMAGE_ITEM_ADD = -1;
 
-    @BindView(R.id.tv_title) TextView tv_title; // 标题
+    @BindView(R.id.tv_title)
+    TextView tv_title; // 标题
+    @BindView(R.id.nineGridView)
+    NineGridView mNineGridView; // 九宫格图片选择器
 
 
     //@BindView(R.id.gv_nine) NineGridView gv_nine;   // 九宫格图片显示器控件
 
     // 返回按钮，点击返回
-    @OnClick(R.id.iv_back) void onBack() {
+    @OnClick(R.id.iv_back)
+    void onBack() {
         onBackPressed();
     }
 
     // 提交
-    @OnClick(R.id.btn_submit) void submit() {
+    @OnClick(R.id.btn_submit)
+    void submit() {
         // TODO 提交
         showToast("暂未实现");
     }
@@ -50,8 +59,6 @@ public class PublishDiscoveryActivity extends AppCompatActivity {
         startActivityForResult(intent, IMAGE_PICKER);
 
     }*/
-
-
 
 
     @Override
@@ -73,11 +80,56 @@ public class PublishDiscoveryActivity extends AppCompatActivity {
         recyclerView.setAdapter(imagePickerAdapter);*/
         tv_title.setText("发布信息");
 
+
+        //设置图片加载器，这个是必须的，不然图片无法显示
+        mNineGridView.setImageLoader(new GlideImageLoader());
+//设置显示列数，默认3列
+        mNineGridView.setColumnCount(4);
+//设置是否为编辑模式，默认为false
+        mNineGridView.setIsEditMode(true);
+//设置单张图片显示时的尺寸，默认100dp
+        mNineGridView.setSingleImageSize(150);
+//设置单张图片显示时的宽高比，默认1.0f
+        mNineGridView.setSingleImageRatio(0.8f);
+//设置最大显示数量，默认9张
+        mNineGridView.setMaxNum(16);
+//设置图片显示间隔大小，默认3dp
+        mNineGridView.setSpcaeSize(4);
+//设置删除图片
+        mNineGridView.setIcDeleteResId(R.drawable.ic_delete);
+//设置删除图片与父视图的大小比例，默认0.35f
+        mNineGridView.setRatioOfDeleteIcon(0.4f);
+//设置“+”号的图片
+        mNineGridView.setIcAddMoreResId(R.drawable.ic_ninegrid_addmore);
+//设置各类点击监听
+        mNineGridView.setOnItemClickListener(new NineGridView.onItemClickListener() {
+            @Override
+            public void onNineGirdAddMoreClick(int cha) {
+                //编辑模式下，图片展示数量尚未达到最大数量时，会显示一个“+”号，点击后回调这里
+            }
+
+            @Override
+            public void onNineGirdItemClick(int position, NineGridBean gridBean, NineGirdImageContainer imageContainer) {
+
+            }
+
+            /*@Override
+            public void onNineGirdItemClick(int position, NineGridBean gridBean, NineGirdImageContainer imageContainer) {
+
+            }
+
+            @Override
+            public void onNineGirdItemClick(int position, NineGridBean gridBean, NineGirdImageContainer imageContainer) {
+                //点击图片的监听
+            }*/
+
+            @Override
+            public void onNineGirdItemDeleted(int position, NineGridBean gridBean, NineGirdImageContainer imageContainer) {
+                //编辑模式下，某张图片被删除后回调这里
+            }
+        });
+
     }
-
-
-
-
 
 
     @Override

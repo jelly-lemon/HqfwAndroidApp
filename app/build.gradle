@@ -105,12 +105,20 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
+    // 图片选择
+    //implementation 'com.github.zhongjhATC.AlbumCameraRecorder:common:1.0.5'        // 公共库，必须使用此库
+    //implementation 'com.github.zhongjhATC.AlbumCameraRecorder:multilibrary:1.0.5'      // 核心lib，调用显示相册、录屏、录音等
+
     // ninegridview
     implementation(name: 'ninegridview-debug', ext: 'aar')
     implementation 'com.github.chrisbanes.photoview:library:1.2.4'  // 必须要添加这句
 
     // imagePicker
     //implementation(name: 'imagepicker-debug', ext: 'aar')
+
+    //implementation 'com.github.Achenglove:PictureSelector:v1.0.9'
+
+    implementation 'com.lwkandroid.widget:NineGridView:1.2.2'
 
 
 }

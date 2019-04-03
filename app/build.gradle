@@ -120,5 +120,10 @@ dependencies {
 
     implementation 'com.lwkandroid.widget:NineGridView:1.2.2'
 
+    //添加该库引用，并去除自带的support-V4、Glide引用，防止版本冲突
+    implementation("com.lwkandroid:ImagePicker:1.4.4") {
+        exclude(group: 'com.android.support', module: 'support-v4')
+        exclude(group: 'com.github.bumptech.glide', module: 'glide')
+    }
 
 }

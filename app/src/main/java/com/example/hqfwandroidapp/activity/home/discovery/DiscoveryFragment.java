@@ -34,9 +34,7 @@ import me.yokeyword.fragmentation.SupportFragment;
 public class DiscoveryFragment extends SupportFragment implements IDiscoveryFragment {
     @BindView(R.id.rl_discovery) RefreshLayout mRefreshLayout;
     @BindView(R.id.rv_discovery) RecyclerView mRecyclerView;
-
-    @BindView(R.id.tv_title)
-    TextView tv_title;  // 标题
+    @BindView(R.id.tv_title) TextView tv_title;  // 标题
 
     DiscoveryRecyclerViewAdapter mAdapter;  // 适配器
     DiscoveryPresenter mPresenter = new DiscoveryPresenter(this);   // 中间人
@@ -46,10 +44,6 @@ public class DiscoveryFragment extends SupportFragment implements IDiscoveryFrag
         Intent intent = new Intent(getContext(), PublishDiscoveryActivity.class);   // 创建意图
         startActivity(intent);  // 启动 Activity
     }
-
-
-
-
 
 
     public static DiscoveryFragment newInstance() {
@@ -73,9 +67,11 @@ public class DiscoveryFragment extends SupportFragment implements IDiscoveryFrag
     }
 
 
-
+    /**
+     * 初始化视图
+     */
     private void initView() {
-        tv_title.setText("发现");
+        tv_title.setText("发现"); // 标题
 
          mAdapter = new DiscoveryRecyclerViewAdapter(getContext(), new ArrayList<DiscoveryCard>());     // 初始化 Adapter
         // 设置下拉刷新监听

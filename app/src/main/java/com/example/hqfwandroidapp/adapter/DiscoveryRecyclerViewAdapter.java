@@ -16,9 +16,8 @@ import com.example.hqfwandroidapp.utils.Urls;
 import com.example.ninegridview.adapter.NineGridViewAdapter;
 import com.example.ninegridview.entity.ImageInfo;
 import com.example.ninegridview.ui.NineGridView;
-/*import com.example.ninegridviewapp.adapter.NineGridViewAdapter;
-import com.example.ninegridviewapp.entity.ImageInfo;
-import com.example.ninegridviewapp.ui.NineGridView;*/
+
+
 
 
 
@@ -80,8 +79,8 @@ public class DiscoveryRecyclerViewAdapter extends RecyclerView.Adapter<Discovery
 
             imageInfoArrayList.add(imageInfo);    // 添加到线性表中
         }
-        /*holder.iv_nine.setMaxNum(6);
-        holder.iv_nine.setOnItemClickListener(new NineGridView.onItemClickListener() {
+        /*holder.nine_grid_view.setMaxNum(6);
+        holder.nine_grid_view.setOnItemClickListener(new NineGridView.onItemClickListener() {
             @Override
             public void onNineGirdAddMoreClick(int cha) {
 
@@ -97,10 +96,10 @@ public class DiscoveryRecyclerViewAdapter extends RecyclerView.Adapter<Discovery
 
             }
         });*/
-        //holder.iv_nine.setImageLoader(new NineGridViewGlideImageLoader());  // 设置图片加载器
-        //holder.iv_nine.setDataList(imageInfoArrayList);  // 设置数据
+        //holder.nine_grid_view.setImageLoader(new NineGridViewGlideImageLoader());  // 设置图片加载器
+        //holder.nine_grid_view.setDataList(imageInfoArrayList);  // 设置数据
         NineGridViewAdapter nineGridViewAdapter = new NineGridViewAdapter(context, imageInfoArrayList);    // 适配器
-        holder.iv_nine.setAdapter(nineGridViewAdapter);    // 九宫格图片加载器设置配置好了的适配器
+        holder.nine_grid_view.setAdapter(nineGridViewAdapter);    // 九宫格图片加载器设置配置好了的适配器
 
     }
 
@@ -124,7 +123,7 @@ public class DiscoveryRecyclerViewAdapter extends RecyclerView.Adapter<Discovery
         @BindView(R.id.tv_tag) TextView tv_tag;
         @BindView(R.id.tv_time) TextView tv_time;
         @BindView(R.id.tv_content) TextView tv_content;
-        @BindView(R.id.iv_nine) NineGridView iv_nine;
+        @BindView(R.id.nine_grid_view) NineGridView nine_grid_view;    // 九宫格
 
 
 

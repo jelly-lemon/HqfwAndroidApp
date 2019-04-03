@@ -20,10 +20,10 @@ import butterknife.OnClick;
 public class LoginActivity extends AppCompatActivity implements com.example.hqfwandroidapp.interfaces.ILoginActivity {
 
 
-    @BindView(R.id.et_phone_login) EditText etPhone;                // 电话
-    @BindView(R.id.et_password_login) EditText etPassword;          // 密码
-    @BindView(R.id.tv_find_password) TextView tvFindPassword;       // 找回密码
-    @BindView(R.id.tv_register) TextView tvRegister;                // 注册
+    @BindView(R.id.et_phone_login) EditText et_phone_login;                // 电话
+    @BindView(R.id.et_password_login) EditText et_password_login;          // 密码
+    @BindView(R.id.tv_find_password) TextView tv_find_password;       // 找回密码
+    @BindView(R.id.tv_register) TextView tv_register;                // 注册
 
 
     private LoginPresenter mLoginPresenter = new LoginPresenter(this);  // 中间人
@@ -49,8 +49,8 @@ public class LoginActivity extends AppCompatActivity implements com.example.hqfw
 
     // 登录
     @OnClick(R.id.btn_login) void submit() {
-        String phone = etPhone.getText().toString();
-        String password = etPassword.getText().toString();
+        String phone = et_phone_login.getText().toString();
+        String password = et_password_login.getText().toString();
 
         mLoginPresenter.checkAccount(phone, password);
     }
@@ -73,8 +73,6 @@ public class LoginActivity extends AppCompatActivity implements com.example.hqfw
         setContentView(R.layout.activity_login);
         // ButterKnife 绑定生效
         ButterKnife.bind(this);
-
-
         // 自动登录
         autoLogin();
     }
@@ -108,6 +106,8 @@ public class LoginActivity extends AppCompatActivity implements com.example.hqfw
         if (SaveSharedPreference.getPhone(this).length() != 0) {
             String phone = SaveSharedPreference.getPhone(this);
             String password = SaveSharedPreference.getPassword(this);
+            et_phone_login.setText(phone);
+            et_password_login.setText(password);
             mLoginPresenter.checkAccount(phone, password);
         }
     }

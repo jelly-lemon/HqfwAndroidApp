@@ -9,10 +9,13 @@ import butterknife.OnClick;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hqfwandroidapp.R;
+import com.example.hqfwandroidapp.utils.App;
 import com.example.hqfwandroidapp.utils.GlideImageLoader;
 import com.example.hqfwandroidapp.utils.ImagePickerLoader;
 import com.example.hqfwandroidapp.utils.Urls;
@@ -24,6 +27,7 @@ import com.lwkandroid.widget.ninegridview.NineGridBean;
 import com.lwkandroid.widget.ninegridview.NineGridView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 
 import java.io.File;
@@ -44,6 +48,8 @@ public class PublishDiscoveryActivity extends AppCompatActivity implements NineG
 
     @BindView(R.id.tv_title) TextView tv_title;                 // 标题
     @BindView(R.id.nineGridView) NineGridView mNineGridView;    // 九宫格图片选择器
+    @BindView(R.id.et_content) EditText et_content;             // 文字内容
+    @BindView(R.id.spinner) Spinner spinner;    // spinner
 
 
     // 返回按钮，点击返回
@@ -63,9 +69,21 @@ public class PublishDiscoveryActivity extends AppCompatActivity implements NineG
             fileList.add(file);
 
         }
-        OkGo.<String>post(Urls.DiscoverServlet())
-                .isMultipart(true)  // 多个部分
-                .addFileParams("fileList", fileList)
+        // 时间格式化，获取当前时间
+        //SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        // 上传图片
+        /*HttpParams param = new HttpParams();    // 参数
+        param.put("phone", App.getUser().getPhone());
+        param.put("content", et_content.getText().toString());
+        param.put("tag", "默认");*/
+        OkGo.<String>post(Urls.PublishDiscovery())
+                .params("phone", App.getUser().getPhone())  // phone
+                .params("content", et_content.getText().toString()) // 文字内容
+                //.params("time", df.format(new Date()))  // time
+                .params("tag", "defaultTest")    // TODO tag
+                //.params(param)  // 添加参数
+                //.isMultipart(true)  // 多个部分
+                //.addFileParams("fileList", fileList)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -132,6 +150,7 @@ public class PublishDiscoveryActivity extends AppCompatActivity implements NineG
         //mNineGridView.setIcAddMoreResId(R.drawable.ic_ninegrid_addmore);
         //设置各类点击监听
         mNineGridView.setOnItemClickListener(this);
+
 
     }
 

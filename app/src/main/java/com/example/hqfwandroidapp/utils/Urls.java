@@ -6,7 +6,7 @@ public class Urls {
     private static String DiscoveryServlet = HOST + "/DiscoveryServlet";
     private static String HeadPath          = HOST + "/images/head/";
     private static String ArticleImgPath    = HOST + "/images/article/";
-    private static String UploadImage = HOST + "/UploadImageServlet";
+    private static String PublishDiscovery = HOST + "/PublishDiscoveryServlet";
 
 
     public static String LoginServlet() {
@@ -25,8 +25,8 @@ public class Urls {
         return ArticleImgPath;
     }
 
-    public static String UploadImage() {
-        return UploadImage;
+    public static String PublishDiscovery() {
+        return PublishDiscovery;
     }
 
 

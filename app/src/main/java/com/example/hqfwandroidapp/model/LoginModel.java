@@ -39,7 +39,7 @@ public class LoginModel {
                                 case 1: // 1 == 正确，允许登录
                                     // 保存 user 相关属性到对象里
                                     // TODO 以后 user 属性可能更新
-                                    /*String name = jsonObject.getString("name");
+                                    String name = jsonObject.getString("name");
                                     String student_id = jsonObject.getString("student_id");
                                     String head = jsonObject.getString("head");
                                     String gender = jsonObject.getString("gender");
@@ -48,7 +48,7 @@ public class LoginModel {
                                     App.getUser().setName(name);
                                     App.getUser().setStudent_id(student_id);
                                     App.getUser().setHead(head);
-                                    App.getUser().setGender(gender);*/
+                                    App.getUser().setGender(gender);
 
                                     mILoginPresenter.showToast(msg);
                                     // 跳转页面之前存储密码

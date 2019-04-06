@@ -5,7 +5,7 @@ import com.example.hqfwandroidapp.interfaces.IDiscoveryFragment;
 import com.example.hqfwandroidapp.interfaces.IDiscoveryPresenter;
 import com.example.hqfwandroidapp.model.DiscoveryModel;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class DiscoveryPresenter implements IDiscoveryPresenter {
     IDiscoveryFragment iDiscoveryFragment;
@@ -25,13 +25,13 @@ public class DiscoveryPresenter implements IDiscoveryPresenter {
 
     // 刷新界面数据
     @Override
-    public void showRefreshResult(ArrayList<DiscoveryCard> discoveryCardList) {
+    public void showRefreshResult(List<DiscoveryCard> discoveryCardList) {
         iDiscoveryFragment.showRefreshResult(discoveryCardList);    // 接口回调，显示结果
     }
 
     // 加载更多
     @Override
-    public void showLoadMoreResult(ArrayList<DiscoveryCard> discoveryCardList) {
+    public void showLoadMoreResult(List<DiscoveryCard> discoveryCardList) {
         iDiscoveryFragment.showLoadMoreResult(discoveryCardList);   // 接口回调，显示结果
     }
 

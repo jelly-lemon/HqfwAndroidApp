@@ -66,6 +66,9 @@ public class App extends Application {
         return user;
     }
 
+    public static void setUser(User user) {
+        App.user = user;
+    }
 
     private void initNineGridView() {
         NineGridView.setImageLoader(new NineGridViewGlideImageLoader());    // 为九宫格图片显示器设置图片加载器

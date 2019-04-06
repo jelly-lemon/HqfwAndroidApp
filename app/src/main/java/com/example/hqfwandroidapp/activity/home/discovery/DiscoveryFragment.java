@@ -21,6 +21,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -104,7 +105,7 @@ public class DiscoveryFragment extends SupportFragment implements IDiscoveryFrag
 
     // 显示刷新结果
     @Override
-    public void showRefreshResult(ArrayList<DiscoveryCard> discoveryCardList) {
+    public void showRefreshResult(List<DiscoveryCard> discoveryCardList) {
         mAdapter.setList(discoveryCardList);    // 重新设置数据集
         mAdapter.notifyDataSetChanged();        // 发出数据集改变的通知
         mRefreshLayout.finishRefresh();         // 结束下拉刷新
@@ -113,7 +114,7 @@ public class DiscoveryFragment extends SupportFragment implements IDiscoveryFrag
 
     // 显示加载更多的结果
     @Override
-    public void showLoadMoreResult(ArrayList<DiscoveryCard> discoveryCardList) {
+    public void showLoadMoreResult(List<DiscoveryCard> discoveryCardList) {
         if (discoveryCardList.isEmpty() | discoveryCardList == null) {
             showToast("没有更多数据");
         } else {

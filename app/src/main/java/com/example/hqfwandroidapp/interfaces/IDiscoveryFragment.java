@@ -3,8 +3,9 @@ package com.example.hqfwandroidapp.interfaces;
 import com.example.hqfwandroidapp.viewdata.DiscoveryCard;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface IDiscoveryFragment {
-    void showRefreshResult(ArrayList<DiscoveryCard> discoveryCardList);
-    void showLoadMoreResult(ArrayList<DiscoveryCard> discoveryCardList);
+    void showRefreshResult(List<DiscoveryCard> discoveryCardList);
+    void showLoadMoreResult(List<DiscoveryCard> discoveryCardList);
 }

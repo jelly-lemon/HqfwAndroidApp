@@ -126,4 +126,6 @@ dependencies {
         exclude(group: 'com.github.bumptech.glide', module: 'glide')
     }
 
+    implementation 'com.google.code.gson:gson:2.8.5'
+
 }

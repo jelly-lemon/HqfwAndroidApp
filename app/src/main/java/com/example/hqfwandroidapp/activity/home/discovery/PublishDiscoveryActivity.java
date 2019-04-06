@@ -76,20 +76,28 @@ public class PublishDiscoveryActivity extends AppCompatActivity implements NineG
         param.put("phone", App.getUser().getPhone());
         param.put("content", et_content.getText().toString());
         param.put("tag", "默认");*/
+        //String content = et_content.getText().toString();
+
+        // 先上传文本
         OkGo.<String>post(Urls.PublishDiscovery())
                 .params("phone", App.getUser().getPhone())  // phone
                 .params("content", et_content.getText().toString()) // 文字内容
-                //.params("time", df.format(new Date()))  // time
                 .params("tag", "defaultTest")    // TODO tag
-                //.params(param)  // 添加参数
-                //.isMultipart(true)  // 多个部分
-                //.addFileParams("fileList", fileList)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
+                        // 再上传图片
+                        OkGo.<String>post(Urls.PublishDiscovery())
+                                .addFileParams("fileList", fileList)
+                                .execute(new StringCallback() {
+                                    @Override
+                                    public void onSuccess(Response<String> response) {
 
+                                    }
+                                });
                     }
                 });
+
     }
 
     // RecyclerView

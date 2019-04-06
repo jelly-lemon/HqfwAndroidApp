@@ -1,15 +1,22 @@
 package com.example.hqfwandroidapp.model;
 
+import com.example.hqfwandroidapp.entity.User;
 import com.example.hqfwandroidapp.interfaces.ILoginPresenter;
 import com.example.hqfwandroidapp.utils.App;
 import com.example.hqfwandroidapp.utils.Urls;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+/*import org.json.JSONException;
+import org.json.JSONObject;*/
 
+/**
+ *  登录模型
+ */
 public class LoginModel {
     private ILoginPresenter mILoginPresenter;
 
@@ -19,7 +26,11 @@ public class LoginModel {
     }
 
 
-    // 检查账户
+    /**
+     * 检查账号密码
+     * @param phone 号码
+     * @param password  密码
+     */
     public void checkAccount(String phone, String password) {
         OkGo.<String>post(Urls.LoginServlet())
                 .params("phone", phone)
@@ -28,40 +39,48 @@ public class LoginModel {
                     @Override
                     public void onSuccess(Response<String> response) {
                         try {
-                            JSONObject jsonObject = new JSONObject(response.body());
-                            // 在这里判断服务器返回的消息
+                            //JSONObject jsonObject = new JSONObject(response.body());
+                            JsonObject jsonObject = new JsonParser().parse(response.body()).getAsJsonObject();
 
-                            int code = jsonObject.getInt("code");
-                            String msg = jsonObject.getString("msg");
+                            // 在这里判断服务器返回的消息
+                            /*int code = jsonObject.getInt("code");
+                            String msg = jsonObject.getString("msg");*/
+                            int code = jsonObject.get("code").getAsInt();
+                            String msg = jsonObject.get("msg").getAsString();
 
 
                             switch (code) {
                                 case 1: // 1 == 正确，允许登录
                                     // 保存 user 相关属性到对象里
                                     // TODO 以后 user 属性可能更新
-                                    String name = jsonObject.getString("name");
+                                    /*String name = jsonObject.getString("name");
                                     String student_id = jsonObject.getString("student_id");
                                     String head = jsonObject.getString("head");
                                     String gender = jsonObject.getString("gender");
                                     App.getUser().setPhone(phone);
                                     App.getUser().setPassword(password);
                                     App.getUser().setName(name);
-                                    App.getUser().setStudent_id(student_id);
-                                    App.getUser().setHead(head);
-                                    App.getUser().setGender(gender);
+                                    App.getUser().setStudentID(student_id);
+                                    App.getUser().setHeadURL(head);
+                                    App.getUser().setGender(gender);*/
+                                    String userJSON = jsonObject.get("user").getAsString();
+                                    Gson gson = new Gson();
+                                    User user = gson.fromJson(userJSON, User.class);
+                                    App.setUser(user);
 
-                                    mILoginPresenter.showToast(msg);
                                     // 跳转页面之前存储密码
                                     mILoginPresenter.saveAccount(phone, password);
                                     mILoginPresenter.goToMainActivity();
                                     break;
                                 case 2: // 2 == 密码错误
                                 case 3: // 3 == 账号错误
-                                    mILoginPresenter.showToast(msg);
+                                    //mILoginPresenter.showToast(msg);
                                     break;
 
                             }
-                        } catch (JSONException e) {
+                            // 气泡显示
+                            mILoginPresenter.showToast(msg);
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }

@@ -22,6 +22,7 @@ import com.example.ninegridview.ui.NineGridView;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -30,7 +31,7 @@ import butterknife.ButterKnife;
 
 public class DiscoveryRecyclerViewAdapter extends RecyclerView.Adapter<DiscoveryRecyclerViewAdapter.DiscoveryViewHolder> {
     private Context context;                                                // 保存上下文
-    ArrayList<DiscoveryCard> discoveryCardArrayList = new ArrayList<>();    // 数据
+    List<DiscoveryCard> discoveryCardArrayList = new ArrayList<>();    // 数据
 
     public DiscoveryRecyclerViewAdapter() {
 
@@ -56,16 +57,16 @@ public class DiscoveryRecyclerViewAdapter extends RecyclerView.Adapter<Discovery
     public void onBindViewHolder(@NonNull DiscoveryViewHolder holder, int position) {
         DiscoveryCard discoveryCard = discoveryCardArrayList.get(position);         // 获取在 position 位置的 DiscoveryCard
 
-        String headUrl = Urls.HeadPath() + discoveryCard.getUser().getHead();       // head 图片路径
+        String headUrl = Urls.HeadPath() + discoveryCard.getUser().getHeadURL();       // head 图片路径
         Glide.with(context).load(headUrl)
                 .placeholder(R.drawable.ic_default_image_black_24dp)
                 .error(R.drawable.ic_broken_image_black_24dp)
                 .into(holder.iv_head);  // 加载头像
 
         holder.tv_name.setText(discoveryCard.getUser().getName());                  // 设置名字
-        holder.tv_tag.setText(discoveryCard.getArticle().getTag());                 // 设置标签
-        holder.tv_time.setText(discoveryCard.getArticle().getTime().toString());    // 设置时间
-        holder.tv_content.setText(discoveryCard.getArticle().getContent());         // 设置内容
+        holder.tv_tag.setText(discoveryCard.getDiscovery().getTag());                 // 设置标签
+        holder.tv_time.setText(discoveryCard.getDiscovery().getDateTime().toString());    // 设置时间
+        holder.tv_content.setText(discoveryCard.getDiscovery().getContent());         // 设置内容
 
         // 获取九宫格中所有图片 URL
         ArrayList<ImageInfo> imageInfoArrayList = new ArrayList<>();
@@ -108,12 +109,12 @@ public class DiscoveryRecyclerViewAdapter extends RecyclerView.Adapter<Discovery
         return discoveryCardArrayList.size();
     }
 
-    public void setList(ArrayList<DiscoveryCard> discoveryCardArrayList) {
+    public void setList(List<DiscoveryCard> discoveryCardArrayList) {
         this.discoveryCardArrayList = discoveryCardArrayList;
     }
 
     // 追加数据
-    public void addList(ArrayList<DiscoveryCard> discoveryCardArrayList) {
+    public void addList(List<DiscoveryCard> discoveryCardArrayList) {
         this.discoveryCardArrayList.addAll(discoveryCardArrayList);
     }
 

@@ -12,7 +12,8 @@ import android.widget.Toast;
 
 import com.example.hqfwandroidapp.R;
 import com.example.hqfwandroidapp.adapter.DiscoveryRecyclerViewAdapter;
-import com.example.hqfwandroidapp.viewdata.DiscoveryCard;
+//import com.example.hqfwandroidapp.viewdata.DiscoveryCard;
+import com.example.hqfwandroidapp.entity.DiscoveryCard;
 import com.example.hqfwandroidapp.interfaces.IDiscoveryFragment;
 import com.example.hqfwandroidapp.presenter.DiscoveryPresenter;
 import com.example.hqfwandroidapp.utils.SpacesItemDecoration;

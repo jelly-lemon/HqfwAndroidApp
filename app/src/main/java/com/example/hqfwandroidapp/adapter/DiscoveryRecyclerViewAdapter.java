@@ -11,16 +11,18 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.hqfwandroidapp.R;
-import com.example.hqfwandroidapp.viewdata.DiscoveryCard;
+//import com.example.hqfwandroidapp.viewdata.DiscoveryCard;
+import com.example.hqfwandroidapp.entity.DiscoveryCard;
 import com.example.hqfwandroidapp.utils.Urls;
 import com.example.ninegridview.adapter.NineGridViewAdapter;
 import com.example.ninegridview.entity.ImageInfo;
 import com.example.ninegridview.ui.NineGridView;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.reflect.TypeToken;
 
 
-
-
-
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,6 +59,7 @@ public class DiscoveryRecyclerViewAdapter extends RecyclerView.Adapter<Discovery
     public void onBindViewHolder(@NonNull DiscoveryViewHolder holder, int position) {
         DiscoveryCard discoveryCard = discoveryCardArrayList.get(position);         // 获取在 position 位置的 DiscoveryCard
 
+
         String headUrl = Urls.HeadPath() + discoveryCard.getUser().getHeadURL();       // head 图片路径
         Glide.with(context).load(headUrl)
                 .placeholder(R.drawable.ic_default_image_black_24dp)
@@ -69,8 +72,13 @@ public class DiscoveryRecyclerViewAdapter extends RecyclerView.Adapter<Discovery
         holder.tv_content.setText(discoveryCard.getDiscovery().getContent());         // 设置内容
 
         // 获取九宫格中所有图片 URL
-        ArrayList<ImageInfo> imageInfoArrayList = new ArrayList<>();
-        ArrayList<String> imgURL = discoveryCard.getImgURL();
+        List<ImageInfo> imageInfoArrayList = new ArrayList<>();
+
+        Type type = new TypeToken<List<String>>(){}.getType();
+        Gson gson = new Gson();
+        imageInfoArrayList = gson.fromJson(discoveryCard.getDiscovery().getImgURL(), type);
+
+        /*ArrayList<String> imgURL = discoveryCard.getImgURL();
         for (String url : imgURL) {
             url = Urls.ArticleImgPath() + url;  // 图片 URL
 
@@ -79,7 +87,7 @@ public class DiscoveryRecyclerViewAdapter extends RecyclerView.Adapter<Discovery
             imageInfo.setOriginalImageUrl(url);
 
             imageInfoArrayList.add(imageInfo);    // 添加到线性表中
-        }
+        }*/
         /*holder.nine_grid_view.setMaxNum(6);
         holder.nine_grid_view.setOnItemClickListener(new NineGridView.onItemClickListener() {
             @Override

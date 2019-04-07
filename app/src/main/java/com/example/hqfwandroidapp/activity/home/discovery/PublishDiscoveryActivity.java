@@ -27,17 +27,11 @@ import com.lwkandroid.widget.ninegridview.NineGridBean;
 import com.lwkandroid.widget.ninegridview.NineGridView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
-import com.lzy.okgo.model.HttpParams;
 import com.lzy.okgo.model.Response;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-/*import com.lzy.imagepicker.ImagePicker;
-import com.lzy.imagepicker.activity.ImageGridActivity;
-import com.lzy.imagepicker.activity.ImagePreviewDelActivity;
-import com.lzy.imagepicker.adapter.ImagePickerAdapter;
-import com.lzy.imagepicker.bean.ImageItem;*/
 
 
 public class PublishDiscoveryActivity extends AppCompatActivity implements NineGridView.onItemClickListener{
@@ -59,57 +53,32 @@ public class PublishDiscoveryActivity extends AppCompatActivity implements NineG
 
     // 提交
     @OnClick(R.id.btn_submit) void submit() {
-        // TODO 提交
-        //showToast("暂未实现");
         List<NineGridBean> nineGridBeanList = mNineGridView.getDataList();
         List<File> fileList = new ArrayList<>();    // 图片数组
         for (NineGridBean nineGridBean : nineGridBeanList) {
             String path = nineGridBean.getThumbUrl();   // 图片路径
             File file = new File(path);
             fileList.add(file);
-
         }
-        // 时间格式化，获取当前时间
-        //SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-        // 上传图片
-        /*HttpParams param = new HttpParams();    // 参数
-        param.put("phone", App.getUser().getPhone());
-        param.put("content", et_content.getText().toString());
-        param.put("tag", "默认");*/
-        //String content = et_content.getText().toString();
+
 
         // 先上传文本
         OkGo.<String>post(Urls.PublishDiscovery())
                 .params("phone", App.getUser().getPhone())  // phone
                 .params("content", et_content.getText().toString()) // 文字内容
-                .params("tag", "defaultTest")    // TODO tag
+                .params("tag", "测试标签")    // TODO tag
+                .addFileParams("fileList", fileList)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        // 再上传图片
-                        OkGo.<String>post(Urls.PublishDiscovery())
-                                .addFileParams("fileList", fileList)
-                                .execute(new StringCallback() {
-                                    @Override
-                                    public void onSuccess(Response<String> response) {
-
-                                    }
-                                });
+                        showToast("发布成功");
+                        onBackPressed();    // 返回上一级
                     }
                 });
 
     }
 
-    // RecyclerView
-    /*@BindView(R.id.rv_image_picker) RecyclerView recyclerView;
-    ImagePickerAdapter imagePickerAdapter;*/
 
-    /*// 启动图片加载器
-    @OnClick(R.id.iv_add) void selectImage() {
-        Intent intent = new Intent(this, ImageGridActivity.class);
-        startActivityForResult(intent, IMAGE_PICKER);
-
-    }*/
 
 
     @Override
@@ -126,13 +95,6 @@ public class PublishDiscoveryActivity extends AppCompatActivity implements NineG
      * 初始化界面
      */
     void initView() {
-        /*ArrayList<ImageItem> imageItemArrayList = new ArrayList<>();
-        imagePickerAdapter = new ImagePickerAdapter(this, imageItemArrayList, 9);
-        //imagePickerAdapter.setOnItemClickListener(this);
-
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(imagePickerAdapter);*/
         tv_title.setText("发布信息");   // 标题
 
 
@@ -186,15 +148,6 @@ public class PublishDiscoveryActivity extends AppCompatActivity implements NineG
         }
     }
 
-    /*private SelectDialog showDialog(SelectDialog.SelectDialogListener listener, List<String> names) {
-        SelectDialog dialog = new SelectDialog(this, R.style
-                .transparentFrameWindowStyle,
-                listener, names);
-        if (!this.isFinishing()) {
-            dialog.show();
-        }
-        return dialog;
-    }*/
 
 
     // 显示气泡

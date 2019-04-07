@@ -1,7 +1,8 @@
 package com.example.hqfwandroidapp.model;
 
 
-import com.example.hqfwandroidapp.viewdata.DiscoveryCard;
+//import com.example.hqfwandroidapp.viewdata.DiscoveryCard;
+import com.example.hqfwandroidapp.entity.DiscoveryCard;
 import com.example.hqfwandroidapp.interfaces.IDiscoveryPresenter;
 import com.example.hqfwandroidapp.presenter.DiscoveryPresenter;
 import com.example.hqfwandroidapp.utils.Urls;

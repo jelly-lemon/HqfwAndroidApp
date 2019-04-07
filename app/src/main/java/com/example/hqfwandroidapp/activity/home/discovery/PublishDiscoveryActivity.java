@@ -62,11 +62,14 @@ public class PublishDiscoveryActivity extends AppCompatActivity implements NineG
         }
 
 
+
+
         // 先上传文本
         OkGo.<String>post(Urls.PublishDiscovery())
+                .isMultipart(true)  // 强制为 Multipart 格式
                 .params("phone", App.getUser().getPhone())  // phone
                 .params("content", et_content.getText().toString()) // 文字内容
-                .params("tag", "测试标签")    // TODO tag
+                .params("tag", spinner.getSelectedItem().toString())    // tag
                 .addFileParams("fileList", fileList)
                 .execute(new StringCallback() {
                     @Override

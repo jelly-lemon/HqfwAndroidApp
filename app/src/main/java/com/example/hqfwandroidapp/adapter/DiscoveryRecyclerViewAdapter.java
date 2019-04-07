@@ -19,11 +19,12 @@ import com.example.ninegridview.entity.ImageInfo;
 import com.example.ninegridview.ui.NineGridView;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.reflect.TypeToken;
+import com.google.gson.JsonElement;
 
 
-import java.lang.reflect.Type;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -71,23 +72,32 @@ public class DiscoveryRecyclerViewAdapter extends RecyclerView.Adapter<Discovery
         holder.tv_time.setText(discoveryCard.getDiscovery().getDateTime().toString());    // 设置时间
         holder.tv_content.setText(discoveryCard.getDiscovery().getContent());         // 设置内容
 
+
         // 获取九宫格中所有图片 URL
-        List<ImageInfo> imageInfoArrayList = new ArrayList<>();
+        //Type type = new TypeToken<List<String>>(){}.getType();
+        //Gson gson = new Gson();
+        //List<ImageInfo> imageInfoArrayList = gson.fromJson(discoveryCard.getDiscovery().getImgURL(), type);
 
-        Type type = new TypeToken<List<String>>(){}.getType();
+        //ArrayList<String> imgURL = discoveryCard.getImgURL();
+        List<ImageInfo> imageInfoList = new ArrayList<>();
+
         Gson gson = new Gson();
-        imageInfoArrayList = gson.fromJson(discoveryCard.getDiscovery().getImgURL(), type);
+        JsonArray jsonArray = gson.fromJson(discoveryCard.getDiscovery().getImgURL(), JsonArray.class);
+        Iterator<JsonElement> jsonElementIterator = jsonArray.iterator();
+        while (jsonElementIterator.hasNext()) {
+            JsonElement jsonElement = jsonElementIterator.next();
+            String url = jsonElement.getAsString();
 
-        /*ArrayList<String> imgURL = discoveryCard.getImgURL();
-        for (String url : imgURL) {
-            url = Urls.ArticleImgPath() + url;  // 图片 URL
+            url = Urls.DiscoveryImgPath() + discoveryCard.getDiscovery().getDiscoveryID() + "/" + url;  // 图片 URL
 
             ImageInfo imageInfo = new ImageInfo();
             imageInfo.setThumbnailUrl(url);
             imageInfo.setOriginalImageUrl(url);
 
-            imageInfoArrayList.add(imageInfo);    // 添加到线性表中
-        }*/
+            imageInfoList.add(imageInfo);    // 添加到线性表中
+        }
+
+
         /*holder.nine_grid_view.setMaxNum(6);
         holder.nine_grid_view.setOnItemClickListener(new NineGridView.onItemClickListener() {
             @Override
@@ -107,7 +117,7 @@ public class DiscoveryRecyclerViewAdapter extends RecyclerView.Adapter<Discovery
         });*/
         //holder.nine_grid_view.setImageLoader(new NineGridViewGlideImageLoader());  // 设置图片加载器
         //holder.nine_grid_view.setDataList(imageInfoArrayList);  // 设置数据
-        NineGridViewAdapter nineGridViewAdapter = new NineGridViewAdapter(context, imageInfoArrayList);    // 适配器
+        NineGridViewAdapter nineGridViewAdapter = new NineGridViewAdapter(context, imageInfoList);    // 适配器
         holder.nine_grid_view.setAdapter(nineGridViewAdapter);    // 九宫格图片加载器设置配置好了的适配器
 
     }

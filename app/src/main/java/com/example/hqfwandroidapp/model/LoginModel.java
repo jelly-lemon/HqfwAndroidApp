@@ -51,18 +51,6 @@ public class LoginModel {
 
                             switch (code) {
                                 case 1: // 1 == 正确，允许登录
-                                    // 保存 user 相关属性到对象里
-                                    // TODO 以后 user 属性可能更新
-                                    /*String name = jsonObject.getString("name");
-                                    String student_id = jsonObject.getString("student_id");
-                                    String head = jsonObject.getString("head");
-                                    String gender = jsonObject.getString("gender");
-                                    App.getUser().setPhone(phone);
-                                    App.getUser().setPassword(password);
-                                    App.getUser().setName(name);
-                                    App.getUser().setStudentID(student_id);
-                                    App.getUser().setHeadURL(head);
-                                    App.getUser().setGender(gender);*/
                                     String userJSON = jsonObject.get("user").getAsString();
                                     Gson gson = new Gson();
                                     User user = gson.fromJson(userJSON, User.class);
@@ -74,7 +62,6 @@ public class LoginModel {
                                     break;
                                 case 2: // 2 == 密码错误
                                 case 3: // 3 == 账号错误
-                                    //mILoginPresenter.showToast(msg);
                                     break;
 
                             }

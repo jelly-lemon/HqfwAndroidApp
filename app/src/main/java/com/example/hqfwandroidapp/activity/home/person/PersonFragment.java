@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.example.hqfwandroidapp.R;
 import com.example.hqfwandroidapp.activity.login.LoginActivity;
 import com.example.hqfwandroidapp.utils.App;
+import com.example.hqfwandroidapp.utils.SaveSharedPreference;
 import com.example.hqfwandroidapp.utils.Urls;
 
 import androidx.annotation.NonNull;
@@ -33,7 +34,11 @@ public class PersonFragment extends SupportFragment {
      * 注销登录
      */
     @OnClick(R.id.btn_logout) void logout() {
+        // 销毁 user 对象
         App.setUser(null);
+        // 密码置为空
+        SaveSharedPreference.setPassword(getContext(), "");
+        // 转到登录页面
         Intent intent = new Intent(getContext(), LoginActivity.class);
         startActivity(intent);
         getActivity().finish();
@@ -49,7 +54,9 @@ public class PersonFragment extends SupportFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_person, container, false);
 
+        // 绑定视图
         ButterKnife.bind(this, view);
+        // 初始化视图
         initView(view);
 
 
@@ -60,7 +67,7 @@ public class PersonFragment extends SupportFragment {
 
 
     public void initView(View view) {
-        Glide.with(this).load(Urls.HeadPath() + App.getUser().getHeadURL())
+        Glide.with(this).load(Urls.getHOST() + App.getUser().getHeadURL())
                 .placeholder(R.drawable.ic_default_image_black_24dp)
                 .error(R.drawable.ic_broken_image_black_24dp)
                 .into(iv_head);  // 加载头像

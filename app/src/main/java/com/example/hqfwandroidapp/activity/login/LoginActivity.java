@@ -42,10 +42,7 @@ public class LoginActivity extends AppCompatActivity implements com.example.hqfw
         showToast("暂未实现");
     }
 
-    // 测试登录
-    @OnClick(R.id.btn_login_test) void submitTest() {
-        goToMainActivity();
-    }
+
 
     // 登录
     @OnClick(R.id.btn_login) void submit() {
@@ -108,6 +105,14 @@ public class LoginActivity extends AppCompatActivity implements com.example.hqfw
             String password = SaveSharedPreference.getPassword(this);
             et_phone_login.setText(phone);
             et_password_login.setText(password);
+            if (phone.isEmpty()) {
+                showToast("请输入账号");
+                return;
+            }
+            if (password.isEmpty()) {
+                showToast("请输入密码");
+                return;
+            }
             mLoginPresenter.checkAccount(phone, password);
         }
     }

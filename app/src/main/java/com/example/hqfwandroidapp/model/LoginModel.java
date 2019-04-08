@@ -82,8 +82,8 @@ public class LoginModel {
                                 break;
                         }
                         // 测试使用，跳转到 MainActivity
-                        mILoginPresenter.showToast("测试跳转，未登录");
-                        mILoginPresenter.goToMainActivity();
+                        //mILoginPresenter.showToast("测试跳转，未登录");
+                        //mILoginPresenter.goToMainActivity();
                     }
 
 

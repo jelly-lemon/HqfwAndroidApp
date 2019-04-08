@@ -1,6 +1,5 @@
 package com.example.hqfwandroidapp.activity.home.discovery;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +11,6 @@ import android.widget.Toast;
 
 import com.example.hqfwandroidapp.R;
 import com.example.hqfwandroidapp.adapter.DiscoveryRecyclerViewAdapter;
-//import com.example.hqfwandroidapp.viewdata.DiscoveryCard;
 import com.example.hqfwandroidapp.entity.DiscoveryCard;
 import com.example.hqfwandroidapp.interfaces.IDiscoveryFragment;
 import com.example.hqfwandroidapp.presenter.DiscoveryPresenter;
@@ -33,35 +31,59 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.yokeyword.fragmentation.SupportFragment;
 
+/**
+ * 发现页面
+ */
 public class DiscoveryFragment extends SupportFragment implements IDiscoveryFragment {
+    // 刷新布局
     @BindView(R.id.rl_discovery) RefreshLayout mRefreshLayout;
+    // 回收视图
     @BindView(R.id.rv_discovery) RecyclerView mRecyclerView;
-    @BindView(R.id.tv_title) TextView tv_title;  // 标题
+    // 标题
+    @BindView(R.id.tv_title) TextView tv_title;
+    // 回收视图适配器
+    private DiscoveryRecyclerViewAdapter mAdapter;
+    // 中间人
+    private DiscoveryPresenter mPresenter = new DiscoveryPresenter(this);
 
-    DiscoveryRecyclerViewAdapter mAdapter;  // 适配器
-    DiscoveryPresenter mPresenter = new DiscoveryPresenter(this);   // 中间人
 
-    // 启动 PublishDiscoveryActivity
+    /**
+     * 启动 PublishDiscoveryActivity
+     */
     @OnClick(R.id.btn_add) void goToNewDiscoveryFragment() {
         Intent intent = new Intent(getContext(), PublishDiscoveryActivity.class);   // 创建意图
         startActivity(intent);  // 启动 Activity
     }
 
 
+
+
+    /**
+     * 返回一个 DiscoveryFragment 实例
+     * @return 一个实例
+     */
     public static DiscoveryFragment newInstance() {
         DiscoveryFragment discoveryFragment = new DiscoveryFragment();
         return discoveryFragment;
     }
 
 
-
-
+    /**
+     * 创建视图
+     * @param inflater  视图加载器
+     * @param container 视图容器
+     * @param savedInstanceState 已保存的实例状态
+     * @return 加载的视图
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_discovery, container, false);    // 加载视图
-        ButterKnife.bind(this, view);           // 对象和视图绑定
-        initView();                                     // 初始化该界面
+
+        // 对象和视图绑定
+        ButterKnife.bind(this, view);
+        // 初始化视图
+        initView();
 
         return view;
 
@@ -75,7 +97,7 @@ public class DiscoveryFragment extends SupportFragment implements IDiscoveryFrag
     private void initView() {
         tv_title.setText("发现"); // 标题
 
-         mAdapter = new DiscoveryRecyclerViewAdapter(getContext(), new ArrayList<DiscoveryCard>());     // 初始化 Adapter
+        mAdapter = new DiscoveryRecyclerViewAdapter(getContext(), new ArrayList<>());     // 初始化 Adapter
         // 设置下拉刷新监听
         mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -92,9 +114,10 @@ public class DiscoveryFragment extends SupportFragment implements IDiscoveryFrag
             }
         });
 
-        mRefreshLayout.autoRefresh();   // 自动刷新一次
+        // 刷新布局自动刷新一次
+        mRefreshLayout.autoRefresh();
 
-
+        // 回收视图相关设置
         mRecyclerView.setHasFixedSize(true);                                                // RecyclerView 自适应尺寸
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());   // 布局管理器
         mRecyclerView.setLayoutManager(layoutManager);                                      // 设置布局管理器
@@ -104,7 +127,12 @@ public class DiscoveryFragment extends SupportFragment implements IDiscoveryFrag
     }
 
 
-    // 显示刷新结果
+
+
+    /**
+     * 显示刷新结果
+     * @param discoveryCardList 得到的结果
+     */
     @Override
     public void showRefreshResult(List<DiscoveryCard> discoveryCardList) {
         mAdapter.setList(discoveryCardList);    // 重新设置数据集
@@ -113,7 +141,11 @@ public class DiscoveryFragment extends SupportFragment implements IDiscoveryFrag
         showToast("刷新成功");              // toast 提示
     }
 
-    // 显示加载更多的结果
+
+    /**
+     * 显示加载更多的结果
+     * @param discoveryCardList 加载更多的结果
+     */
     @Override
     public void showLoadMoreResult(List<DiscoveryCard> discoveryCardList) {
         if (discoveryCardList.isEmpty() | discoveryCardList == null) {
@@ -125,11 +157,16 @@ public class DiscoveryFragment extends SupportFragment implements IDiscoveryFrag
         mRefreshLayout.finishLoadMore();            // 结束上拉加载更多
     }
 
-    // 显示气泡
+
+    /**
+     * 显示气泡
+     * @param str 要显示的信息
+     */
     private void showToast(String str) {
-        Context context = getContext();                             // 上下文
-        Toast.makeText(context, str, Toast.LENGTH_SHORT).show();    // 气泡显示
+        Toast.makeText(getContext(), str, Toast.LENGTH_SHORT).show();    // 气泡显示
+
     }
+
 
 
 }

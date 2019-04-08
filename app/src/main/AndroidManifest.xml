@@ -23,7 +23,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:name">
-        <activity android:name=".activity.home.person.ChangeHeadActivity"></activity>
+        <activity android:name=".activity.home.discovery.PersonDetailActivity"></activity>
+        <activity android:name=".activity.home.person.ChangeHeadActivity" />
         <activity android:name=".activity.home.discovery.PublishDiscoveryActivity" />
         <activity android:name=".activity.login.LoginActivity">
             <intent-filter>

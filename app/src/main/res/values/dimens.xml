@@ -2,4 +2,13 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="image_width">48dp</dimen>
+    <dimen name="image_height">48dp</dimen>
+
+    <dimen name="toolbar_height">60dp</dimen>
+
+    <dimen name="iv_head_width">64dp</dimen>
+    <dimen name="iv_head_height">64dp</dimen>
+    <dimen name="tv_name_size">16sp</dimen>
 </resources>

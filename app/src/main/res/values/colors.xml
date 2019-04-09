@@ -5,4 +5,19 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="ic_launcher_background">#FFFFFF</color>
+    <color name="tab_unselected">#c9c9c9</color>
+
+    <color name="tag_background">#FFC000</color>
+
+
+    <color name="success">#8BC34A</color>
+    <color name="in_progress">#000000</color>
+    <color name="fail">#FF0000</color>
+
+    <color name="red">#FF4B4B</color>
+    <color name="black">#000000</color>
+    <color name="gray">#FFFFFF</color>
+    <color name="white">#FFF</color>
+    <color name="orange">#FF7A00</color>
+
 </resources>

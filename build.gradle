@@ -3,13 +3,18 @@
 buildscript {
     repositories {
         google()
-        jcenter()
+        //jcenter()     // 下载太慢了，使用阿里云的镜像仓库
+        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}  // 阿里云仓库
+        maven { url 'https://jitpack.io' }                                  // BRVAH 的 RecyclerView
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0'
+        classpath 'com.android.tools.build:gradle:3.3.2'
         
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
+
+
+        classpath "com.mob.sdk:MobSDK:+"        // 注册MobSDK
 
     }
 }
@@ -17,7 +22,10 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        //jcenter()     // 下载太慢了，使用阿里云的镜像仓库
+        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}  // 阿里云仓库
+        //maven { url "https://jitpack.io" }
+        //maven { url 'https://www.jitpack.io' }
     }
 }
 

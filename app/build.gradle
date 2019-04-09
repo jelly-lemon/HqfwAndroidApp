@@ -1,18 +1,49 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.mob.sdk' // mob 插件
+
+MobSDK {
+    appKey "22a3dcda66160"          // 在 mob 注册的
+    appSecret "a29752d35c1935b21bd8e6d94ad31cd2"
+
+    // UMSSDK 依赖于 ShareSDK 和 SMSSDK
+    UMSSDK {}   // 用户管理
+    // 分享功能
+    ShareSDK {
+        devInfo {
+            SinaWeibo {
+                appKey "568898243"
+                appSecret "38a4f8204cc784f81f9f0daaf31e02e3"
+                callbackUri "http://www.sharesdk.cn"
+                shareByAppClient false
+            }
+            Wechat {
+                appId "wx4868b35061f87885"
+                appSecret "64020361b8ec4c99936c0e3999a9f249"
+            }
+            QQ {
+                appId "100371282"
+                appKey "aed9b0303e3ed1e27bae87c33761161d"
+            }
+        }
+    }
+
+    SMSSDK {}   // 短信
+    PaySDK {}   // 支付
+}
 
 android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    compileSdkVersion 28
+    compileSdkVersion 28    // 用来编译的 SDK 版本
     defaultConfig {
         applicationId "com.example.hqfwandroidapp"
-        minSdkVersion 24
-        targetSdkVersion 28
+        minSdkVersion 24    // 最小可运行 SDK 版本 7.0
+        targetSdkVersion 28 // 目标版本 9.0
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.layout.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -20,23 +51,82 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    // 源目录设置
+    sourceSets {
+        main {
+            res.srcDirs =
+                    [
+                            'src/main/res/layout/activity',
+                            'src/main/res/layout/fragment',
+                            'src/main/res/layout',
+                            'src/main/res'
+                    ]
+        }
+    }
+}
+
+// 依赖库目录
+repositories {
+    flatDir {
+        dirs 'libs' // app\libs 目录
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha03'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.google.android.material:material:1.1.0-alpha02'
+    implementation 'com.google.android.material:material:1.1.0-alpha05'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
 
+    // okgo 网络请求库
     implementation 'com.lzy.net:okgo:3.0.4'
 
+    // butterknife 注解库
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
 
-    // appcompat-v7包是必须的
-    implementation 'me.yokeyword:fragmentation:1.3.6'
+    // fragmentation 管理库，本地
+    api(name: 'fragmentation-debug', ext: 'aar')
+    api(name: 'fragmentation_core-debug', ext: 'aar')
+    api(name: 'fragmentation_swipeback-debug', ext: 'aar')
+    api(name: 'eventbus_activity_scope-debug', ext: 'aar')
+
+    // 智能刷新布局
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-3'    // 智能刷新布局
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-3'    // 头
+
+    // 权限管理
+    //implementation 'org.permissionsdispatcher:permissionsdispatcher:4.3.0'
+    //annotationProcessor "org.permissionsdispatcher:permissionsdispatcher-processor:4.3.0"
+
+    // glide
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+
+    // 图片选择
+    //implementation 'com.github.zhongjhATC.AlbumCameraRecorder:common:1.0.5'        // 公共库，必须使用此库
+    //implementation 'com.github.zhongjhATC.AlbumCameraRecorder:multilibrary:1.0.5'      // 核心lib，调用显示相册、录屏、录音等
+
+    // ninegridview
+    implementation(name: 'ninegridview-debug', ext: 'aar')
+    implementation 'com.github.chrisbanes.photoview:library:1.2.4'  // 必须要添加这句
+
+    // imagePicker
+    //implementation(name: 'imagepicker-debug', ext: 'aar')
+
+    //implementation 'com.github.Achenglove:PictureSelector:v1.0.9'
+
+    implementation 'com.lwkandroid.widget:NineGridView:1.2.2'
+
+    //添加该库引用，并去除自带的support-V4、Glide引用，防止版本冲突
+    implementation("com.lwkandroid:ImagePicker:1.4.4") {
+        exclude(group: 'com.android.support', module: 'support-v4')
+        exclude(group: 'com.github.bumptech.glide', module: 'glide')
+    }
+
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'androidx.viewpager:viewpager:1.0.0'
 
 }

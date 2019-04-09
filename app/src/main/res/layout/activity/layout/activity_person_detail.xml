@@ -23,7 +23,7 @@
         app:srcCompat="@drawable/ic_default_image_black_24dp" />
 
     <TextView
-        android:id="@+id/tv_name"
+        android:id="@+id/tv_buyer_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

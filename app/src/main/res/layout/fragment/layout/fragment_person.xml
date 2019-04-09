@@ -16,7 +16,7 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tv_name"
+        android:id="@+id/tv_buyer_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -30,8 +30,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="角色"
-        app:layout_constraintStart_toEndOf="@+id/tv_name"
-        app:layout_constraintTop_toTopOf="@+id/tv_name" />
+        app:layout_constraintStart_toEndOf="@+id/tv_buyer_name"
+        app:layout_constraintTop_toTopOf="@+id/tv_buyer_name" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout4"

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,7 +24,7 @@ import me.yokeyword.fragmentation.SupportFragment;
 
 public class PersonFragment extends SupportFragment {
     @BindView(R.id.iv_head) ImageView iv_head;  // 头像
-    @BindView(R.id.tv_name) TextView tv_name;   // 名字
+    @BindView(R.id.tv_buyer_name) TextView tv_name;   // 名字
     @BindView(R.id.tv_phone) TextView tv_phone; // 电话
     //@BindView(R.id)
 

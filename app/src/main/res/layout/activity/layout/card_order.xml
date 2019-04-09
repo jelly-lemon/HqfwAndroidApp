@@ -29,7 +29,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tv_order_number"
+                android:id="@+id/tv_order_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1234567891011"
@@ -38,14 +38,14 @@
                 app:layout_constraintTop_toTopOf="@+id/tv" />
 
             <TextView
-                android:id="@+id/tv_time"
+                android:id="@+id/tv_date_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:text="2019-3-16 12:00:00.0"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_order_number"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_order_id"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_order_number" />
+                app:layout_constraintTop_toTopOf="@+id/tv_order_id" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -67,7 +67,7 @@
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
-                android:id="@+id/tv_goods_name"
+                android:id="@+id/tv_item_name"
                 android:layout_width="0dp"
                 android:layout_height="64dp"
                 android:layout_marginStart="8dp"
@@ -80,7 +80,7 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:id="@+id/tv_unit_price"
+                android:id="@+id/tv_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -96,8 +96,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="1"
-                app:layout_constraintEnd_toEndOf="@+id/tv_unit_price"
-                app:layout_constraintTop_toBottomOf="@+id/tv_unit_price" />
+                app:layout_constraintEnd_toEndOf="@+id/tv_price"
+                app:layout_constraintTop_toBottomOf="@+id/tv_price" />
 
             <TextView
                 android:id="@+id/textView15"
@@ -114,9 +114,9 @@
                 android:layout_height="wrap_content"
                 android:text="¥"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_unit_price"
-                app:layout_constraintEnd_toStartOf="@+id/tv_unit_price"
-                app:layout_constraintTop_toTopOf="@+id/tv_unit_price" />
+                app:layout_constraintBottom_toBottomOf="@+id/tv_price"
+                app:layout_constraintEnd_toStartOf="@+id/tv_price"
+                app:layout_constraintTop_toTopOf="@+id/tv_price" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -199,7 +199,7 @@
                 app:layout_constraintTop_toTopOf="@+id/textView10" />
 
             <TextView
-                android:id="@+id/tv_name"
+                android:id="@+id/tv_buyer_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -215,7 +215,7 @@
                 android:layout_marginEnd="8dp"
                 android:text="交易成功"
                 android:textColor="@color/success"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tv_name"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tv_buyer_name"
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView

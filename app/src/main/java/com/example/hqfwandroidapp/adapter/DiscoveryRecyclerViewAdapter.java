@@ -2,7 +2,6 @@ package com.example.hqfwandroidapp.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class DiscoveryRecyclerViewAdapter extends RecyclerView.Adapter<DiscoveryRecyclerViewAdapter.DiscoveryViewHolder> {
     // 保存上下文
@@ -118,11 +116,11 @@ public class DiscoveryRecyclerViewAdapter extends RecyclerView.Adapter<Discovery
         // 头像
         @BindView(R.id.iv_head) ImageView iv_head;
         // 名字
-        @BindView(R.id.tv_name) TextView tv_name;
+        @BindView(R.id.tv_buyer_name) TextView tv_name;
         // 标签
         @BindView(R.id.tv_tag) TextView tv_tag;
         // 时间
-        @BindView(R.id.tv_time) TextView tv_time;
+        @BindView(R.id.tv_date_time) TextView tv_time;
         // 内容
         @BindView(R.id.tv_content) TextView tv_content;
         // 九宫格

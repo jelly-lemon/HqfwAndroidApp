@@ -36,13 +36,13 @@ import me.yokeyword.fragmentation.SupportFragment;
  */
 public class DiscoveryFragment extends SupportFragment implements IDiscoveryFragment {
     // 刷新布局
-    @BindView(R.id.rl_discovery) RefreshLayout mRefreshLayout;
+    @BindView(R.id.rl_discovery) RefreshLayout rl_discovery;
     // 回收视图
-    @BindView(R.id.rv_discovery) RecyclerView mRecyclerView;
+    @BindView(R.id.rv_discovery) RecyclerView rv_discovery;
     // 标题
     @BindView(R.id.tv_title) TextView tv_title;
     // 回收视图适配器
-    private DiscoveryRecyclerViewAdapter mAdapter;
+    private DiscoveryRecyclerViewAdapter discoveryRecyclerViewAdapter;
     // 中间人
     private DiscoveryPresenter mPresenter = new DiscoveryPresenter(this);
 
@@ -50,7 +50,7 @@ public class DiscoveryFragment extends SupportFragment implements IDiscoveryFrag
     /**
      * 启动 PublishDiscoveryActivity
      */
-    @OnClick(R.id.btn_add) void goToNewDiscoveryFragment() {
+    @OnClick(R.id.ib_add) void goToNewDiscoveryFragment() {
         Intent intent = new Intent(getContext(), PublishDiscoveryActivity.class);   // 创建意图
         startActivity(intent);  // 启动 Activity
     }
@@ -97,33 +97,33 @@ public class DiscoveryFragment extends SupportFragment implements IDiscoveryFrag
     private void initView() {
         tv_title.setText("发现"); // 标题
 
-        mAdapter = new DiscoveryRecyclerViewAdapter(getContext(), new ArrayList<>());     // 初始化 Adapter
+        discoveryRecyclerViewAdapter = new DiscoveryRecyclerViewAdapter(getContext(), new ArrayList<>());     // 初始化 Adapter
         // 设置下拉刷新监听
-        mRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+        rl_discovery.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 mPresenter.refresh();                   // 中间人刷新
             }
         });
         // 设置上拉加载更多监听
-        mRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+        rl_discovery.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                int start = mAdapter.getItemCount();    // 获得记录数目
+                int start = discoveryRecyclerViewAdapter.getItemCount();    // 获得记录数目
                 mPresenter.loadMore(start);             // 中间人加载更多
             }
         });
 
         // 刷新布局自动刷新一次
-        mRefreshLayout.autoRefresh();
+        rl_discovery.autoRefresh();
 
         // 回收视图相关设置
-        mRecyclerView.setHasFixedSize(true);                                                // RecyclerView 自适应尺寸
+        rv_discovery.setHasFixedSize(true);                                                // RecyclerView 自适应尺寸
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());   // 布局管理器
-        mRecyclerView.setLayoutManager(layoutManager);                                      // 设置布局管理器
+        rv_discovery.setLayoutManager(layoutManager);                                      // 设置布局管理器
         SpacesItemDecoration spacesItemDecoration = new SpacesItemDecoration(24);           // 间距
-        mRecyclerView.addItemDecoration(spacesItemDecoration);                              // 添加各单元之间的间距
-        mRecyclerView.setAdapter(mAdapter);                                                 // RecyclerView 添加适配器
+        rv_discovery.addItemDecoration(spacesItemDecoration);                              // 添加各单元之间的间距
+        rv_discovery.setAdapter(discoveryRecyclerViewAdapter);                                                 // RecyclerView 添加适配器
     }
 
 
@@ -135,9 +135,9 @@ public class DiscoveryFragment extends SupportFragment implements IDiscoveryFrag
      */
     @Override
     public void showRefreshResult(List<DiscoveryCard> discoveryCardList) {
-        mAdapter.setList(discoveryCardList);    // 重新设置数据集
-        mAdapter.notifyDataSetChanged();        // 发出数据集改变的通知
-        mRefreshLayout.finishRefresh();         // 结束下拉刷新
+        discoveryRecyclerViewAdapter.setList(discoveryCardList);    // 重新设置数据集
+        discoveryRecyclerViewAdapter.notifyDataSetChanged();        // 发出数据集改变的通知
+        rl_discovery.finishRefresh();         // 结束下拉刷新
         showToast("刷新成功");              // toast 提示
     }
 
@@ -151,10 +151,10 @@ public class DiscoveryFragment extends SupportFragment implements IDiscoveryFrag
         if (discoveryCardList.isEmpty() | discoveryCardList == null) {
             showToast("没有更多数据");
         } else {
-            mAdapter.addList(discoveryCardList);    // 追加数据到线性表中
-            mAdapter.notifyDataSetChanged();        // 通知数据已改变
+            discoveryRecyclerViewAdapter.addList(discoveryCardList);    // 追加数据到线性表中
+            discoveryRecyclerViewAdapter.notifyDataSetChanged();        // 通知数据已改变
         }
-        mRefreshLayout.finishLoadMore();            // 结束上拉加载更多
+        rl_discovery.finishLoadMore();            // 结束上拉加载更多
     }
 
 

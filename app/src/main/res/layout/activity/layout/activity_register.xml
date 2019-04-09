@@ -12,7 +12,7 @@
 
     <include
         android:id="@+id/include6"
-        layout="@layout/view_get_code"
+        layout="@layout/widget_get_code"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"

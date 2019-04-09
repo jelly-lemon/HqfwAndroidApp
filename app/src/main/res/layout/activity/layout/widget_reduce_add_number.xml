@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_number"
+        android:layout_width="48dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="1"
+        app:layout_constraintBottom_toBottomOf="@+id/ib_reduce"
+        app:layout_constraintStart_toEndOf="@+id/ib_reduce"
+        app:layout_constraintTop_toTopOf="@+id/ib_reduce" />
+
+    <ImageButton
+        android:id="@+id/ib_reduce"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_reduce_black_24dp" />
+
+    <ImageButton
+        android:id="@+id/ib_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_number"
+        app:layout_constraintStart_toEndOf="@+id/tv_number"
+        app:layout_constraintTop_toTopOf="@+id/tv_number"
+        app:srcCompat="@drawable/ic_add_black_24dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

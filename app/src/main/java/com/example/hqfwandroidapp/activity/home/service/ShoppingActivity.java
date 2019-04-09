@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.hqfwandroidapp.R;
 import com.example.hqfwandroidapp.adapter.CommodityAdapter;
 import com.example.hqfwandroidapp.entity.Commodity;
+import com.example.hqfwandroidapp.entity.OrderForm;
 import com.example.hqfwandroidapp.utils.SpacesItemDecoration;
 import com.example.hqfwandroidapp.utils.Urls;
 import com.google.gson.Gson;
@@ -23,28 +24,28 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingActivity extends AppCompatActivity {
     // 标题
     @BindView(R.id.tv_title) TextView tv_title;
-
-
     // RecyclerView
     @BindView(R.id.rv_commodity) RecyclerView rv_commodity;
-
-
+    // Adapter
+    CommodityAdapter commodityAdapter;
     // 返回
     @OnClick(R.id.iv_back) void onBack() {
         onBackPressed();
     }
-
     // 购买
     @OnClick(R.id.btn_submit) void onSubmit() {
-        showToast("暂未实现");
+        String shoppingList = commodityAdapter.getShoppingList();
+        showToast(shoppingList);
     }
-    // Adapter
-    CommodityAdapter commodityAdapter;
+    // 订单
+    //List<OrderForm> orderFormList = new ArrayList<>();
+
 
 
     @Override
@@ -104,4 +105,6 @@ public class ShoppingActivity extends AppCompatActivity {
     void showToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
+
+
 }

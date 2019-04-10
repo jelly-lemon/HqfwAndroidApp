@@ -7,6 +7,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,7 +15,6 @@ import android.widget.Toast;
 import com.example.hqfwandroidapp.R;
 import com.example.hqfwandroidapp.adapter.CommodityAdapter;
 import com.example.hqfwandroidapp.entity.Commodity;
-import com.example.hqfwandroidapp.entity.OrderForm;
 import com.example.hqfwandroidapp.utils.SpacesItemDecoration;
 import com.example.hqfwandroidapp.utils.Urls;
 import com.google.gson.Gson;
@@ -24,7 +24,6 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingActivity extends AppCompatActivity {
@@ -41,12 +40,16 @@ public class ShoppingActivity extends AppCompatActivity {
     // 购买
     @OnClick(R.id.btn_submit) void onSubmit() {
         String shoppingList = commodityAdapter.getShoppingList();
-        showToast(shoppingList);
+        // 检查是否选中了商品
+        if (shoppingList.equals("[]")) {
+            showToast("请选择商品");
+            return;
+        }
+
+        Intent intent = new Intent(this, ConfirmPurchaseActivity.class);
+        intent.putExtra("shoppingList", shoppingList);
+        startActivity(intent);
     }
-    // 订单
-    //List<OrderForm> orderFormList = new ArrayList<>();
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

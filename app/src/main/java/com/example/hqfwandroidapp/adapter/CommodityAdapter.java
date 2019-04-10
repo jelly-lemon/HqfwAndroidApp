@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide;
 import com.example.hqfwandroidapp.R;
 import com.example.hqfwandroidapp.entity.Commodity;
 import com.example.hqfwandroidapp.utils.Urls;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -52,8 +53,10 @@ public class CommodityAdapter extends RecyclerView.Adapter<CommodityAdapter.View
         for (int i = 0; i < numberList.size(); i++) {
             if (numberList.get(i) != 0) {
                 JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("commodityID", commodityList.get(i).getCommodityID());
-                jsonObject.addProperty("name", commodityList.get(i).getName());
+                //jsonObject.addProperty("commodityID", commodityList.get(i).getCommodityID());
+                //jsonObject.addProperty("name", commodityList.get(i).getName());
+                Gson gson = new Gson();
+                jsonObject.addProperty("commodity", gson.toJson(commodityList.get(i)));
                 jsonObject.addProperty("number", numberList.get(i));
                 jsonArray.add(jsonObject);
             }
@@ -64,7 +67,7 @@ public class CommodityAdapter extends RecyclerView.Adapter<CommodityAdapter.View
     @NonNull
     @Override
     public ViewHolodr onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.card_commodity, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.card_commodity_shopping, parent, false);
         return new ViewHolodr(view);
     }
 

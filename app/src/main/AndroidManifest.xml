@@ -23,14 +23,15 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:name">
-        <activity android:name=".activity.home.service.ShoppingActivity"></activity>
+        <activity android:name=".activity.home.service.ConfirmPurchaseActivity" />
+        <activity android:name=".activity.home.service.ShoppingActivity" />
         <activity android:name=".activity.home.discovery.PersonDetailActivity" />
         <activity android:name=".activity.home.person.ChangeHeadActivity" />
         <activity android:name=".activity.home.discovery.PublishDiscoveryActivity" />
+        <!-- 启动 activity -->
         <activity android:name=".activity.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

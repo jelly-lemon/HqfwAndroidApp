@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="spinner_tag">
+        <item>报修</item>
         <item>失物招领</item>
         <item>吐槽</item>
         <item>爆料</item>

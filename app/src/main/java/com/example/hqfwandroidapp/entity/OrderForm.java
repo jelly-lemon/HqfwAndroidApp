@@ -7,8 +7,26 @@ public class OrderForm {
     private Timestamp dateTime;
     private String shoppingList;
     private String buyerPhone;
-    private String recevieAdress;
+    private String receiveName;
+    private String receivePhone;
+    private String receiveAdress;
     private String status;
+
+    public String getReceiveName() {
+        return receiveName;
+    }
+
+    public void setReceiveName(String receiveName) {
+        this.receiveName = receiveName;
+    }
+
+    public String getReceivePhone() {
+        return receivePhone;
+    }
+
+    public void setReceivePhone(String receivePhone) {
+        this.receivePhone = receivePhone;
+    }
 
     public String getOrderFormID() {
         return orderFormID;
@@ -42,12 +60,12 @@ public class OrderForm {
         this.buyerPhone = buyerPhone;
     }
 
-    public String getRecevieAdress() {
-        return recevieAdress;
+    public String getReceiveAdress() {
+        return receiveAdress;
     }
 
-    public void setRecevieAdress(String recevieAdress) {
-        this.recevieAdress = recevieAdress;
+    public void setReceiveAdress(String receiveAdress) {
+        this.receiveAdress = receiveAdress;
     }
 
     public String getStatus() {

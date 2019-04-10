@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -25,7 +26,11 @@ public class AllOrderFormAdapter extends RecyclerView.Adapter<AllOrderFormAdapte
     // context
     private Context context;
     // data list
-    private List<OrderForm> orderFormList;
+    private List<OrderForm> orderFormList = new ArrayList<>();
+
+    public AllOrderFormAdapter(Context context) {
+        this.context = context;
+    }
 
     public AllOrderFormAdapter(Context context, List<OrderForm> orderFormList) {
         this.context = context;
@@ -113,6 +118,21 @@ public class AllOrderFormAdapter extends RecyclerView.Adapter<AllOrderFormAdapte
 
             rv_commodity_confirm.setAdapter(confirmPurchaseAdapter);
         }
-
     }
+
+
+
+    public void setOrderFormList(List<OrderForm> orderFormList) {
+        this.orderFormList = orderFormList;
+        notifyDataSetChanged();
+    }
+
+    public void addOrderFormList(List<OrderForm> orderFormList) {
+        this.orderFormList.addAll(orderFormList);
+        notifyDataSetChanged();
+    }
+
+    /*public List<OrderForm> getOrderFormList() {
+        return orderFormList;
+    }*/
 }

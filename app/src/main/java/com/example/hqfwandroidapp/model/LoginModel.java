@@ -39,23 +39,18 @@ public class LoginModel {
                     @Override
                     public void onSuccess(Response<String> response) {
                         try {
-                            //JSONObject jsonObject = new JSONObject(response.body());
+                            //
                             JsonObject jsonObject = new JsonParser().parse(response.body()).getAsJsonObject();
-
                             // 在这里判断服务器返回的消息
-                            /*int code = jsonObject.getInt("code");
-                            String msg = jsonObject.getString("msg");*/
                             int code = jsonObject.get("code").getAsInt();
                             String msg = jsonObject.get("msg").getAsString();
-
-
+                            // 判断消息类型
                             switch (code) {
                                 case 1: // 1 == 正确，允许登录
                                     String userJSON = jsonObject.get("user").getAsString();
                                     Gson gson = new Gson();
                                     User user = gson.fromJson(userJSON, User.class);
                                     App.setUser(user);
-
                                     // 跳转页面之前存储密码
                                     mILoginPresenter.saveAccount(phone, password);
                                     mILoginPresenter.goToMainActivity();

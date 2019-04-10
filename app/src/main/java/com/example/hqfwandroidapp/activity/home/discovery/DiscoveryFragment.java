@@ -148,13 +148,15 @@ public class DiscoveryFragment extends SupportFragment implements IDiscoveryFrag
      */
     @Override
     public void showLoadMoreResult(List<DiscoveryCard> discoveryCardList) {
-        if (discoveryCardList.isEmpty() | discoveryCardList == null) {
+        if (discoveryCardList.isEmpty()) {
             showToast("没有更多数据");
+            rl_discovery.finishLoadMoreWithNoMoreData();
         } else {
             discoveryAdapter.addList(discoveryCardList);    // 追加数据到线性表中
             discoveryAdapter.notifyDataSetChanged();        // 通知数据已改变
+            rl_discovery.finishLoadMore();            // 结束上拉加载更多
         }
-        rl_discovery.finishLoadMore();            // 结束上拉加载更多
+
     }
 
 

@@ -4,11 +4,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.hqfwandroidapp.R;
 import com.example.hqfwandroidapp.adapter.AllOrderFormAdapter;
-import com.example.hqfwandroidapp.adapter.ShoppingAdapter;
-import com.example.hqfwandroidapp.entity.Commodity;
 import com.example.hqfwandroidapp.entity.OrderForm;
 import com.example.hqfwandroidapp.utils.SpacesItemDecoration;
 import com.example.hqfwandroidapp.utils.Urls;
@@ -17,6 +16,9 @@ import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -34,6 +36,8 @@ public class AllOrderFormFragment extends SupportFragment {
     @BindView(R.id.rv_all_order_form) RecyclerView rv_all_order_form;
     // adapter
     AllOrderFormAdapter allOrderFormAdapter;
+    // smart refresh layout
+    @BindView(R.id.refreshLayout) RefreshLayout refreshLayout;
 
 
     /**
@@ -47,7 +51,7 @@ public class AllOrderFormFragment extends SupportFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //return super.onCreateView(inflater, container, savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_all_order, container, false);
+        View view = inflater.inflate(R.layout.fragment_all_order_form, container, false);
 
         // 绑定变量
         ButterKnife.bind(this, view);
@@ -61,24 +65,69 @@ public class AllOrderFormFragment extends SupportFragment {
      * 初始化视图
      * @param view
      */
-    void initView(View view) {
-        // 获取数据
-        OkGo.<String>get(Urls.OrderFormServlet)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        // 获取数据
-                        Gson gson = new Gson();
-                        Type type = new TypeToken<List<OrderForm>>(){}.getType();
-                        List<OrderForm> orderFormList = gson.fromJson(response.body(), type);
-                        // adapter
-                        initAdapter(orderFormList);
-                        // recycler view
-                        initRecyclerView();
-                    }
-                });
+    private void initView(View view) {
+        // adapter
+        allOrderFormAdapter = new AllOrderFormAdapter(getContext());
+
+        initRecyclerView();
+        // refresh layout
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                // 获取数据
+                OkGo.<String>get(Urls.OrderFormServlet)
+                        .params("method", "refresh")
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onSuccess(Response<String> response) {
+                                // 获取数据
+                                Gson gson = new Gson();
+                                Type type = new TypeToken<List<OrderForm>>(){}.getType();
+                                List<OrderForm> orderFormList = gson.fromJson(response.body(), type);
+                                // 设置数据
+                                allOrderFormAdapter.setOrderFormList(orderFormList);
+                                // finish
+                                refreshLayout.finishRefresh();
+
+                            }
+                        });
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                // 获取数据
+                OkGo.<String>get(Urls.OrderFormServlet)
+                        .params("method", "loadMore")
+                        .params("start", allOrderFormAdapter.getItemCount())
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onSuccess(Response<String> response) {
+                                // 获取数据
+                                Gson gson = new Gson();
+                                Type type = new TypeToken<List<OrderForm>>(){}.getType();
+                                List<OrderForm> orderFormList = gson.fromJson(response.body(), type);
+                                if (orderFormList.isEmpty()) {
+                                    showToast("没有更多数据");
+                                    refreshLayout.finishLoadMoreWithNoMoreData();
+                                } else {
+                                    // 添加数据
+                                    allOrderFormAdapter.addOrderFormList(orderFormList);
+                                    refreshLayout.finishLoadMore();
+                                }
+                            }
+                        });
+            }
+        });
+
+        // 自动刷新一次
+        refreshLayout.autoRefresh();
+
     }
 
+    void showToast(String msg) {
+        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
 
     /**
      * 创建实例
@@ -90,9 +139,6 @@ public class AllOrderFormFragment extends SupportFragment {
     }
 
 
-    void initAdapter(List<OrderForm> orderFormList) {
-        allOrderFormAdapter = new AllOrderFormAdapter(getContext(), orderFormList);
-    }
 
     void initRecyclerView() {
         // 初始化 rv_commodity

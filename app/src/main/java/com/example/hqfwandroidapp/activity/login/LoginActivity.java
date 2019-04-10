@@ -49,6 +49,15 @@ public class LoginActivity extends AppCompatActivity implements com.example.hqfw
         String phone = et_phone_login.getText().toString();
         String password = et_password_login.getText().toString();
 
+        if (phone.isEmpty()) {
+            showToast("请输入账号");
+            return;
+        }
+        if (password.isEmpty()) {
+            showToast("请输入密码");
+            return;
+        }
+
         mLoginPresenter.checkAccount(phone, password);
     }
 

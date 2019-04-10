@@ -23,10 +23,21 @@ import butterknife.OnClick;
 import me.yokeyword.fragmentation.SupportFragment;
 
 public class PersonFragment extends SupportFragment {
-    @BindView(R.id.iv_head) ImageView iv_head;  // 头像
-    @BindView(R.id.tv_receive_name) TextView tv_name;   // 名字
-    @BindView(R.id.tv_receive_phone) TextView tv_phone; // 电话
-    //@BindView(R.id)
+    // role
+    @BindView(R.id.tv_role)TextView tv_role;
+    // 头像
+    @BindView(R.id.iv_head) ImageView iv_head;
+    // 名字
+    @BindView(R.id.tv_name) TextView tv_name;
+    // 电话
+    @BindView(R.id.tv_phone) TextView tv_phone;
+    // studentID
+    @BindView(R.id.tv_studentID)TextView tv_studentID;
+    // building
+    @BindView(R.id.tv_building)TextView tv_building;
+    // roomNumber
+    @BindView(R.id.tv_roomNumber)TextView tv_roomNumber;
+
 
 
     /**
@@ -71,8 +82,18 @@ public class PersonFragment extends SupportFragment {
                 .error(R.drawable.ic_broken_image_black_24dp)
                 .into(iv_head);  // 加载头像
 
+        // name
         tv_name.setText(App.getUser().getName());
+        // role
+        tv_role.setText(App.getUser().getRole());
+        // phone
         tv_phone.setText(App.getUser().getPhone());
+        // studentID
+        tv_studentID.setText(App.getUser().getStudentID());
+        // building
+        tv_building.setText(App.getUser().getBuilding());
+        // roomNumber
+        tv_roomNumber.setText(App.getUser().getRoomNumber());
 
     }
 

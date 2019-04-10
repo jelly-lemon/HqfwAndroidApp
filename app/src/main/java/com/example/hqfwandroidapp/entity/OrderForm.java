@@ -3,14 +3,23 @@ package com.example.hqfwandroidapp.entity;
 import java.sql.Timestamp;
 
 public class OrderForm {
-    private String orderFormID;
+    private int orderFormID;
     private Timestamp dateTime;
     private String shoppingList;
     private String buyerPhone;
     private String receiveName;
     private String receivePhone;
-    private String receiveAdress;
-    private String status;
+    private String receiveAddress;
+    private String orderFormStatus;
+    private float totalPrice;
+
+    public float getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(float totalPrice) {
+        this.totalPrice = totalPrice;
+    }
 
     public String getReceiveName() {
         return receiveName;
@@ -28,11 +37,11 @@ public class OrderForm {
         this.receivePhone = receivePhone;
     }
 
-    public String getOrderFormID() {
+    public int getOrderFormID() {
         return orderFormID;
     }
 
-    public void setOrderFormID(String orderFormID) {
+    public void setOrderFormID(int orderFormID) {
         this.orderFormID = orderFormID;
     }
 
@@ -60,19 +69,19 @@ public class OrderForm {
         this.buyerPhone = buyerPhone;
     }
 
-    public String getReceiveAdress() {
-        return receiveAdress;
+    public String getReceiveAddress() {
+        return receiveAddress;
     }
 
-    public void setReceiveAdress(String receiveAdress) {
-        this.receiveAdress = receiveAdress;
+    public void setReceiveAddress(String receiveAddress) {
+        this.receiveAddress = receiveAddress;
     }
 
-    public String getStatus() {
-        return status;
+    public String getOrderFormStatus() {
+        return orderFormStatus;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setOrderFormStatus(String orderFormStatus) {
+        this.orderFormStatus = orderFormStatus;
     }
 }

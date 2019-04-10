@@ -29,7 +29,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tv_order_id"
+                android:id="@+id/tv_order_form_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1234567891011"
@@ -43,88 +43,27 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:text="2019-3-16 12:00:00.0"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_order_id"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_order_form_id"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_order_id" />
+                app:layout_constraintTop_toTopOf="@+id/tv_order_form_id" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout3"
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_commodity_confirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
-
-            <ImageView
-                android:id="@+id/iv_head"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
-
-            <TextView
-                android:id="@+id/tv_item_name"
-                android:layout_width="0dp"
-                android:layout_height="64dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="5037-3月电费"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_head"
-                app:layout_constraintEnd_toStartOf="@+id/textView16"
-                app:layout_constraintStart_toEndOf="@+id/iv_head"
-                app:layout_constraintTop_toTopOf="@+id/iv_head"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/tv_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="169.99"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="1"
-                app:layout_constraintEnd_toEndOf="@+id/tv_price"
-                app:layout_constraintTop_toBottomOf="@+id/tv_price" />
-
-            <TextView
-                android:id="@+id/textView15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="x"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_number"
-                app:layout_constraintEnd_toStartOf="@+id/tv_number"
-                app:layout_constraintTop_toTopOf="@+id/tv_number" />
-
-            <TextView
-                android:id="@+id/textView16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="¥"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_price"
-                app:layout_constraintEnd_toStartOf="@+id/tv_price"
-                app:layout_constraintTop_toTopOf="@+id/tv_price" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"></androidx.recyclerview.widget.RecyclerView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
+            app:layout_constraintTop_toBottomOf="@+id/rv_commodity_confirm">
 
             <TextView
                 android:id="@+id/textView6"
@@ -175,10 +114,10 @@
                 android:text="电话："
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textView9"
-                app:layout_constraintTop_toBottomOf="@+id/tv_address" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_receive_address" />
 
             <TextView
-                android:id="@+id/tv_address"
+                android:id="@+id/tv_receive_address"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -189,7 +128,7 @@
                 app:layout_constraintTop_toTopOf="@+id/textView9" />
 
             <TextView
-                android:id="@+id/tv_phone"
+                android:id="@+id/tv_receive_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -199,23 +138,23 @@
                 app:layout_constraintTop_toTopOf="@+id/textView10" />
 
             <TextView
-                android:id="@+id/tv_buyer_name"
+                android:id="@+id/tv_receive_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="林蒙"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_phone"
-                app:layout_constraintStart_toEndOf="@+id/tv_phone"
-                app:layout_constraintTop_toTopOf="@+id/tv_phone" />
+                app:layout_constraintBottom_toBottomOf="@+id/tv_receive_phone"
+                app:layout_constraintStart_toEndOf="@+id/tv_receive_phone"
+                app:layout_constraintTop_toTopOf="@+id/tv_receive_phone" />
 
             <TextView
-                android:id="@+id/tv_status"
+                android:id="@+id/tv_order_form_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:text="交易成功"
                 android:textColor="@color/success"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tv_buyer_name"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tv_receive_name"
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <TextView

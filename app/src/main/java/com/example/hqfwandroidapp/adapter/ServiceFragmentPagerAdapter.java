@@ -1,6 +1,6 @@
 package com.example.hqfwandroidapp.adapter;
 
-import com.example.hqfwandroidapp.activity.home.service.AllOrderFragment;
+import com.example.hqfwandroidapp.activity.home.service.AllOrderFormFragment;
 import com.example.hqfwandroidapp.activity.home.service.PendingPaymentFragment;
 
 import androidx.annotation.NonNull;
@@ -31,7 +31,7 @@ public class ServiceFragmentPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case ALLORDER:
-                return AllOrderFragment.newInstance();
+                return AllOrderFormFragment.newInstance();
             case PENDINGPAYMENT:
                 return PendingPaymentFragment.newInstance();
         }

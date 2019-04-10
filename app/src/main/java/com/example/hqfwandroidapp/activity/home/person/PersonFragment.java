@@ -24,8 +24,8 @@ import me.yokeyword.fragmentation.SupportFragment;
 
 public class PersonFragment extends SupportFragment {
     @BindView(R.id.iv_head) ImageView iv_head;  // 头像
-    @BindView(R.id.tv_buyer_name) TextView tv_name;   // 名字
-    @BindView(R.id.tv_phone) TextView tv_phone; // 电话
+    @BindView(R.id.tv_receive_name) TextView tv_name;   // 名字
+    @BindView(R.id.tv_receive_phone) TextView tv_phone; // 电话
     //@BindView(R.id)
 
 

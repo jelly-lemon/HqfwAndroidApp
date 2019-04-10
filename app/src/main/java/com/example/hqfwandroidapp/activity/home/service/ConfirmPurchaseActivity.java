@@ -13,15 +13,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hqfwandroidapp.R;
-import com.example.hqfwandroidapp.adapter.CommodityAdapter;
-import com.example.hqfwandroidapp.adapter.ShoppingListAdapter;
+import com.example.hqfwandroidapp.adapter.ConfirmPurchaseAdapter;
 import com.example.hqfwandroidapp.entity.Commodity;
+import com.example.hqfwandroidapp.entity.OrderForm;
 import com.example.hqfwandroidapp.utils.App;
 import com.example.hqfwandroidapp.utils.SpacesItemDecoration;
+import com.example.hqfwandroidapp.utils.Urls;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-
-import java.util.List;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 
 public class ConfirmPurchaseActivity extends AppCompatActivity {
@@ -40,21 +44,39 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
     // recycler view
     @BindView(R.id.rv_shopping_list) RecyclerView rv_shopping_list;
     // adapter
-    private ShoppingListAdapter shoppingListAdapter;
+    private ConfirmPurchaseAdapter confirmPurchaseAdapter;
     // total price
     @BindView(R.id.tv_total_price) TextView tv_total_price;
     // submit button
     @OnClick(R.id.btn_submit) void onSubmit() {
-        showToast("暂未实现");
+        // shoppingList
+        String shoppingList = getIntent().getStringExtra("shoppingList");
+        // orderFrom
+        OrderForm orderForm = new OrderForm();
+        orderForm.setShoppingList(shoppingList);
+        orderForm.setBuyerPhone(App.getUser().getPhone());
+        orderForm.setReceivePhone(et_receive_phone.getText().toString());
+        orderForm.setReceiveName(et_receive_name.getText().toString());
+        orderForm.setReceiveAddress(ed_receive_address.getText().toString());
+        orderForm.setTotalPrice(confirmPurchaseAdapter.getTotalPrice());
+        orderForm.setOrderFormStatus("等待付款");
+        // convert orderFrom into json
+        Gson gson = new Gson();
+        String json = gson.toJson(orderForm);
+        // submit
+        OkGo.<String>post(Urls.OrderFormServlet)
+                .params("orderForm", json)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        showToast("提交成功");
+                    }
+                });
     }
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_purchase);
-
         // 绑定视图
         ButterKnife.bind(this);
         // init view
@@ -64,6 +86,7 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
 
     // 初始化视图
     void initView() {
+        // title
         tv_title.setText("确认订单");
         // get and set basic information
         et_receive_name.setText(App.getUser().getName());
@@ -77,6 +100,8 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
         initAdapter(jsonArray);
         // recycler view
         initRecyclerView();
+        // 总金额
+        tv_total_price.setText(String.valueOf(confirmPurchaseAdapter.getTotalPrice()));
     }
 
     void showToast(String msg) {
@@ -88,7 +113,7 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
      * @param jsonArray
      */
     void initAdapter(JsonArray jsonArray) {
-        shoppingListAdapter = new ShoppingListAdapter(this, jsonArray);
+        confirmPurchaseAdapter = new ConfirmPurchaseAdapter(this, jsonArray);
     }
 
     /**
@@ -100,6 +125,6 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
         rv_shopping_list.setLayoutManager(layoutManager);                                      // 设置布局管理器
         SpacesItemDecoration spacesItemDecoration = new SpacesItemDecoration(24);           // 间距
         rv_shopping_list.addItemDecoration(spacesItemDecoration);                              // 添加各单元之间的间距
-        rv_shopping_list.setAdapter(shoppingListAdapter);
+        rv_shopping_list.setAdapter(confirmPurchaseAdapter);
     }
 }

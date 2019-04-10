@@ -10,6 +10,7 @@ public class Urls {
     //private static String DiscoveryImgPath = HOST + "/images/discovery/";
     private static String PublishDiscovery = HOSTWEB + "/PublishDiscoveryServlet";
     public static String CommodityServlet = HOSTWEB + "/CommodityServlet";
+    public static String OrderFormServlet = HOSTWEB + "/OrderFormServlet";
 
 
     public static String LoginServlet() {

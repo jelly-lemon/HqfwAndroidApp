@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hqfwandroidapp.R;
-import com.example.hqfwandroidapp.adapter.CommodityAdapter;
+import com.example.hqfwandroidapp.adapter.ShoppingAdapter;
 import com.example.hqfwandroidapp.entity.Commodity;
 import com.example.hqfwandroidapp.utils.SpacesItemDecoration;
 import com.example.hqfwandroidapp.utils.Urls;
@@ -32,14 +32,14 @@ public class ShoppingActivity extends AppCompatActivity {
     // RecyclerView
     @BindView(R.id.rv_commodity) RecyclerView rv_commodity;
     // Adapter
-    CommodityAdapter commodityAdapter;
+    ShoppingAdapter shoppingAdapter;
     // 返回
     @OnClick(R.id.iv_back) void onBack() {
         onBackPressed();
     }
     // 购买
     @OnClick(R.id.btn_submit) void onSubmit() {
-        String shoppingList = commodityAdapter.getShoppingList();
+        String shoppingList = shoppingAdapter.getShoppingList();
         // 检查是否选中了商品
         if (shoppingList.equals("[]")) {
             showToast("请选择商品");
@@ -88,8 +88,8 @@ public class ShoppingActivity extends AppCompatActivity {
      * @param commodityList
      */
     void initAdapter(List<Commodity> commodityList) {
-        // CommodityAdapter
-        commodityAdapter = new CommodityAdapter(this, commodityList);
+        // ShoppingAdapter
+        shoppingAdapter = new ShoppingAdapter(this, commodityList);
     }
 
     /**
@@ -102,7 +102,7 @@ public class ShoppingActivity extends AppCompatActivity {
         rv_commodity.setLayoutManager(layoutManager);                                      // 设置布局管理器
         SpacesItemDecoration spacesItemDecoration = new SpacesItemDecoration(24);           // 间距
         rv_commodity.addItemDecoration(spacesItemDecoration);                              // 添加各单元之间的间距
-        rv_commodity.setAdapter(commodityAdapter);
+        rv_commodity.setAdapter(shoppingAdapter);
     }
 
     void showToast(String msg) {

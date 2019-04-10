@@ -29,13 +29,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DiscoveryRecyclerViewAdapter extends RecyclerView.Adapter<DiscoveryRecyclerViewAdapter.DiscoveryViewHolder> {
+public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.DiscoveryViewHolder> {
     // 保存上下文
     private Context context;
     // 数据
     private List<DiscoveryCard> discoveryCardArrayList;
 
-    public DiscoveryRecyclerViewAdapter(Context context, ArrayList<DiscoveryCard> discoveryCardArrayList) {
+    public DiscoveryAdapter(Context context, ArrayList<DiscoveryCard> discoveryCardArrayList) {
         this.context = context;
         this.discoveryCardArrayList = discoveryCardArrayList;
     }
@@ -116,7 +116,7 @@ public class DiscoveryRecyclerViewAdapter extends RecyclerView.Adapter<Discovery
         // 头像
         @BindView(R.id.iv_head) ImageView iv_head;
         // 名字
-        @BindView(R.id.tv_buyer_name) TextView tv_name;
+        @BindView(R.id.tv_receive_name) TextView tv_name;
         // 标签
         @BindView(R.id.tv_tag) TextView tv_tag;
         // 时间

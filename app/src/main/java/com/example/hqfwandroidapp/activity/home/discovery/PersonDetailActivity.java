@@ -24,7 +24,7 @@ public class PersonDetailActivity extends AppCompatActivity {
     // 头像
     @BindView(R.id.iv_head) ImageView iv_head;
     // 名字
-    @BindView(R.id.tv_buyer_name) TextView tv_name;
+    @BindView(R.id.tv_receive_name) TextView tv_name;
     // 用户
     User user;
 

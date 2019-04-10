@@ -25,7 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CommodityAdapter extends RecyclerView.Adapter<CommodityAdapter.ViewHolodr> {
+public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingAdapter.ViewHolodr> {
     // 上下文
     private Context context;
     // 数据集
@@ -34,7 +34,7 @@ public class CommodityAdapter extends RecyclerView.Adapter<CommodityAdapter.View
     private List<Integer> numberList = new ArrayList<>();
 
 
-    public CommodityAdapter(Context context, List<Commodity> commodityList) {
+    public ShoppingAdapter(Context context, List<Commodity> commodityList) {
         this.context = context;
         this.commodityList = commodityList;
 

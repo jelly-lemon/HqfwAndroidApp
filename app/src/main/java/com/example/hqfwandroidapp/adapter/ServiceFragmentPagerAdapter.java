@@ -1,7 +1,7 @@
 package com.example.hqfwandroidapp.adapter;
 
 import com.example.hqfwandroidapp.activity.home.service.AllOrderFormFragment;
-import com.example.hqfwandroidapp.activity.home.service.PendingPaymentFragment;
+import com.example.hqfwandroidapp.activity.home.service.UnpaidOrderFormFragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,7 +33,7 @@ public class ServiceFragmentPagerAdapter extends FragmentPagerAdapter {
             case ALLORDER:
                 return AllOrderFormFragment.newInstance();
             case PENDINGPAYMENT:
-                return PendingPaymentFragment.newInstance();
+                return UnpaidOrderFormFragment.newInstance();
         }
         return null;
     }

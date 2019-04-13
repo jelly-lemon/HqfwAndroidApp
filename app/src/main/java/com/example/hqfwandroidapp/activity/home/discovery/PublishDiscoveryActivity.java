@@ -29,6 +29,8 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,10 +76,15 @@ public class PublishDiscoveryActivity extends AppCompatActivity implements NineG
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        showToast("发布成功");
-                        onBackPressed();    // 返回上一级
+                        //showToast("发布成功");
+                        //onBackPressed();    // 返回上一级
+                        // 广播消息
+                        EventBus.getDefault().post("PublishDiscoveryActivity:success");
                     }
                 });
+
+        // 返回
+        onBackPressed();
 
     }
 

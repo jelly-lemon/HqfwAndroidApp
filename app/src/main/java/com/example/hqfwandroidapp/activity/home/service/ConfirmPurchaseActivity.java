@@ -7,25 +7,31 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cuit.pswkeyboard.OnPasswordInputFinish;
+import com.cuit.pswkeyboard.widget.PopEnterPassword;
 import com.example.hqfwandroidapp.R;
 import com.example.hqfwandroidapp.adapter.ConfirmPurchaseAdapter;
-import com.example.hqfwandroidapp.entity.Commodity;
 import com.example.hqfwandroidapp.entity.OrderForm;
 import com.example.hqfwandroidapp.utils.App;
 import com.example.hqfwandroidapp.utils.SpacesItemDecoration;
 import com.example.hqfwandroidapp.utils.Urls;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+
+import org.greenrobot.eventbus.EventBus;
 
 
 public class ConfirmPurchaseActivity extends AppCompatActivity {
@@ -49,6 +55,9 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
     @BindView(R.id.tv_total_price) TextView tv_total_price;
     // submit button
     @OnClick(R.id.btn_submit) void onSubmit() {
+        // 关闭键盘
+        showKeyboard(false);
+
         // shoppingList
         String shoppingList = getIntent().getStringExtra("shoppingList");
         // orderFrom
@@ -65,14 +74,76 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
         String json = gson.toJson(orderForm);
         // submit
         OkGo.<String>post(Urls.OrderFormServlet)
+                .params("method", "onInsertOrderForm")
                 .params("orderForm", json)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        showToast("提交成功");
+                        JsonObject jsonObject = gson.fromJson(response.body(), JsonObject.class);
+                        int orderFormID = jsonObject.get("orderFormID").getAsInt();
+
+                        PopEnterPassword popEnterPassword = new PopEnterPassword(getActivityContext());
+                        // 显示支付窗口
+                        popEnterPassword.showAtLocation(getActivityContext().findViewById(R.id.layoutContent),
+                                Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); // 设置layout在PopupWindow中显示的位置
+                        // 输入密码回调
+                        popEnterPassword.setOnFinishInput(new OnPasswordInputFinish() {
+                            @Override
+                            public void inputFinish(String password) {
+                                if (password.equals("123456")) {
+                                    OkGo.<String>post(Urls.OrderFormServlet)
+                                            .params("method", "onUpdateStatus")
+                                            .params("orderFormID", orderFormID)
+                                            .execute(new StringCallback() {
+                                                @Override
+                                                public void onSuccess(Response<String> response) {
+                                                    showToast("支付成功");
+                                                    // 广播消息
+                                                    EventBus.getDefault().post("ConfirmPurchaseActivity:close");
+                                                    // 关闭支付键盘窗口
+                                                    popEnterPassword.dismiss();
+                                                    // 结束当前 activity
+                                                    onActivityFinish();
+                                                }
+                                            });
+                                } else {
+                                    showToast("密码错误，请重新输入");
+                                }
+                            }
+                        });
+
+                        //popEnterPassword
+
+
                     }
                 });
     }
+
+    protected void showKeyboard(boolean isShow) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        if (null == imm)
+            return;
+
+        if (isShow) {
+            if (getCurrentFocus() != null) {
+                //有焦点打开
+                imm.showSoftInput(getCurrentFocus(), 0);
+            } else {
+                //无焦点打开
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+            }
+        } else {
+            if (getCurrentFocus() != null) {
+                //有焦点关闭
+                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            } else {
+                //无焦点关闭
+                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+            }
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +162,7 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
         // get and set basic information
         et_receive_name.setText(App.getUser().getName());
         et_receive_phone.setText(App.getUser().getPhone());
-        ed_receive_address.setText("地址暂未实现");
+        ed_receive_address.setText(App.getUser().getBuilding() + "栋" + App.getUser().getRoomNumber() + "房间");
         // shopping list
         String shoppingList = getIntent().getStringExtra("shoppingList");
         Gson gson = new Gson();
@@ -102,7 +173,13 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
         initRecyclerView();
         // 总金额
         tv_total_price.setText(String.valueOf(confirmPurchaseAdapter.getTotalPrice()));
+
+        //showKeyboard(false);
     }
+
+
+
+
 
     void showToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
@@ -126,5 +203,18 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
         SpacesItemDecoration spacesItemDecoration = new SpacesItemDecoration(24);           // 间距
         rv_shopping_list.addItemDecoration(spacesItemDecoration);                              // 添加各单元之间的间距
         rv_shopping_list.setAdapter(confirmPurchaseAdapter);
+
+
     }
+
+    Activity getActivityContext() {
+        return this;
+    }
+
+
+    void onActivityFinish() {
+        finish();
+    }
+
+
 }

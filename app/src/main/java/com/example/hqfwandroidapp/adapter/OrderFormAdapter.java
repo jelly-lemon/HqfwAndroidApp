@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.example.hqfwandroidapp.R;
 import com.example.hqfwandroidapp.entity.OrderForm;
-import com.example.hqfwandroidapp.utils.SpacesItemDecoration;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 
@@ -22,17 +21,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AllOrderFormAdapter extends RecyclerView.Adapter<AllOrderFormAdapter.ViewHolder>{
+public class OrderFormAdapter extends RecyclerView.Adapter<OrderFormAdapter.ViewHolder>{
     // context
     private Context context;
     // data list
     private List<OrderForm> orderFormList = new ArrayList<>();
 
-    public AllOrderFormAdapter(Context context) {
+    public OrderFormAdapter(Context context) {
         this.context = context;
     }
 
-    public AllOrderFormAdapter(Context context, List<OrderForm> orderFormList) {
+    public OrderFormAdapter(Context context, List<OrderForm> orderFormList) {
         this.context = context;
         this.orderFormList = orderFormList;
     }
@@ -65,7 +64,17 @@ public class AllOrderFormAdapter extends RecyclerView.Adapter<AllOrderFormAdapte
         // address
         holder.tv_receive_address.setText(orderForm.getReceiveAddress());
         // status
+        switch (orderForm.getOrderFormStatus()) {
+            case "等待付款":
+                holder.tv_order_form_status.setTextColor(context.getColor(R.color.等待付款));
+                break;
+            case "交易完成":
+                holder.tv_order_form_status.setTextColor(context.getColor(R.color.交易完成));
+                break;
+
+        }
         holder.tv_order_form_status.setText(orderForm.getOrderFormStatus());
+
 
     }
 

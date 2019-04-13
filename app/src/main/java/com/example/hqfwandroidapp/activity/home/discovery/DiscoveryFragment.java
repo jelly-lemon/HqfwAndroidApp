@@ -19,6 +19,10 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -170,5 +174,26 @@ public class DiscoveryFragment extends SupportFragment implements IDiscoveryFrag
     }
 
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        // 注册广播
+        EventBus.getDefault().register(this);
 
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        // 取关广播
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(String msg) {
+        if (msg.equals("PublishDiscoveryActivity:success")) {
+            showToast("发布成功");
+            rl_discovery.autoRefresh();
+        }
+    }
 }

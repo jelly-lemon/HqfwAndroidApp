@@ -129,4 +129,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'androidx.viewpager:viewpager:1.0.0'
 
+    implementation 'org.greenrobot:eventbus:3.1.1'
+
+    implementation 'com.github.jelly-lemon:WeChatPswKeyboard:v1.0'
+
 }

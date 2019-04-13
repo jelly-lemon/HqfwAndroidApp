@@ -25,7 +25,7 @@ allprojects {
         //jcenter()     // 下载太慢了，使用阿里云的镜像仓库
         maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}  // 阿里云仓库
         //maven { url "https://jitpack.io" }
-        //maven { url 'https://www.jitpack.io' }
+        maven { url 'https://www.jitpack.io' }
     }
 }
 

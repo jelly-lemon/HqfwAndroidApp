@@ -1,8 +1,10 @@
 package com.example.hqfwandroidapp.utils;
 
 import android.app.Application;
+import android.content.Context;
 
 
+import com.example.hqfwandroidapp.R;
 import com.example.hqfwandroidapp.entity.User;
 /*import com.example.ninegridviewapp.ui.NineGridView;
 import com.lzy.imagepicker.ImagePicker;
@@ -11,6 +13,11 @@ import com.example.ninegridview.ui.NineGridView;
 import com.lzy.okgo.OkGo;
 import com.mob.MobSDK;
 import com.mob.ums.gui.pickers.ImagePicker;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
+import com.scwang.smartrefresh.layout.api.RefreshHeader;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 
 import java.util.concurrent.TimeUnit;
 
@@ -32,6 +39,18 @@ public class App extends Application {
         initMob();              // 初始化 MobSDK
         initNineGridView();     // 初始化九宫格图片加载器
         initImagePicker();      // 初始化微信图片加载器
+        initSmartRefreshLayout();
+    }
+
+    private void initSmartRefreshLayout() {
+        //设置全局的Header构建器
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
+            @Override
+            public RefreshHeader createRefreshHeader(Context context, RefreshLayout layout) {
+                //layout.setPrimaryColorsId(R.color.colorPrimary, android.R.color.white);//全局设置主题颜色
+                return new ClassicsHeader(context);//.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
+            }
+        });
     }
 
 

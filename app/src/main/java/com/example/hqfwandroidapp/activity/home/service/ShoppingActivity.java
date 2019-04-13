@@ -7,8 +7,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +25,10 @@ import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -46,10 +53,27 @@ public class ShoppingActivity extends AppCompatActivity {
             return;
         }
 
+
+        //showKeyboard(false);
+
         Intent intent = new Intent(this, ConfirmPurchaseActivity.class);
         intent.putExtra("shoppingList", shoppingList);
         startActivity(intent);
     }
+
+
+
+    /**
+     * 隐藏键盘
+     */
+    protected void hideInput() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        View v = getWindow().peekDecorView();
+        if (null != v) {
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,4 +134,31 @@ public class ShoppingActivity extends AppCompatActivity {
     }
 
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
+    public void onMessageEvent(String msg) {
+        if (msg.equals("ConfirmPurchaseActivity:close")) {
+            // 关闭该 activity
+            finish();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // 注册 event bus
+        if ( !EventBus.getDefault().isRegistered(this) ) {
+            EventBus.getDefault().register(this);
+        }
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        // 取消 event bus
+        EventBus.getDefault().unregister(this);
+    }
 }

@@ -2,6 +2,7 @@ package com.example.hqfwandroidapp.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.hqfwandroidapp.R;
+import com.example.hqfwandroidapp.activity.home.discovery.DiscoveryDetailActivity;
 import com.example.hqfwandroidapp.activity.home.discovery.PersonDetailActivity;
 import com.example.hqfwandroidapp.entity.DiscoveryCard;
 import com.example.hqfwandroidapp.utils.Urls;
@@ -54,7 +56,6 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.Disc
         DiscoveryCard discoveryCard = discoveryCardArrayList.get(position);         // 获取在 position 位置的 DiscoveryCard
 
         // 头像
-        //String headUrl = Urls.HeadPath() + discoveryCard.getUser().getHeadURL();       // head 图片路径
         Glide.with(context).load(Urls.getHOST() + discoveryCard.getUser().getHeadURL())
                 .placeholder(R.drawable.ic_default_image_black_24dp)
                 .error(R.drawable.ic_broken_image_black_24dp)
@@ -68,10 +69,14 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.Disc
                 context.startActivity(intent);
             }
         });
-        holder.tv_name.setText(discoveryCard.getUser().getName());                  // 设置名字
-        holder.tv_tag.setText(discoveryCard.getDiscovery().getTag());                 // 设置标签
-        holder.tv_time.setText(discoveryCard.getDiscovery().getDateTime().toString());    // 设置时间
-        holder.tv_content.setText(discoveryCard.getDiscovery().getContent());         // 设置内容
+        // 设置名字
+        holder.tv_name.setText(discoveryCard.getUser().getName());
+        // 设置标签
+        holder.tv_tag.setText(discoveryCard.getDiscovery().getTag());
+        // 设置时间
+        holder.tv_time.setText(discoveryCard.getDiscovery().getDateTime().toString());
+        // 设置内容
+        holder.tv_content.setText(discoveryCard.getDiscovery().getContent());
         // 九宫格图片
         List<ImageInfo> imageInfoList = new ArrayList<>();
         Gson gson = new Gson();
@@ -82,10 +87,22 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.Disc
             ImageInfo imageInfo = new ImageInfo();
             imageInfo.setThumbnailUrl(url);
             imageInfo.setOriginalImageUrl(url);
-            imageInfoList.add(imageInfo);    // 添加到线性表中
+            // 添加到线性表中
+            imageInfoList.add(imageInfo);
         }
-        NineGridViewAdapter nineGridViewAdapter = new NineGridViewAdapter(context, imageInfoList);    // 适配器
-        holder.nine_grid_view.setAdapter(nineGridViewAdapter);    // 九宫格图片加载器设置配置好了的适配器
+        // 适配器
+        NineGridViewAdapter nineGridViewAdapter = new NineGridViewAdapter(context, imageInfoList);
+        // 九宫格图片加载器设置配置好了的适配器
+        holder.nine_grid_view.setAdapter(nineGridViewAdapter);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DiscoveryDetailActivity.class);
+                // TODO 传递发现内容
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

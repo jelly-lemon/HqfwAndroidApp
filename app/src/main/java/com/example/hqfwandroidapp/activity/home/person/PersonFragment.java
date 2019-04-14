@@ -27,6 +27,11 @@ public class PersonFragment extends SupportFragment {
     @BindView(R.id.tv_role)TextView tv_role;
     // 头像
     @BindView(R.id.iv_head) ImageView iv_head;
+    @OnClick(R.id.iv_head) void startChangeHeadActivity() {
+        Intent intent = new Intent(getContext(), ChangeHeadActivity.class);
+        //intent.putExtra("")
+        startActivity(intent);
+    }
     // 名字
     @BindView(R.id.tv_name) TextView tv_name;
     // 电话

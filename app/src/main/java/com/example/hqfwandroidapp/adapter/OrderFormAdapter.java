@@ -1,12 +1,14 @@
 package com.example.hqfwandroidapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.hqfwandroidapp.R;
+import com.example.hqfwandroidapp.activity.home.service.OrderFormDetailActivity;
 import com.example.hqfwandroidapp.entity.OrderForm;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -40,6 +42,7 @@ public class OrderFormAdapter extends RecyclerView.Adapter<OrderFormAdapter.View
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.card_order_form, parent, false);
+
         return new ViewHolder(view);
     }
 
@@ -75,6 +78,16 @@ public class OrderFormAdapter extends RecyclerView.Adapter<OrderFormAdapter.View
         }
         holder.tv_order_form_status.setText(orderForm.getOrderFormStatus());
 
+        // 点击该卡片时，进入详情页面
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, OrderFormDetailActivity.class);
+                intent.putExtra("orderFormID", orderForm.getOrderFormID());
+                context.startActivity(intent);
+            }
+        });
+
 
     }
 
@@ -109,11 +122,11 @@ public class OrderFormAdapter extends RecyclerView.Adapter<OrderFormAdapter.View
             // 绑定控件
             ButterKnife.bind(this, itemView);
 
-            //initView();
+            initView(itemView);
         }
 
-        void initView() {
-            //initAdapter();
+        void initView(View view) {
+
         }
 
         void initAdapter(Context context, JsonArray jsonArray) {

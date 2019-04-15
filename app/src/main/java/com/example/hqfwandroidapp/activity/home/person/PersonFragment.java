@@ -26,14 +26,14 @@ public class PersonFragment extends SupportFragment {
     // role
     @BindView(R.id.tv_role)TextView tv_role;
     // 头像
-    @BindView(R.id.iv_head) ImageView iv_head;
-    @OnClick(R.id.iv_head) void startChangeHeadActivity() {
+    @BindView(R.id.iv_head_discovery) ImageView iv_head;
+    @OnClick(R.id.iv_head_discovery) void startChangeHeadActivity() {
         Intent intent = new Intent(getContext(), ChangeHeadActivity.class);
         //intent.putExtra("")
         startActivity(intent);
     }
     // 名字
-    @BindView(R.id.tv_name) TextView tv_name;
+    @BindView(R.id.tv_name__comment) TextView tv_name;
     // 电话
     @BindView(R.id.tv_phone) TextView tv_phone;
     // studentID

@@ -23,7 +23,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:name">
-        <activity android:name=".activity.home.discovery.DiscoveryDetailActivity"></activity>
+        <activity
+            android:name=".activity.home.discovery.DiscoveryDetailActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".activity.home.service.OrderFormDetailActivity" />
         <activity android:name=".activity.home.service.ConfirmPurchaseActivity" />
         <activity android:name=".activity.home.service.ShoppingActivity" />

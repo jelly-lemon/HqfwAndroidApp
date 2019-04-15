@@ -1,8 +1,8 @@
 package com.example.hqfwandroidapp.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,21 +23,25 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.DiscoveryViewHolder> {
+public class DiscoveryCardAdapter extends RecyclerView.Adapter<DiscoveryCardAdapter.DiscoveryViewHolder> {
     // 保存上下文
     private Context context;
     // 数据
     private List<DiscoveryCard> discoveryCardArrayList;
 
-    public DiscoveryAdapter(Context context, ArrayList<DiscoveryCard> discoveryCardArrayList) {
+    public DiscoveryCardAdapter(Context context, ArrayList<DiscoveryCard> discoveryCardArrayList) {
         this.context = context;
         this.discoveryCardArrayList = discoveryCardArrayList;
     }
@@ -59,8 +63,9 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.Disc
         Glide.with(context).load(Urls.getHOST() + discoveryCard.getUser().getHeadURL())
                 .placeholder(R.drawable.ic_default_image_black_24dp)
                 .error(R.drawable.ic_broken_image_black_24dp)
-                .into(holder.iv_head);  // 加载头像
-        holder.iv_head.setOnClickListener(new View.OnClickListener() {
+                .into(holder.iv_head_discovery);  // 加载头像
+        // 头像点击监听
+        holder.iv_head_discovery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // 启动 PersonDetailActivity
@@ -70,13 +75,15 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.Disc
             }
         });
         // 设置名字
-        holder.tv_name.setText(discoveryCard.getUser().getName());
+        holder.tv_name_discovery.setText(discoveryCard.getUser().getName());
+        // 角色
+        holder.tv_role_discovery.setText(discoveryCard.getUser().getRole());
         // 设置标签
-        holder.tv_tag.setText(discoveryCard.getDiscovery().getTag());
+        holder.tv_tag_discovery.setText(discoveryCard.getDiscovery().getTag());
         // 设置时间
-        holder.tv_time.setText(discoveryCard.getDiscovery().getDateTime().toString());
+        holder.tv_date_time_discovery.setText(discoveryCard.getDiscovery().getDateTime().toString());
         // 设置内容
-        holder.tv_content.setText(discoveryCard.getDiscovery().getContent());
+        holder.tv_content_discovery.setText(discoveryCard.getDiscovery().getContent());
         // 九宫格图片
         List<ImageInfo> imageInfoList = new ArrayList<>();
         Gson gson = new Gson();
@@ -93,13 +100,13 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.Disc
         // 适配器
         NineGridViewAdapter nineGridViewAdapter = new NineGridViewAdapter(context, imageInfoList);
         // 九宫格图片加载器设置配置好了的适配器
-        holder.nine_grid_view.setAdapter(nineGridViewAdapter);
+        holder.nine_grid_view_discovery.setAdapter(nineGridViewAdapter);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DiscoveryDetailActivity.class);
-                // TODO 传递发现内容
+                intent.putExtra("discoveryCard", new Gson().toJson(discoveryCard));
                 context.startActivity(intent);
             }
         });
@@ -131,24 +138,26 @@ public class DiscoveryAdapter extends RecyclerView.Adapter<DiscoveryAdapter.Disc
      */
     static class DiscoveryViewHolder extends RecyclerView.ViewHolder {
         // 头像
-        @BindView(R.id.iv_head) ImageView iv_head;
+        @BindView(R.id.iv_head_discovery) ImageView iv_head_discovery;
         // 名字
-        @BindView(R.id.tv_receive_name) TextView tv_name;
+        @BindView(R.id.tv_name_discovery) TextView tv_name_discovery;
+        // 角色
+        @BindView(R.id.tv_role_discovery) TextView tv_role_discovery;
         // 标签
-        @BindView(R.id.tv_tag) TextView tv_tag;
+        @BindView(R.id.tv_tag_discovery) TextView tv_tag_discovery;
         // 时间
-        @BindView(R.id.tv_date_time) TextView tv_time;
+        @BindView(R.id.tv_date_time_discovery) TextView tv_date_time_discovery;
         // 内容
-        @BindView(R.id.tv_content) TextView tv_content;
+        @BindView(R.id.tv_content_discovery) TextView tv_content_discovery;
         // 九宫格
-        @BindView(R.id.nine_grid_view) NineGridView nine_grid_view;
+        @BindView(R.id.nine_grid_view_discovery) NineGridView nine_grid_view_discovery;
 
 
 
         DiscoveryViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            ButterKnife.bind(this, itemView);   // 绑定视图
+            // 绑定视图
+            ButterKnife.bind(this, itemView);
         }
     }
 

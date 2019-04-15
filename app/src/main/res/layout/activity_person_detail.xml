@@ -12,7 +12,7 @@
         layout="@layout/toolbar_back_title" />
 
     <ImageView
-        android:id="@+id/iv_head"
+        android:id="@+id/iv_head_discovery"
         android:layout_width="@dimen/iv_head_width"
         android:layout_height="@dimen/iv_head_width"
         android:layout_marginStart="8dp"
@@ -23,15 +23,15 @@
         app:srcCompat="@drawable/ic_default_image_black_24dp" />
 
     <TextView
-        android:id="@+id/tv_receive_name"
+        android:id="@+id/tv_name_discovery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="TextView"
         android:textSize="@dimen/tv_name_size"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_head"
-        app:layout_constraintStart_toEndOf="@+id/iv_head"
-        app:layout_constraintTop_toTopOf="@+id/iv_head"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_head_discovery"
+        app:layout_constraintStart_toEndOf="@+id/iv_head_discovery"
+        app:layout_constraintTop_toTopOf="@+id/iv_head_discovery"
         app:layout_constraintVertical_bias="0.0" />
 
 

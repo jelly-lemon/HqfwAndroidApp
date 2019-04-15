@@ -5,12 +5,13 @@ public class Urls {
     private static String HOSTWEB = HOST + "/lmJavaEEWebAppHqfw";
 
     private static String LoginServlet = HOSTWEB + "/LoginServlet";
-    private static String DiscoveryServlet = HOSTWEB + "/DiscoveryServlet";
+    private static String DiscoveryCardServlet = HOSTWEB + "/DiscoveryCardServlet";
     //private static String HeadPath          = HOST + "/images/head/";
     //private static String DiscoveryImgPath = HOST + "/images/discovery/";
     private static String PublishDiscovery = HOSTWEB + "/PublishDiscoveryServlet";
     public static String CommodityServlet = HOSTWEB + "/CommodityServlet";
     public static String OrderFormServlet = HOSTWEB + "/OrderFormServlet";
+    public static String CommentCardServlet = HOSTWEB + "/CommentCardServlet";
 
 
     public static String LoginServlet() {
@@ -18,7 +19,7 @@ public class Urls {
     }
 
     public static String DiscoverServlet() {
-        return DiscoveryServlet;
+        return DiscoveryCardServlet;
     }
 
     public static String PublishDiscovery() {

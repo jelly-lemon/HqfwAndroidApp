@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/iv_head"
+        android:id="@+id/iv_head_discovery"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_marginStart="8dp"
@@ -16,13 +16,13 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
-        android:id="@+id/tv_name"
+        android:id="@+id/tv_name__comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="昵称"
-        app:layout_constraintStart_toEndOf="@+id/iv_head"
-        app:layout_constraintTop_toTopOf="@+id/iv_head" />
+        app:layout_constraintStart_toEndOf="@+id/iv_head_discovery"
+        app:layout_constraintTop_toTopOf="@+id/iv_head_discovery" />
 
     <TextView
         android:id="@+id/tv_role"
@@ -30,8 +30,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="角色"
-        app:layout_constraintStart_toEndOf="@+id/tv_name"
-        app:layout_constraintTop_toTopOf="@+id/tv_name" />
+        app:layout_constraintStart_toEndOf="@+id/tv_name__comment"
+        app:layout_constraintTop_toTopOf="@+id/tv_name__comment" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout4"
@@ -40,7 +40,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_head">
+        app:layout_constraintTop_toBottomOf="@+id/iv_head_discovery">
 
         <TextView
             android:id="@+id/textView4"

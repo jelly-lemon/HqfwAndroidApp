@@ -110,7 +110,7 @@ public class OrderFormAdapter extends RecyclerView.Adapter<OrderFormAdapter.View
         // receive phone
         @BindView(R.id.tv_receive_phone) TextView tv_receive_phone;
         // receive name
-        @BindView(R.id.tv_receive_name) TextView tv_receive_name;
+        @BindView(R.id.tv_name_discovery) TextView tv_receive_name;
         // status
         @BindView(R.id.tv_order_form_status) TextView tv_order_form_status;
         // adapter

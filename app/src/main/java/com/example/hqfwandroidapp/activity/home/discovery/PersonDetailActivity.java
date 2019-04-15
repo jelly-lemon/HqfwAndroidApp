@@ -22,9 +22,9 @@ public class PersonDetailActivity extends AppCompatActivity {
     // 标题
     @BindView(R.id.tv_title) TextView tv_title;
     // 头像
-    @BindView(R.id.iv_head) ImageView iv_head;
+    @BindView(R.id.iv_head_discovery) ImageView iv_head;
     // 名字
-    @BindView(R.id.tv_receive_name) TextView tv_name;
+    @BindView(R.id.tv_name_discovery) TextView tv_name;
     // 用户
     User user;
 

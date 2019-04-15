@@ -20,4 +20,15 @@
     <string name="title_service">service</string>
     <string name="title_person">person</string>
     <string name="title_find_password"></string>
+    <string name="comment_content">评论内容</string>
+    <string name="comment_date_time">4-15 13:28</string>
+    <string name="comment_name">name</string>
+    <string name="comment_role">角色</string>
+    <string name="comment_head">comment_head</string>
+    <string name="discovery_date_time">02月02日13:28</string>
+    <string name="discovery_content">世界上有太多孤独的人害怕先踏出第一步。我父亲曾经说过，无论你做什么，百分之百地做，工作就工作，笑就笑，吃饭的时候要像最后一顿。</string>
+    <string name="discovery_tag">标签</string>
+    <string name="discovery_role">角色</string>
+    <string name="leave_comment">说点什么吧</string>
+    <string name="submit">发送</string>
 </resources>

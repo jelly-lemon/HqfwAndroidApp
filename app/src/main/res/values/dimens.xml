@@ -8,7 +8,9 @@
 
     <dimen name="toolbar_height">60dp</dimen>
 
-    <dimen name="iv_head_width">64dp</dimen>
-    <dimen name="iv_head_height">64dp</dimen>
+    <dimen name="iv_head_width">48dp</dimen>
+    <dimen name="iv_head_height">48dp</dimen>
     <dimen name="tv_name_size">16sp</dimen>
+    <dimen name="role_padding">4dp</dimen>
+    <dimen name="edit_text_padding">4dp</dimen>
 </resources>

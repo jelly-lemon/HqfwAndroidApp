@@ -34,6 +34,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnItemClick;
 import me.yokeyword.fragmentation.SupportFragment;
 
 public class AllOrderFormFragment extends SupportFragment {
@@ -62,6 +63,8 @@ public class AllOrderFormFragment extends SupportFragment {
         ButterKnife.bind(this, view);
         // 初始化视图
         initView(view);
+
+
 
         return view;
     }

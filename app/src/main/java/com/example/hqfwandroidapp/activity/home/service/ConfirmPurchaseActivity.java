@@ -11,13 +11,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.cuit.pswkeyboard.OnPasswordInputFinish;
-import com.cuit.pswkeyboard.widget.PopEnterPassword;
+import com.cuit.pswkeyboard.widget.EnterPasswordPopupWindow;
 import com.example.hqfwandroidapp.R;
 import com.example.hqfwandroidapp.adapter.ConfirmPurchaseAdapter;
 import com.example.hqfwandroidapp.entity.OrderForm;
@@ -82,12 +84,13 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
                         JsonObject jsonObject = gson.fromJson(response.body(), JsonObject.class);
                         int orderFormID = jsonObject.get("orderFormID").getAsInt();
 
-                        PopEnterPassword popEnterPassword = new PopEnterPassword(getActivityContext());
-                        // 显示支付窗口
-                        popEnterPassword.showAtLocation(getActivityContext().findViewById(R.id.layoutContent),
-                                Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); // 设置layout在PopupWindow中显示的位置
+                        EnterPasswordPopupWindow enterPasswordPopupWindow = new EnterPasswordPopupWindow(getActivityContext());
+                        // 金额
+                        enterPasswordPopupWindow.setMoney(orderForm.getTotalPrice());
+                        // 头像
+                        Glide.with(getActivityContext()).load(Urls.HOST + App.getUser().getHeadURL()).into(enterPasswordPopupWindow.getImgHead());
                         // 输入密码回调
-                        popEnterPassword.setOnFinishInput(new OnPasswordInputFinish() {
+                        enterPasswordPopupWindow.setOnFinishInput(new OnPasswordInputFinish() {
                             @Override
                             public void inputFinish(String password) {
                                 if (password.equals("123456")) {
@@ -101,7 +104,7 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
                                                     // 广播消息
                                                     EventBus.getDefault().post("ConfirmPurchaseActivity:close");
                                                     // 关闭支付键盘窗口
-                                                    popEnterPassword.dismiss();
+                                                    enterPasswordPopupWindow.dismiss();
                                                     // 结束当前 activity
                                                     onActivityFinish();
                                                 }
@@ -111,8 +114,10 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
                                 }
                             }
                         });
+                        // 显示支付窗口
+                        enterPasswordPopupWindow.show(getActivityContext().findViewById(R.id.layoutContent)); // 设置layout在PopupWindow中显示的位置
 
-                        //popEnterPassword
+
 
 
                     }

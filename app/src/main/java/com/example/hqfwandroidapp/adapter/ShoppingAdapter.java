@@ -132,7 +132,7 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingAdapter.ViewHo
         // 图片
         @BindView(R.id.iv_commodity) ImageView iv_commodity;
         // 商品名字
-        @BindView(R.id.tv_name) TextView tv_name;
+        @BindView(R.id.tv_name__comment) TextView tv_name;
         // 商品描述
         @BindView(R.id.tv_detail) TextView tv_detail;
         // 单价

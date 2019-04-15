@@ -1,8 +1,8 @@
 package com.example.hqfwandroidapp.entity;
 
 public class DiscoveryCard {
-    public User user;
-    public Discovery discovery;
+    private User user;
+    private Discovery discovery;
 
     public User getUser() {
         return user;

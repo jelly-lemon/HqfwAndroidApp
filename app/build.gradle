@@ -135,4 +135,6 @@ dependencies {
 
     implementation(name: 'pswkeyboard-debug', ext: 'aar')
 
+    // if u use AndroidX, use the following
+    implementation 'com.blankj:utilcodex:1.23.7'
 }

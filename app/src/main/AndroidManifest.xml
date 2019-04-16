@@ -25,7 +25,7 @@
         tools:replace="android:name">
         <activity
             android:name=".activity.home.discovery.DiscoveryDetailActivity"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize|stateHidden|stateUnchanged"/>
         <activity android:name=".activity.home.service.OrderFormDetailActivity" />
         <activity android:name=".activity.home.service.ConfirmPurchaseActivity" />
         <activity android:name=".activity.home.service.ShoppingActivity" />

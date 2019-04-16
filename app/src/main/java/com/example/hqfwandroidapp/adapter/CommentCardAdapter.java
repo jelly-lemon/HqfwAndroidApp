@@ -73,6 +73,11 @@ public class CommentCardAdapter extends RecyclerView.Adapter<CommentCardAdapter.
         notifyDataSetChanged();
     }
 
+    public void addData(CommentCard commentCard) {
+        commentCardList.add(commentCard);
+        notifyDataSetChanged();
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
         // 头像
         @BindView(R.id.iv_head_comment) ImageView iv_head_comment;

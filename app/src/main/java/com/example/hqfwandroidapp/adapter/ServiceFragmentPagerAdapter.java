@@ -32,8 +32,11 @@ public class ServiceFragmentPagerAdapter extends FragmentPagerAdapter {
         switch (position) {
             case ALLORDER:
                 return AllOrderFormFragment.newInstance();
-            case PENDINGPAYMENT:
+            case PENDINGPAYMENT: {
                 return UnpaidOrderFormFragment.newInstance();
+
+            }
+
         }
         return null;
     }

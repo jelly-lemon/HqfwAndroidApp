@@ -37,4 +37,5 @@
     <string name="phone">18300000001</string>
     <string name="name">熊大</string>
     <string name="deal_success">交易成功</string>
+    <string name="商品名称">商品名称</string>
 </resources>

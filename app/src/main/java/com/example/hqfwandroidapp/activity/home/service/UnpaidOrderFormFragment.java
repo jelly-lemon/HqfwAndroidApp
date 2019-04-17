@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.hqfwandroidapp.R;
-import com.example.hqfwandroidapp.adapter.OrderFormAdapter;
+import com.example.hqfwandroidapp.adapter.DeleteOrderFormAdapter;
 import com.example.hqfwandroidapp.entity.OrderForm;
 import com.example.hqfwandroidapp.utils.SpacesItemDecoration;
 import com.example.hqfwandroidapp.utils.Urls;
@@ -38,7 +38,7 @@ public class UnpaidOrderFormFragment extends SupportFragment {
     // 回收视图
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
     // adapter
-    OrderFormAdapter orderFormAdapter;
+    DeleteOrderFormAdapter deleteOrderFormAdapter;
 
     @Nullable
     @Override
@@ -46,7 +46,7 @@ public class UnpaidOrderFormFragment extends SupportFragment {
         //return super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_pending_payment, container, false);
 
-        initView(view);
+        //initView(view);
         return view;
     }
 
@@ -54,14 +54,14 @@ public class UnpaidOrderFormFragment extends SupportFragment {
         // 绑定视图
         ButterKnife.bind(this, view);
         // 适配器
-        orderFormAdapter = new OrderFormAdapter(_mActivity);
+        deleteOrderFormAdapter = new DeleteOrderFormAdapter(_mActivity);
         // 回收视图
         recyclerView.setHasFixedSize(true);                                                // RecyclerView 自适应尺寸
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());   // 布局管理器
         recyclerView.setLayoutManager(layoutManager);                                      // 设置布局管理器
         SpacesItemDecoration spacesItemDecoration = new SpacesItemDecoration(24);           // 间距
         recyclerView.addItemDecoration(spacesItemDecoration);
-        recyclerView.setAdapter(orderFormAdapter);
+        recyclerView.setAdapter(deleteOrderFormAdapter);
         // 刷新布局
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -77,7 +77,7 @@ public class UnpaidOrderFormFragment extends SupportFragment {
                                 Type type = new TypeToken<List<OrderForm>>(){}.getType();
                                 List<OrderForm> orderFormList = gson.fromJson(response.body(), type);
                                 // 设置数据
-                                orderFormAdapter.setOrderFormList(orderFormList);
+                                deleteOrderFormAdapter.setOrderFormList(orderFormList);
                                 // finish
                                 refreshLayout.finishRefresh();
 
@@ -91,7 +91,7 @@ public class UnpaidOrderFormFragment extends SupportFragment {
                 // 获取数据
                 OkGo.<String>get(Urls.OrderFormServlet)
                         .params("method", "loadMoreUnPaidOrderForm")
-                        .params("start", orderFormAdapter.getItemCount())
+                        .params("start", deleteOrderFormAdapter.getItemCount())
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {
@@ -104,7 +104,7 @@ public class UnpaidOrderFormFragment extends SupportFragment {
                                     refreshLayout.finishLoadMoreWithNoMoreData();
                                 } else {
                                     // 添加数据
-                                    orderFormAdapter.addOrderFormList(orderFormList);
+                                    deleteOrderFormAdapter.addOrderFormList(orderFormList);
                                     refreshLayout.finishLoadMore();
                                 }
                             }

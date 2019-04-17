@@ -134,9 +134,9 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingAdapter.ViewHo
         // 商品名字
         @BindView(R.id.tv_name__comment) TextView tv_name;
         // 商品描述
-        @BindView(R.id.tv_detail) TextView tv_detail;
+        @BindView(R.id.tv_name_commodity) TextView tv_detail;
         // 单价
-        @BindView(R.id.tv_price) TextView tv_price;
+        @BindView(R.id.tv_price_commodity) TextView tv_price;
         // 减少数量按钮
         @BindView(R.id.ib_reduce) ImageButton ib_reduce;
         // 数量

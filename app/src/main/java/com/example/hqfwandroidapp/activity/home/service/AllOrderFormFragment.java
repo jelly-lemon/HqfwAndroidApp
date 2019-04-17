@@ -10,13 +10,10 @@ import android.widget.Toast;
 import com.blankj.utilcode.util.GsonUtils;
 import com.example.hqfwandroidapp.R;
 import com.example.hqfwandroidapp.adapter.OrderFormAdapter;
-import com.example.hqfwandroidapp.adapter.OrderFormCardAdapter;
-import com.example.hqfwandroidapp.entity.OrderForm;
 import com.example.hqfwandroidapp.utils.SpacesItemDecoration;
 import com.example.hqfwandroidapp.utils.Urls;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -28,24 +25,19 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.lang.reflect.Type;
-import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnItemClick;
 import me.yokeyword.fragmentation.SupportFragment;
 
 public class AllOrderFormFragment extends SupportFragment {
     // recycler view
     @BindView(R.id.rv_all_order_form) RecyclerView rv_all_order_form;
     // adapter
-    //OrderFormAdapter orderFormAdapter;
-    OrderFormCardAdapter orderFormCardAdapter;
+    OrderFormAdapter orderFormAdapter;
     // smart refresh layout
     @BindView(R.id.refreshLayout) RefreshLayout refreshLayout;
 
@@ -60,15 +52,12 @@ public class AllOrderFormFragment extends SupportFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //return super.onCreateView(inflater, container, savedInstanceState);
+        // 加载视图
         View view = inflater.inflate(R.layout.fragment_all_order_form, container, false);
-
         // 绑定变量
         ButterKnife.bind(this, view);
         // 初始化视图
         initView(view);
-
-
 
         return view;
     }
@@ -78,36 +67,24 @@ public class AllOrderFormFragment extends SupportFragment {
      * @param view
      */
     private void initView(View view) {
-        // adapter
-        //orderFormAdapter = new OrderFormAdapter(getContext());
-
-        orderFormCardAdapter = new OrderFormCardAdapter(getContext(), new JsonArray());
-
-
+        orderFormAdapter = new OrderFormAdapter(getContext(), new JsonArray());
         initRecyclerView();
-        rv_all_order_form.setAdapter(orderFormCardAdapter);
+        rv_all_order_form.setAdapter(orderFormAdapter);
 
         // refresh layout
-        //refreshLayout.setRefreshHeader(new ClassicsHeader(_mActivity));
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 // 获取数据
-                OkGo.<String>get(Urls.OrderFormCardServlet)
-                        .params("method", "query")
+                OkGo.<String>get(Urls.OrderFormServlet)
+                        .params("method", "refresh")
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {
-                                /*// 获取数据
-                                Gson gson = new Gson();
-                                Type type = new TypeToken<List<OrderForm>>(){}.getType();
-                                List<OrderForm> orderFormList = gson.fromJson(response.body(), type);
-                                // 设置数据
-                                orderFormAdapter.setOrderFormList(orderFormList);
+                                // 设置数据集
+                                orderFormAdapter.setData(GsonUtils.fromJson(response.body(), JsonArray.class));
                                 // finish
-                                refreshLayout.finishRefresh();*/
-
-                                orderFormCardAdapter.setData(GsonUtils.fromJson(response.body(), JsonArray.class));
+                                refreshLayout.finishRefresh();
                             }
                         });
             }
@@ -116,26 +93,23 @@ public class AllOrderFormFragment extends SupportFragment {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 // 获取数据
-                /*OkGo.<String>get(Urls.OrderFormServlet)
-                        .params("method", "loadMoreOrderForm")
+                OkGo.<String>get(Urls.OrderFormServlet)
+                        .params("method", "loadMore")
                         .params("start", orderFormAdapter.getItemCount())
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {
-                                // 获取数据
-                                Gson gson = new Gson();
-                                Type type = new TypeToken<List<OrderForm>>(){}.getType();
-                                List<OrderForm> orderFormList = gson.fromJson(response.body(), type);
-                                if (orderFormList.isEmpty()) {
+                                JsonArray jsonArray = GsonUtils.fromJson(response.body(), JsonArray.class);
+                                if (jsonArray.size() == 0) {
                                     showToast("没有更多数据");
                                     refreshLayout.finishLoadMoreWithNoMoreData();
                                 } else {
                                     // 添加数据
-                                    orderFormAdapter.addOrderFormList(orderFormList);
+                                    orderFormAdapter.addDate(jsonArray);
                                     refreshLayout.finishLoadMore();
                                 }
                             }
-                        });*/
+                        });
             }
         });
 
@@ -166,7 +140,7 @@ public class AllOrderFormFragment extends SupportFragment {
         rv_all_order_form.setLayoutManager(layoutManager);                                      // 设置布局管理器
         SpacesItemDecoration spacesItemDecoration = new SpacesItemDecoration(24);           // 间距
         rv_all_order_form.addItemDecoration(spacesItemDecoration);                              // 添加各单元之间的间距
-        //rv_all_order_form.setAdapter(orderFormAdapter);
+        //rv_all_order_form.setAdapter(deleteOrderFormAdapter);
     }
 
 

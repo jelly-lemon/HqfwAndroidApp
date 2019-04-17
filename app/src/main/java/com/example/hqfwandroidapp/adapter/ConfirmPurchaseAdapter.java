@@ -70,11 +70,11 @@ public class ConfirmPurchaseAdapter extends RecyclerView.Adapter<ConfirmPurchase
         // name
         //@BindView(R.id.tv_name__comment) TextView tv_name;
         // detail
-        @BindView(R.id.tv_detail) TextView tv_detail;
+        @BindView(R.id.tv_name_commodity) TextView tv_detail;
         // number
         @BindView(R.id.tv_number) TextView tv_number;
         // price
-        @BindView(R.id.tv_price) TextView tv_price;
+        @BindView(R.id.tv_price_commodity) TextView tv_price;
 
 
         public ViewHolder(@NonNull View itemView) {

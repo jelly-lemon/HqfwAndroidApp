@@ -51,21 +51,21 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_commodity_confirm"
+            android:id="@+id/rv_purchased_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"></androidx.recyclerview.widget.RecyclerView>
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rv_commodity_confirm">
+            app:layout_constraintTop_toBottomOf="@+id/rv_purchased_item">
 
             <TextView
                 android:id="@+id/textView6"

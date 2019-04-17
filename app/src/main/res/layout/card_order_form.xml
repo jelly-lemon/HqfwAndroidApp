@@ -54,6 +54,8 @@
             android:id="@+id/rv_commodity_confirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"></androidx.recyclerview.widget.RecyclerView>
@@ -122,7 +124,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="四川省成都市双流区学府路一段24号成都西信息工程大学3栋5037"
+                android:text="@string/receive_address"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView9"
                 app:layout_constraintTop_toTopOf="@+id/textView9" />
@@ -132,7 +135,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="18381054430"
+                android:text="@string/phone"
+                android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="@+id/textView10"
                 app:layout_constraintStart_toEndOf="@+id/textView10"
                 app:layout_constraintTop_toTopOf="@+id/textView10" />
@@ -142,7 +146,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="林蒙"
+                android:text="@string/name"
+                android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_receive_phone"
                 app:layout_constraintStart_toEndOf="@+id/tv_receive_phone"
                 app:layout_constraintTop_toTopOf="@+id/tv_receive_phone" />
@@ -151,11 +156,12 @@
                 android:id="@+id/tv_order_form_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="交易成功"
+                android:text="@string/deal_success"
                 android:textColor="@color/success"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tv_receive_name"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_receive_address" />
 
             <TextView
                 android:id="@+id/textView17"

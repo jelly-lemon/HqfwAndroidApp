@@ -13,4 +13,5 @@
     <dimen name="tv_name_size">16sp</dimen>
     <dimen name="role_padding">4dp</dimen>
     <dimen name="edit_text_padding">4dp</dimen>
+    <dimen name="discovery_text_size">18sp</dimen>
 </resources>

@@ -11,6 +11,7 @@ public class Urls {
     private static String PublishDiscovery = HOSTWEB + "/PublishDiscoveryServlet";
     public static String CommodityServlet = HOSTWEB + "/CommodityServlet";
     public static String OrderFormServlet = HOSTWEB + "/OrderFormServlet";
+    public static String OrderFormCardServlet = HOSTWEB + "/OrderFormCardServlet";
     public static String CommentCardServlet = HOSTWEB + "/CommentCardServlet";
     public static String CommentServlet = HOSTWEB + "/CommentServlet";
 

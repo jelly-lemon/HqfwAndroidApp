@@ -50,7 +50,7 @@ public class ConfirmPurchaseAdapter extends RecyclerView.Adapter<ConfirmPurchase
         // 图片
         Glide.with(context).load(Urls.HOST + commodity.getImgURL()).into(holder.iv_commodity);
         // name
-        holder.tv_name.setText(commodity.getName());
+        //holder.tv_name.setText(commodity.getName());
         // detail
         holder.tv_detail.setText(commodity.getDetail());
         // price
@@ -68,7 +68,7 @@ public class ConfirmPurchaseAdapter extends RecyclerView.Adapter<ConfirmPurchase
         // 图片
         @BindView(R.id.iv_commodity) ImageView iv_commodity;
         // name
-        @BindView(R.id.tv_name__comment) TextView tv_name;
+        //@BindView(R.id.tv_name__comment) TextView tv_name;
         // detail
         @BindView(R.id.tv_detail) TextView tv_detail;
         // number

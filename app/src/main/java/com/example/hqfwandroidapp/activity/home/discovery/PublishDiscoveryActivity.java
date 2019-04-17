@@ -15,10 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hqfwandroidapp.R;
+import com.example.hqfwandroidapp.entity.Discovery;
 import com.example.hqfwandroidapp.utils.App;
 import com.example.hqfwandroidapp.utils.GlideImageLoader;
 import com.example.hqfwandroidapp.utils.ImagePickerLoader;
 import com.example.hqfwandroidapp.utils.Urls;
+import com.google.gson.Gson;
 import com.lwkandroid.imagepicker.ImagePicker;
 import com.lwkandroid.imagepicker.data.ImageBean;
 import com.lwkandroid.imagepicker.data.ImagePickType;
@@ -42,10 +44,18 @@ public class PublishDiscoveryActivity extends AppCompatActivity implements NineG
     public static final int IMAGE_ITEM_ADD = -1;
     private final int REQUEST_CODE_PICKER = 100;    // ImagePicker 的请求代码
 
-    @BindView(R.id.tv_title) TextView tv_title;                 // 标题
-    @BindView(R.id.nineGridView) NineGridView mNineGridView;    // 九宫格图片选择器
-    @BindView(R.id.et_content) EditText et_content;             // 文字内容
-    @BindView(R.id.spinner) Spinner spinner;    // spinner
+    // 标题
+    @BindView(R.id.tv_title) TextView tv_title;
+    // 九宫格图片选择器
+    @BindView(R.id.nineGridView) NineGridView mNineGridView;
+    // QQ
+    @BindView(R.id.et_contact_qq) EditText et_contact_qq;
+    // phone
+    @BindView(R.id.et_contact_phone) EditText et_contact_phone;
+    // 文字内容
+    @BindView(R.id.et_content) EditText et_content;
+    // spinner
+    @BindView(R.id.spinner) Spinner spinner;
 
 
     // 返回按钮，点击返回
@@ -64,20 +74,23 @@ public class PublishDiscoveryActivity extends AppCompatActivity implements NineG
         }
 
 
+        // 创建一个对象
+        Discovery discovery = new Discovery();
+        discovery.setPhone(App.getUser().getPhone());
+        discovery.setContent(et_content.getText().toString());
+        discovery.setTag(spinner.getSelectedItem().toString());
+        discovery.setContactQQ(et_contact_qq.getText().toString());
+        discovery.setContactPhone(et_contact_phone.getText().toString());
 
-
-        // 先上传文本
+        // 上传
         OkGo.<String>post(Urls.PublishDiscovery())
                 .isMultipart(true)  // 强制为 Multipart 格式
-                .params("phone", App.getUser().getPhone())  // phone
-                .params("content", et_content.getText().toString()) // 文字内容
-                .params("tag", spinner.getSelectedItem().toString())    // tag
+                .params("method", "insert")
+                .params("discovery", new Gson().toJson(discovery))
                 .addFileParams("fileList", fileList)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        //showToast("发布成功");
-                        //onBackPressed();    // 返回上一级
                         // 广播消息
                         EventBus.getDefault().post("PublishDiscoveryActivity:success");
                     }

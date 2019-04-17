@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#1B67D8</color>
 
     <color name="ic_launcher_background">#FFFFFF</color>
     <color name="tab_unselected">#c9c9c9</color>
@@ -13,6 +13,7 @@
     <color name="success">#8BC34A</color>
     <color name="in_progress">#000000</color>
     <color name="fail">#FF0000</color>
+    <color name="submit">#008577</color>
 
     <color name="red">#FF4B4B</color>
     <color name="black">#000000</color>
@@ -20,6 +21,7 @@
     <color name="white">#FFF</color>
     <color name="orange">#FF7A00</color>
     <color name="green">#228B18</color>
+    <color name="blue">#4586FC</color>
 
     <color name="交易完成">#4CAF50</color>
     <color name="等待付款">#FF7A00</color>

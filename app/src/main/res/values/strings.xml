@@ -38,4 +38,5 @@
     <string name="name">熊大</string>
     <string name="deal_success">交易成功</string>
     <string name="商品名称">商品名称</string>
+    <string name="title_activity_all_hydropower_bill">AllHydropowerBillActivity</string>
 </resources>

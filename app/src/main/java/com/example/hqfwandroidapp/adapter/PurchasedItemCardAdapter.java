@@ -15,6 +15,9 @@ import com.google.gson.JsonObject;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -22,11 +25,12 @@ public class PurchasedItemCardAdapter extends RecyclerView.Adapter<PurchasedItem
     // 上下文
     private Context context;
     // 数据集
-    private JsonArray jsonArray;
+    //private JsonArray purchasedItemCardJsonArray;
+    private List<JsonObject> jsonObjectList;
 
-    public PurchasedItemCardAdapter(Context context, JsonArray jsonArray) {
+    public PurchasedItemCardAdapter(Context context, List<JsonObject> jsonObjectList) {
         this.context = context;
-        this.jsonArray = jsonArray;
+        this.jsonObjectList = jsonObjectList;
     }
 
     @NonNull
@@ -39,7 +43,7 @@ public class PurchasedItemCardAdapter extends RecyclerView.Adapter<PurchasedItem
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        JsonObject jsonObject = jsonArray.get(position).getAsJsonObject();
+        JsonObject jsonObject = jsonObjectList.get(position);
 
         Glide.with(context).load(Urls.HOST + jsonObject.get("imgURL").getAsString()).into(holder.iv_commodity);
         holder.tv_name_commodity.setText(jsonObject.get("name").getAsString());
@@ -49,9 +53,16 @@ public class PurchasedItemCardAdapter extends RecyclerView.Adapter<PurchasedItem
 
     @Override
     public int getItemCount() {
-        return jsonArray.size();
+        return jsonObjectList.size();
     }
 
+    /*public JsonArray getPurchasedItemCardJsonArray() {
+        return purchasedItemCardJsonArray;
+    }*/
+
+    public List<JsonObject> getJsonObjectList() {
+        return jsonObjectList;
+    }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.iv_commodity) ImageView iv_commodity;

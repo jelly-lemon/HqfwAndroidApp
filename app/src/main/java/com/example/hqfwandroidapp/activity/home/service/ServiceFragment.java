@@ -27,13 +27,11 @@ public class ServiceFragment extends SupportFragment {
     // tabLayout
     @BindView(R.id.tabLayout) TabLayout tabLayout;
     // 添加按钮
-    @OnClick(R.id.ib_add) void goToShoppingActivity() {
+    @OnClick(R.id.iv_add) void goToShoppingActivity() {
         Intent intent = new Intent(getContext(), ShoppingActivity.class);
         startActivity(intent);
     }
 
-    //@BindView(R.id.refresh_layout) SmartRefreshLayout refresh_layout; // 刷新布局
-    //@BindView(R.id.recycler_view) RecyclerView recycler_view; // 回收视图
 
     public static ServiceFragment newInstance() {
         ServiceFragment serviceFragment = new ServiceFragment();
@@ -43,7 +41,6 @@ public class ServiceFragment extends SupportFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //return super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_service, container, false);
         ButterKnife.bind(this, view); // 绑定视图
         initView(); // 初始化视图
@@ -67,9 +64,10 @@ public class ServiceFragment extends SupportFragment {
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         // ViewPager 初始化
-        String[] title = {"所有订单", "待付款订单"};
+        String[] title = {"所有订单", "待付款订单", "水电费"};
         viewPager.setAdapter(new ServiceFragmentPagerAdapter(getChildFragmentManager(), title));
-        // TabLayout 添加两个 tab
+        // TabLayout 添加 tab
+        tabLayout.addTab(tabLayout.newTab());
         tabLayout.addTab(tabLayout.newTab());
         tabLayout.addTab(tabLayout.newTab());
         // TabLayout 设置 ViewPager

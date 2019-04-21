@@ -8,30 +8,33 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.KeyboardUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.cuit.pswkeyboard.OnPasswordInputFinish;
 import com.cuit.pswkeyboard.widget.EnterPasswordPopupWindow;
 import com.example.hqfwandroidapp.R;
-import com.example.hqfwandroidapp.adapter.ConfirmPurchaseAdapter;
-import com.example.hqfwandroidapp.entity.OrderForm;
+import com.example.hqfwandroidapp.adapter.PurchasedItemCardAdapter;
 import com.example.hqfwandroidapp.utils.App;
 import com.example.hqfwandroidapp.utils.SpacesItemDecoration;
 import com.example.hqfwandroidapp.utils.Urls;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 
 public class ConfirmPurchaseActivity extends AppCompatActivity {
@@ -50,41 +53,52 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
     // recycler view
     @BindView(R.id.rv_shopping_list) RecyclerView rv_shopping_list;
     // adapter
-    private ConfirmPurchaseAdapter confirmPurchaseAdapter;
+    private PurchasedItemCardAdapter purchasedItemCardAdapter;
     // total price
     @BindView(R.id.tv_total_price) TextView tv_total_price;
-    // submit button
+
+
+    // submit button, 提交订单
     @OnClick(R.id.btn_submit) void onSubmit() {
         // 关闭键盘
-        showKeyboard(false);
+        KeyboardUtils.hideSoftInput(this);
 
-        // shoppingList
-        String shoppingList = getIntent().getStringExtra("shoppingList");
         // orderFrom
-        OrderForm orderForm = new OrderForm();
-        orderForm.setShoppingList(shoppingList);
-        orderForm.setBuyerPhone(App.getUser().getPhone());
-        orderForm.setReceivePhone(et_receive_phone.getText().toString());
-        orderForm.setReceiveName(et_receive_name.getText().toString());
-        orderForm.setReceiveAddress(ed_receive_address.getText().toString());
-        orderForm.setTotalPrice(confirmPurchaseAdapter.getTotalPrice());
-        orderForm.setOrderFormStatus("等待付款");
-        // convert orderFrom into json
-        Gson gson = new Gson();
-        String json = gson.toJson(orderForm);
-        // submit
+        JsonObject orderForm = new JsonObject();
+        orderForm.addProperty("buyerPhone", App.getUser().getPhone());
+        orderForm.addProperty("receivePhone", et_receive_phone.getText().toString());
+        orderForm.addProperty("receiveName", et_receive_name.getText().toString());
+        orderForm.addProperty("receiveAddress", ed_receive_address.getText().toString());
+        orderForm.addProperty("totalPrice", tv_total_price.getText().toString());
+        orderForm.addProperty("orderFormStatus", "等待付款");
+
+        // 购买项记录
+        List<JsonObject> purchasedItemList = new ArrayList<>();
+        for (JsonObject jsonObject : purchasedItemCardAdapter.getJsonObjectList()) {
+            JsonObject purchasedItemCard = jsonObject.getAsJsonObject();
+
+            JsonObject purchasedItem = new JsonObject();
+            purchasedItem.addProperty("commodityID", purchasedItemCard.get("commodityID").getAsString());
+            purchasedItem.addProperty("number", purchasedItemCard.get("number").getAsString());
+            purchasedItemList.add(purchasedItem);
+        }
+
+        // submit，创建一个订单
         OkGo.<String>post(Urls.OrderFormServlet)
-                .params("method", "onInsertOrderForm")
-                .params("orderForm", json)
+                .params("method", "insert")
+                .params("orderForm", orderForm.toString())
+                .params("purchasedItemList", purchasedItemList.toString())
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        JsonObject jsonObject = gson.fromJson(response.body(), JsonObject.class);
-                        int orderFormID = jsonObject.get("orderFormID").getAsInt();
+                        // 得到 orderFormID
+                        JsonObject jsonObject = GsonUtils.fromJson(response.body(), JsonObject.class);
+                        String orderFormID = jsonObject.get("orderFormID").getAsString();
 
+                        // 输入密码窗口
                         EnterPasswordPopupWindow enterPasswordPopupWindow = new EnterPasswordPopupWindow(getActivityContext());
                         // 金额
-                        enterPasswordPopupWindow.setMoney(orderForm.getTotalPrice());
+                        enterPasswordPopupWindow.setMoney(orderForm.get("totalPrice").getAsFloat());
                         // 头像
                         Glide.with(getActivityContext()).load(Urls.HOST + App.getUser().getHeadURL()).into(enterPasswordPopupWindow.getImgHead());
                         // 输入密码回调
@@ -93,12 +107,13 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
                             public void inputFinish(String password) {
                                 if (password.equals("123456")) {
                                     OkGo.<String>post(Urls.OrderFormServlet)
-                                            .params("method", "onUpdateStatus")
+                                            .params("method", "update")
                                             .params("orderFormID", orderFormID)
+                                            .params("orderFormStatus", "交易完成")
                                             .execute(new StringCallback() {
                                                 @Override
                                                 public void onSuccess(Response<String> response) {
-                                                    showToast("支付成功");
+                                                    ToastUtils.showShort("支付成功");
                                                     // 广播消息
                                                     EventBus.getDefault().post("ConfirmPurchaseActivity:close");
                                                     // 关闭支付键盘窗口
@@ -108,44 +123,16 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
                                                 }
                                             });
                                 } else {
-                                    showToast("密码错误，请重新输入");
+                                    ToastUtils.showShort("密码错误，请重新输入");
                                 }
                             }
                         });
                         // 显示支付窗口
                         enterPasswordPopupWindow.show(getActivityContext().findViewById(R.id.layoutContent)); // 设置layout在PopupWindow中显示的位置
-
-
-
-
                     }
                 });
     }
 
-    protected void showKeyboard(boolean isShow) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-
-        if (null == imm)
-            return;
-
-        if (isShow) {
-            if (getCurrentFocus() != null) {
-                //有焦点打开
-                imm.showSoftInput(getCurrentFocus(), 0);
-            } else {
-                //无焦点打开
-                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-            }
-        } else {
-            if (getCurrentFocus() != null) {
-                //有焦点关闭
-                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-            } else {
-                //无焦点关闭
-                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-            }
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,47 +153,27 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
         et_receive_name.setText(App.getUser().getName());
         et_receive_phone.setText(App.getUser().getPhone());
         ed_receive_address.setText(App.getUser().getBuilding() + "栋" + App.getUser().getRoomNumber() + "房间");
-        // shopping list
-        String shoppingList = getIntent().getStringExtra("shoppingList");
-        Gson gson = new Gson();
-        JsonArray jsonArray = gson.fromJson(shoppingList, JsonArray.class);
-        // adapter
-        initAdapter(jsonArray);
-        // recycler view
-        initRecyclerView();
-        // 总金额
-        tv_total_price.setText(String.valueOf(confirmPurchaseAdapter.getTotalPrice()));
 
-        //showKeyboard(false);
-    }
+        /*JsonArray purchasedItemCardJsonArray =
+                GsonUtils.fromJson(getIntent().getStringExtra("purchasedItemCardJsonArray"), JsonArray.class);
+        */
+        List<JsonObject> jsonObjectList = GsonUtils.fromJson(getIntent().getStringExtra("purchasedItemCardList"), GsonUtils.getListType(JsonObject.class));
+        purchasedItemCardAdapter = new PurchasedItemCardAdapter(this, jsonObjectList);
 
-
-
-
-
-    void showToast(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-    }
-
-    /**
-     * 给 Adapter 设置数据集
-     * @param jsonArray
-     */
-    void initAdapter(JsonArray jsonArray) {
-        confirmPurchaseAdapter = new ConfirmPurchaseAdapter(this, jsonArray);
-    }
-
-    /**
-     * 初始化 RecyclerView
-     */
-    void initRecyclerView() {
-        rv_shopping_list.setHasFixedSize(true);                                                // RecyclerView 自适应尺寸
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);   // 布局管理器
         rv_shopping_list.setLayoutManager(layoutManager);                                      // 设置布局管理器
         SpacesItemDecoration spacesItemDecoration = new SpacesItemDecoration(24);           // 间距
         rv_shopping_list.addItemDecoration(spacesItemDecoration);                              // 添加各单元之间的间距
-        rv_shopping_list.setAdapter(confirmPurchaseAdapter);
+        rv_shopping_list.setAdapter(purchasedItemCardAdapter);
 
+        // 总金额
+        float totalPrice = 0f;
+        for (JsonObject purchasedItem : jsonObjectList) {
+            int number = purchasedItem.get("number").getAsInt();
+            float price = purchasedItem.get("price").getAsFloat();
+            totalPrice += number * price;
+        }
+        tv_total_price.setText(String.valueOf(totalPrice));
 
     }
 

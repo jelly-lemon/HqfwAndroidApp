@@ -28,7 +28,7 @@
 
 
     <Button
-        android:id="@+id/ib_add"
+        android:id="@+id/iv_add"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginEnd="8dp"

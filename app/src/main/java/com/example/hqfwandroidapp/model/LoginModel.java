@@ -32,7 +32,7 @@ public class LoginModel {
      * @param password  密码
      */
     public void checkAccount(String phone, String password) {
-        OkGo.<String>post(Urls.LoginServlet())
+        OkGo.<String>post(Urls.LoginServlet)
                 .params("phone", phone)
                 .params("password", password)
                 .execute(new StringCallback() {

@@ -11,7 +11,6 @@ import com.blankj.utilcode.util.GsonUtils;
 import com.example.hqfwandroidapp.R;
 import com.example.hqfwandroidapp.activity.home.service.OrderFormDetailActivity;
 import com.example.hqfwandroidapp.utils.Urls;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -21,6 +20,9 @@ import com.lzy.okgo.model.Response;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -28,11 +30,12 @@ public class OrderFormAdapter extends RecyclerView.Adapter<OrderFormAdapter.View
     // 上下文
     private Context context;
     // 数据集
-    private JsonArray jsonArray;
+    //private JsonArray jsonArray;
+    private List<JsonObject> jsonObjectList;
 
-    public OrderFormAdapter(Context context, JsonArray jsonArray) {
+    public OrderFormAdapter(Context context, List<JsonObject> jsonObjectList) {
         this.context = context;
-        this.jsonArray = jsonArray;
+        this.jsonObjectList = jsonObjectList;
     }
 
     @NonNull
@@ -46,15 +49,14 @@ public class OrderFormAdapter extends RecyclerView.Adapter<OrderFormAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        JsonObject jsonObject = jsonArray.get(position).getAsJsonObject();
+        JsonObject jsonObject = jsonObjectList.get(position);
 
         // id
         holder.tv_order_form_id.setText(jsonObject.get("orderFormID").getAsString());
         // dateTime
         holder.tv_date_time.setText(jsonObject.get("dateTime").getAsString());
         // total price
-        float totalPrice = jsonObject.get("totalPrice").getAsFloat();
-        holder.tv_total_price.setText(String.valueOf(totalPrice));
+        holder.tv_total_price.setText(jsonObject.get("totalPrice").getAsString());
         // name
         holder.tv_receive_name.setText(jsonObject.get("receiveName").getAsString());
         // phone
@@ -94,8 +96,8 @@ public class OrderFormAdapter extends RecyclerView.Adapter<OrderFormAdapter.View
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        JsonArray jsonArray = GsonUtils.fromJson(response.body(), JsonArray.class);
-                        holder.purchasedItemCardAdapter = new PurchasedItemCardAdapter(context, jsonArray);
+
+                        holder.purchasedItemCardAdapter = new PurchasedItemCardAdapter(context, GsonUtils.fromJson(response.body(), GsonUtils.getListType(JsonObject.class)));
                         holder.rv_purchased_item.setAdapter(holder.purchasedItemCardAdapter);
                     }
                 });
@@ -103,22 +105,22 @@ public class OrderFormAdapter extends RecyclerView.Adapter<OrderFormAdapter.View
 
     @Override
     public int getItemCount() {
-        return jsonArray.size();
+        return jsonObjectList.size();
     }
 
-    public void setData(JsonArray jsonArray) {
-        this.jsonArray = jsonArray;
+    public void setData(List<JsonObject> jsonObjectList) {
+        this.jsonObjectList = jsonObjectList;
         notifyDataSetChanged();
     }
 
-    public void addDate(JsonArray jsonArray) {
-        this.jsonArray.addAll(jsonArray);
+    public void addDate(List<JsonObject> jsonObjectList) {
+        this.jsonObjectList.addAll(jsonObjectList);
     }
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         // id
-        @BindView(R.id.tv_order_form_id)
+        @BindView(R.id.tv_bill_number)
         TextView tv_order_form_id;
         // date time
         @BindView(R.id.tv_date_time) TextView tv_date_time;

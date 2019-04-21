@@ -83,7 +83,7 @@ public class PublishDiscoveryActivity extends AppCompatActivity implements NineG
         discovery.setContactPhone(et_contact_phone.getText().toString());
 
         // 上传
-        OkGo.<String>post(Urls.PublishDiscovery())
+        OkGo.<String>post(Urls.PublishDiscovery)
                 .isMultipart(true)  // 强制为 Multipart 格式
                 .params("method", "insert")
                 .params("discovery", new Gson().toJson(discovery))

@@ -51,7 +51,7 @@ public class PersonDetailActivity extends AppCompatActivity {
         user = gson.fromJson(getIntent().getStringExtra("user"), User.class);
 
         tv_title.setText("个人资料");
-        Glide.with(this).load(Urls.getHOST() + user.getHeadURL()).into(iv_head);
+        Glide.with(this).load(Urls.HOST + user.getHeadURL()).into(iv_head);
         tv_name.setText(user.getName());
 
 

@@ -23,32 +23,34 @@ import butterknife.OnClick;
 import me.yokeyword.fragmentation.SupportFragment;
 
 public class PersonFragment extends SupportFragment {
+
     // role
-    @BindView(R.id.tv_role)TextView tv_role;
+    @BindView(R.id.tv_role_person) TextView tv_role_person;
     // 头像
-    @BindView(R.id.iv_head_discovery) ImageView iv_head;
-    @OnClick(R.id.iv_head_discovery) void startChangeHeadActivity() {
+    @BindView(R.id.iv_head_person) ImageView iv_head_person;
+    @OnClick(R.id.iv_head_person) void startChangeHeadActivity() {
         Intent intent = new Intent(getContext(), ChangeHeadActivity.class);
         //intent.putExtra("")
         startActivity(intent);
     }
     // 名字
-    @BindView(R.id.tv_name__comment) TextView tv_name;
+    @BindView(R.id.tv_name_person) TextView tv_name;
     // 电话
-    @BindView(R.id.tv_phone) TextView tv_phone;
+    @BindView(R.id.tv_phone_person) TextView tv_phone_person;
     // studentID
-    @BindView(R.id.tv_studentID)TextView tv_studentID;
+    @BindView(R.id.tv_student_id_person)TextView tv_studentID;
     // building
-    @BindView(R.id.tv_building)TextView tv_building;
+    //@BindView(R.id.tv_building)TextView tv_building;
     // roomNumber
-    @BindView(R.id.tv_roomNumber)TextView tv_roomNumber;
+    //@BindView(R.id.tv_roomNumber)TextView tv_roomNumber;
+    @BindView(R.id.tv_address_person) TextView tv_address_person;
 
 
 
     /**
      * 注销登录
      */
-    @OnClick(R.id.btn_logout) void logout() {
+    @OnClick(R.id.btn_logout_person) void logout() {
         // 销毁 user 对象
         App.setUser(null);
         // 密码置为空
@@ -82,23 +84,24 @@ public class PersonFragment extends SupportFragment {
 
 
     public void initView(View view) {
-        Glide.with(this).load(Urls.getHOST() + App.getUser().getHeadURL())
+        Glide.with(this).load(Urls.HOST + App.getUser().getHeadURL())
                 .placeholder(R.drawable.ic_default_image_black_24dp)
                 .error(R.drawable.ic_broken_image_black_24dp)
-                .into(iv_head);  // 加载头像
+                .into(iv_head_person);  // 加载头像
 
         // name
         tv_name.setText(App.getUser().getName());
         // role
-        tv_role.setText(App.getUser().getRole());
+        tv_role_person.setText(App.getUser().getRole());
         // phone
-        tv_phone.setText(App.getUser().getPhone());
+        tv_phone_person.setText(App.getUser().getPhone());
         // studentID
         tv_studentID.setText(App.getUser().getStudentID());
         // building
-        tv_building.setText(App.getUser().getBuilding());
+        //tv_building.setText(App.getUser().getBuilding());
         // roomNumber
-        tv_roomNumber.setText(App.getUser().getRoomNumber());
+        //tv_roomNumber.setText(App.getUser().getRoomNumber());
+        tv_address_person.setText(App.getUser().getBuilding() + "栋" + App.getUser().getRoomNumber() + "房间");
 
     }
 

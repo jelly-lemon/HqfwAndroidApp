@@ -11,58 +11,35 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.hqfwandroidapp.R;
-import com.example.hqfwandroidapp.entity.Commodity;
 import com.example.hqfwandroidapp.utils.Urls;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingAdapter.ViewHolodr> {
+public class CommodityAdapter extends RecyclerView.Adapter<CommodityAdapter.ViewHolodr> {
     // 上下文
     private Context context;
     // 数据集
-    private List<Commodity> commodityList;
+    //private JsonArray commodityJsonArray;
+    private List<JsonObject> jsonObjectList;
     // 记录选中状态
-    private List<Integer> numberList = new ArrayList<>();
+    //private JsonArray purchasedItemCardJsonArray = new JsonArray();
+    private List<JsonObject> purchasedItemCardList = new ArrayList<>();
 
 
-    public ShoppingAdapter(Context context, List<Commodity> commodityList) {
+    public CommodityAdapter(Context context, List<JsonObject> jsonObjectList) {
         this.context = context;
-        this.commodityList = commodityList;
-
-        // 初始化选中列表，默认为 0 个数量
-        for (int i = 0; i < commodityList.size(); i++) {
-            numberList.add(0);
-        }
+        this.jsonObjectList = jsonObjectList;
     }
 
-    /**
-     * 获取 shoppingList
-     * @return shoppingList JSON
-     */
-    public String getShoppingList() {
-        JsonArray jsonArray = new JsonArray();
-        for (int i = 0; i < numberList.size(); i++) {
-            if (numberList.get(i) != 0) {
-                JsonObject jsonObject = new JsonObject();
-                //jsonObject.addProperty("commodityID", commodityList.get(i).getCommodityID());
-                //jsonObject.addProperty("name", commodityList.get(i).getName());
-                Gson gson = new Gson();
-                jsonObject.addProperty("commodity", gson.toJson(commodityList.get(i)));
-                jsonObject.addProperty("number", numberList.get(i));
-                jsonArray.add(jsonObject);
-            }
-        }
-        return jsonArray.toString();
-    }
+
 
     @NonNull
     @Override
@@ -74,22 +51,26 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolodr holder, int position) {
         // 具体的一个商品
-        Commodity commodity = commodityList.get(position);
+        JsonObject commodity = jsonObjectList.get(position);
+
         // 图片
-        Glide.with(context).load(Urls.HOST + commodity.getImgURL()).into(holder.iv_commodity);
+        Glide.with(context).load(Urls.HOST + commodity.get("imgURL").getAsString()).into(holder.iv_commodity);
         // name
-        holder.tv_name.setText(commodity.getName());
-        // detail
-        holder.tv_detail.setText(commodity.getDetail());
+        holder.tv_name.setText(commodity.get("name").getAsString());
         // price
-        holder.tv_price.setText(String.valueOf(commodity.getPrice()));
+        holder.tv_price.setText(commodity.get("price").getAsString());
+        // 数量，默认 1
+        holder.tv_number.setText("1");
+
+        // 记录购买项
+        JsonObject purchasedItem = commodity.deepCopy();// 把商品信息复制过来
+        purchasedItem.addProperty("number", holder.tv_number.getText().toString());
         // checkBox
         holder.cb_check.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
-                int n = Integer.valueOf(holder.tv_number.getText().toString());
-                numberList.set(position, n);
+                purchasedItemCardList.add(purchasedItem);
             } else {
-                numberList.set(position, 0);
+                purchasedItemCardList.remove(purchasedItem);
             }
         });
         // reduce button
@@ -100,10 +81,9 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingAdapter.ViewHo
                 if (n >= 2) {
                     n--;
                 }
-                holder.tv_number.setText("" + n);
-                if (holder.cb_check.isChecked()) {
-                    numberList.set(position, n);
-                }
+                holder.tv_number.setText(String.valueOf(n));
+                // 记录数量
+                purchasedItem.addProperty("number", n);
             }
         });
         // add button
@@ -112,19 +92,25 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingAdapter.ViewHo
             public void onClick(View v) {
                 int n = Integer.valueOf(holder.tv_number.getText().toString());
                 n++;
-                holder.tv_number.setText("" + n);
-                if (holder.cb_check.isChecked()) {
-                    numberList.set(position, n);
-                }
+                holder.tv_number.setText(String.valueOf(n));
+                // 记录数量
+                purchasedItem.addProperty("number", n);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return commodityList.size();
+        return jsonObjectList.size();
     }
 
+    /*public JsonArray getPurchasedItemCardJsonArray() {
+        return purchasedItemCardJsonArray;
+    }*/
+
+    public List<JsonObject> getPurchasedItemCardList() {
+        return purchasedItemCardList;
+    }
 
     static class ViewHolodr extends RecyclerView.ViewHolder{
         // 选中按钮
@@ -134,7 +120,7 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingAdapter.ViewHo
         // 商品名字
         @BindView(R.id.tv_name__comment) TextView tv_name;
         // 商品描述
-        @BindView(R.id.tv_name_commodity) TextView tv_detail;
+        //@BindView(R.id.tv_name_commodity) TextView tv_detail;
         // 单价
         @BindView(R.id.tv_price_commodity) TextView tv_price;
         // 减少数量按钮
@@ -142,7 +128,7 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingAdapter.ViewHo
         // 数量
         @BindView(R.id.tv_number) TextView tv_number;
         // 增加
-        @BindView(R.id.ib_add) ImageButton ib_add;
+        @BindView(R.id.iv_add) ImageButton ib_add;
 
         public ViewHolodr(@NonNull View itemView) {
             super(itemView);

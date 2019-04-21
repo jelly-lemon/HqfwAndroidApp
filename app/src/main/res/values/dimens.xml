@@ -14,4 +14,7 @@
     <dimen name="role_padding">4dp</dimen>
     <dimen name="edit_text_padding">4dp</dimen>
     <dimen name="discovery_text_size">18sp</dimen>
+
+    <dimen name="person_information_text_size">18sp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

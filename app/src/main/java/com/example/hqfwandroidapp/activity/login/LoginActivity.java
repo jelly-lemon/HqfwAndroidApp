@@ -77,6 +77,7 @@ public class LoginActivity extends AppCompatActivity implements com.example.hqfw
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         // ButterKnife 绑定生效
         ButterKnife.bind(this);
         // 自动登录

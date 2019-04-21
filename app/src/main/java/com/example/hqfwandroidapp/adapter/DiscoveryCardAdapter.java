@@ -1,6 +1,5 @@
 package com.example.hqfwandroidapp.adapter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -23,12 +22,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -60,7 +56,7 @@ public class DiscoveryCardAdapter extends RecyclerView.Adapter<DiscoveryCardAdap
         DiscoveryCard discoveryCard = discoveryCardArrayList.get(position);         // 获取在 position 位置的 DiscoveryCard
 
         // 头像
-        Glide.with(context).load(Urls.getHOST() + discoveryCard.getUser().getHeadURL())
+        Glide.with(context).load(Urls.HOST + discoveryCard.getUser().getHeadURL())
                 .placeholder(R.drawable.ic_default_image_black_24dp)
                 .error(R.drawable.ic_broken_image_black_24dp)
                 .into(holder.iv_head_discovery);  // 加载头像
@@ -89,7 +85,7 @@ public class DiscoveryCardAdapter extends RecyclerView.Adapter<DiscoveryCardAdap
         Gson gson = new Gson();
         JsonArray jsonArray = gson.fromJson(discoveryCard.getDiscovery().getImgURL(), JsonArray.class);
         for (JsonElement jsonElement : jsonArray) {
-            String url = Urls.getHOST() + jsonElement.getAsString();
+            String url = Urls.HOST + jsonElement.getAsString();
             //url = Urls.DiscoveryImgPath() + discoveryCard.getDiscovery().getDiscoveryID() + "/" + url;  // 图片 URL
             ImageInfo imageInfo = new ImageInfo();
             imageInfo.setThumbnailUrl(url);

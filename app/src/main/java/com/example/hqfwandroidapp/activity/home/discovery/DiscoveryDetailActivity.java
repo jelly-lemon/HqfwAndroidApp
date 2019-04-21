@@ -161,7 +161,7 @@ public class DiscoveryDetailActivity extends AppCompatActivity {
         Gson gson = new Gson();
         JsonArray jsonArray = gson.fromJson(discoveryCard.getDiscovery().getImgURL(), JsonArray.class);
         for (JsonElement jsonElement : jsonArray) {
-            String url = Urls.getHOST() + jsonElement.getAsString();
+            String url = Urls.HOST + jsonElement.getAsString();
             ImageInfo imageInfo = new ImageInfo();
             imageInfo.setThumbnailUrl(url);
             imageInfo.setOriginalImageUrl(url);

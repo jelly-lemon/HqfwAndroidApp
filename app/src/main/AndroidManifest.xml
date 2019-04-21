@@ -25,25 +25,27 @@
         tools:replace="android:name">
         <activity
             android:name=".activity.home.discovery.DiscoveryDetailActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden|stateUnchanged"/>
+            android:windowSoftInputMode="adjustResize|stateHidden|stateUnchanged" />
+
+        <activity android:name=".activity.login.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity android:name=".activity.home.service.OrderFormDetailActivity" />
         <activity android:name=".activity.home.service.ConfirmPurchaseActivity" />
         <activity android:name=".activity.home.service.ShoppingActivity" />
         <activity android:name=".activity.home.discovery.PersonDetailActivity" />
         <activity android:name=".activity.home.person.ChangeHeadActivity" />
-        <activity android:name=".activity.home.discovery.PublishDiscoveryActivity" /> <!-- 启动 activity -->
-        <activity android:name=".activity.login.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".activity.home.discovery.PublishDiscoveryActivity" />
         <activity android:name=".activity.login.FindPasswordActivity" />
         <activity android:name=".activity.login.RegisterActivity" />
         <activity android:name=".activity.login.AgreementActivity" />
         <activity android:name=".activity.login.LocationActivity" />
         <activity android:name=".activity.home.MainActivity" />
+        <activity android:name=".activity.home.service.HydropowerBillDetailActivity"/>
     </application>
 
 </manifest>

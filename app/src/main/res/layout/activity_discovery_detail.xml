@@ -73,7 +73,7 @@
 
                 <include
                     android:id="@+id/include15"
-                    layout="@layout/widget_separator"
+                    layout="@layout/widget_separator_comment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="8dp"

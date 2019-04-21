@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -29,7 +28,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tv_order_form_id"
+                android:id="@+id/tv_bill_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1234567891011"
@@ -43,9 +42,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:text="2019-3-16 12:00:00.0"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_order_form_id"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_bill_number"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tv_order_form_id" />
+                app:layout_constraintTop_toTopOf="@+id/tv_bill_number" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

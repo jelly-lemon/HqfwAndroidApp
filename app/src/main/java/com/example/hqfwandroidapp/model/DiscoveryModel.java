@@ -32,7 +32,7 @@ public class DiscoveryModel {
      * 刷新
      */
     public void refresh() {
-        OkGo.<String>get(Urls.DiscoverServlet())
+        OkGo.<String>get(Urls.DiscoveryCardServlet)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -47,7 +47,7 @@ public class DiscoveryModel {
      * @param start 从哪一条数据开始获取
      */
     public void loadMore(int start) {
-        OkGo.<String>post(Urls.DiscoverServlet())
+        OkGo.<String>post(Urls.DiscoveryCardServlet)
                 .params("start", start)
                 .execute(new StringCallback() {
                     @Override

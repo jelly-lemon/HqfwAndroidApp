@@ -5,15 +5,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.GsonUtils;
 import com.example.hqfwandroidapp.R;
 import com.example.hqfwandroidapp.adapter.OrderFormAdapter;
 import com.example.hqfwandroidapp.utils.SpacesItemDecoration;
 import com.example.hqfwandroidapp.utils.Urls;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -29,6 +28,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -37,18 +40,12 @@ public class AllOrderFormFragment extends SupportFragment {
     // recycler view
     @BindView(R.id.rv_all_order_form) RecyclerView rv_all_order_form;
     // adapter
-    OrderFormAdapter orderFormAdapter;
+    private OrderFormAdapter orderFormAdapter;
     // smart refresh layout
     @BindView(R.id.refreshLayout) RefreshLayout refreshLayout;
 
 
-    /**
-     * 创建视图
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
-     */
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -67,27 +64,31 @@ public class AllOrderFormFragment extends SupportFragment {
      * @param view
      */
     private void initView(View view) {
-        orderFormAdapter = new OrderFormAdapter(getContext(), new JsonArray());
-        initRecyclerView();
+        // 初始化 rv_commodity
+        // 布局管理器
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        rv_all_order_form.setLayoutManager(layoutManager);
+        // 间距
+        SpacesItemDecoration spacesItemDecoration = new SpacesItemDecoration(24);
+        rv_all_order_form.addItemDecoration(spacesItemDecoration);
+        // 适配器
+        orderFormAdapter = new OrderFormAdapter(getContext(), new ArrayList<>());
         rv_all_order_form.setAdapter(orderFormAdapter);
 
         // refresh layout
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                // 获取数据
-                OkGo.<String>get(Urls.OrderFormServlet)
-                        .params("method", "refresh")
-                        .execute(new StringCallback() {
-                            @Override
-                            public void onSuccess(Response<String> response) {
-                                // 设置数据集
-                                orderFormAdapter.setData(GsonUtils.fromJson(response.body(), JsonArray.class));
-                                // finish
-                                refreshLayout.finishRefresh();
-                            }
-                        });
-            }
+        refreshLayout.setOnRefreshListener((RefreshLayout refreshLayout) -> {
+            // 获取数据
+            OkGo.<String>get(Urls.OrderFormServlet)
+                    .params("method", "refresh")
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onSuccess(Response<String> response) {
+                            // 设置数据集
+                            orderFormAdapter.setData(GsonUtils.fromJson(response.body(), GsonUtils.getListType(JsonObject.class)));
+                            // finish
+                            refreshLayout.finishRefresh();
+                        }
+                    });
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
@@ -99,13 +100,13 @@ public class AllOrderFormFragment extends SupportFragment {
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {
-                                JsonArray jsonArray = GsonUtils.fromJson(response.body(), JsonArray.class);
-                                if (jsonArray.size() == 0) {
-                                    showToast("没有更多数据");
+                                //JsonArray jsonArray = GsonUtils.fromJson(response.body(), JsonArray.class);
+                                List<JsonObject> jsonObjectList = GsonUtils.fromJson(response.body(), GsonUtils.getListType(JsonObject.class));
+                                if (jsonObjectList.isEmpty()) {
                                     refreshLayout.finishLoadMoreWithNoMoreData();
                                 } else {
                                     // 添加数据
-                                    orderFormAdapter.addDate(jsonArray);
+                                    orderFormAdapter.addDate(jsonObjectList);
                                     refreshLayout.finishLoadMore();
                                 }
                             }
@@ -118,9 +119,6 @@ public class AllOrderFormFragment extends SupportFragment {
 
     }
 
-    void showToast(String msg) {
-        Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
-    }
 
     /**
      * 创建实例
@@ -131,17 +129,6 @@ public class AllOrderFormFragment extends SupportFragment {
         return allOrderFormFragment;
     }
 
-
-
-    private void initRecyclerView() {
-        // 初始化 rv_commodity
-        rv_all_order_form.setHasFixedSize(true);                                                // RecyclerView 自适应尺寸
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());   // 布局管理器
-        rv_all_order_form.setLayoutManager(layoutManager);                                      // 设置布局管理器
-        SpacesItemDecoration spacesItemDecoration = new SpacesItemDecoration(24);           // 间距
-        rv_all_order_form.addItemDecoration(spacesItemDecoration);                              // 添加各单元之间的间距
-        //rv_all_order_form.setAdapter(deleteOrderFormAdapter);
-    }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)

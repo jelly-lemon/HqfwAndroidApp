@@ -54,7 +54,7 @@ public class DiscoveryFragment extends SupportFragment implements IDiscoveryFrag
     /**
      * 启动 PublishDiscoveryActivity
      */
-    @OnClick(R.id.ib_add) void goToNewDiscoveryFragment() {
+    @OnClick(R.id.iv_add) void goToNewDiscoveryFragment() {
         Intent intent = new Intent(getContext(), PublishDiscoveryActivity.class);   // 创建意图
         startActivity(intent);  // 启动 Activity
     }

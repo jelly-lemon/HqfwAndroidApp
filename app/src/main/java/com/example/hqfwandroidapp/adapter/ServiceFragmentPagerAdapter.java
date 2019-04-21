@@ -1,6 +1,7 @@
 package com.example.hqfwandroidapp.adapter;
 
 import com.example.hqfwandroidapp.activity.home.service.AllOrderFormFragment;
+import com.example.hqfwandroidapp.activity.home.service.AllHydropowerBillFragment;
 import com.example.hqfwandroidapp.activity.home.service.UnpaidOrderFormFragment;
 
 import androidx.annotation.NonNull;
@@ -10,8 +11,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 public class ServiceFragmentPagerAdapter extends FragmentPagerAdapter {
-    private final int ALLORDER = 0;
-    private final int PENDINGPAYMENT = 1;
+    private final int ALLORDERFORM = 0;
+    private final int UNPAIDORDERFORM = 1;
+    private final int HYDROPOWERBILL = 2;
 
     // 标题
     private String[] title;
@@ -30,11 +32,14 @@ public class ServiceFragmentPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position) {
-            case ALLORDER:
+            case ALLORDERFORM:{
                 return AllOrderFormFragment.newInstance();
-            case PENDINGPAYMENT: {
+            }
+            case UNPAIDORDERFORM: {
                 return UnpaidOrderFormFragment.newInstance();
-
+            }
+            case HYDROPOWERBILL: {
+                return AllHydropowerBillFragment.newInstance();
             }
 
         }

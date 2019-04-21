@@ -33,8 +33,11 @@ MobSDK {
 
 android {
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+
+        //sourceCompatibility 'JavaVersion.VERSION_1_8'
+        //targetCompatibility 'JavaVersion.VERSION_1_8'
     }
     compileSdkVersion 28    // 用来编译的 SDK 版本
     defaultConfig {
@@ -73,12 +76,16 @@ repositories {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha03'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'com.google.android.material:material:1.1.0-alpha05'
     testImplementation 'junit:junit:4.12'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+
+    implementation 'com.google.android.material:material:1.1.0-alpha05'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha04'
 
     // okgo 网络请求库
     implementation 'com.lzy.net:okgo:3.0.4'
@@ -135,6 +142,8 @@ dependencies {
 
     implementation(name: 'pswkeyboard-debug', ext: 'aar')
 
-    // if u use AndroidX, use the following
+    // 工具类
     implementation 'com.blankj:utilcodex:1.23.7'
+
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
 }

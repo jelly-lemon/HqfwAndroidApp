@@ -6,13 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.example.hqfwandroidapp.R;
-import com.example.hqfwandroidapp.adapter.DeleteOrderFormAdapter;
-import com.example.hqfwandroidapp.entity.OrderForm;
+import com.example.hqfwandroidapp.adapter.OrderFormAdapter;
 import com.example.hqfwandroidapp.utils.SpacesItemDecoration;
 import com.example.hqfwandroidapp.utils.Urls;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -21,13 +22,16 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-import java.lang.reflect.Type;
-import java.util.List;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -38,15 +42,14 @@ public class UnpaidOrderFormFragment extends SupportFragment {
     // 回收视图
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
     // adapter
-    DeleteOrderFormAdapter deleteOrderFormAdapter;
+    private OrderFormAdapter orderFormAdapter;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //return super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_pending_payment, container, false);
 
-        //initView(view);
+        initView(view);
         return view;
     }
 
@@ -54,33 +57,27 @@ public class UnpaidOrderFormFragment extends SupportFragment {
         // 绑定视图
         ButterKnife.bind(this, view);
         // 适配器
-        deleteOrderFormAdapter = new DeleteOrderFormAdapter(_mActivity);
+        orderFormAdapter = new OrderFormAdapter(getContext(), new ArrayList<>());
         // 回收视图
-        recyclerView.setHasFixedSize(true);                                                // RecyclerView 自适应尺寸
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());   // 布局管理器
         recyclerView.setLayoutManager(layoutManager);                                      // 设置布局管理器
         SpacesItemDecoration spacesItemDecoration = new SpacesItemDecoration(24);           // 间距
         recyclerView.addItemDecoration(spacesItemDecoration);
-        recyclerView.setAdapter(deleteOrderFormAdapter);
+        recyclerView.setAdapter(orderFormAdapter);
         // 刷新布局
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 // 获取数据
                 OkGo.<String>get(Urls.OrderFormServlet)
-                        .params("method", "getUnPaidOrderForm")
+                        .params("method", "unpaidRefresh")
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {
-                                // 获取数据
-                                Gson gson = new Gson();
-                                Type type = new TypeToken<List<OrderForm>>(){}.getType();
-                                List<OrderForm> orderFormList = gson.fromJson(response.body(), type);
                                 // 设置数据
-                                deleteOrderFormAdapter.setOrderFormList(orderFormList);
+                                orderFormAdapter.setData(GsonUtils.fromJson(response.body(), GsonUtils.getListType(JsonObject.class)));
                                 // finish
                                 refreshLayout.finishRefresh();
-
                             }
                         });
             }
@@ -90,32 +87,28 @@ public class UnpaidOrderFormFragment extends SupportFragment {
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 // 获取数据
                 OkGo.<String>get(Urls.OrderFormServlet)
-                        .params("method", "loadMoreUnPaidOrderForm")
-                        .params("start", deleteOrderFormAdapter.getItemCount())
+                        .params("method", "unpaidLoadMore")
+                        .params("start", orderFormAdapter.getItemCount())
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {
                                 // 获取数据
-                                Gson gson = new Gson();
-                                Type type = new TypeToken<List<OrderForm>>(){}.getType();
-                                List<OrderForm> orderFormList = gson.fromJson(response.body(), type);
-                                if (orderFormList.isEmpty()) {
-                                    showToast("没有更多数据");
+                                //JsonArray orderFormJsonArray = GsonUtils.fromJson(response.body(), JsonArray.class);
+                                List<JsonObject> jsonObjectList = GsonUtils.fromJson(response.body(), GsonUtils.getListType(JsonObject.class));
+                                if (jsonObjectList.isEmpty()) {
+                                    //ToastUtils.showShort("没有更多");
                                     refreshLayout.finishLoadMoreWithNoMoreData();
                                 } else {
                                     // 添加数据
-                                    deleteOrderFormAdapter.addOrderFormList(orderFormList);
+                                    orderFormAdapter.addDate(jsonObjectList);
                                     refreshLayout.finishLoadMore();
                                 }
                             }
                         });
             }
         });
-
         // 自动刷新
         smartRefreshLayout.autoRefresh();
-
-
     }
 
     /**

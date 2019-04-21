@@ -10,18 +10,16 @@ import butterknife.OnClick;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.example.hqfwandroidapp.R;
-import com.example.hqfwandroidapp.adapter.ShoppingAdapter;
-import com.example.hqfwandroidapp.entity.Commodity;
+import com.example.hqfwandroidapp.adapter.CommodityAdapter;
 import com.example.hqfwandroidapp.utils.SpacesItemDecoration;
 import com.example.hqfwandroidapp.utils.Urls;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -30,7 +28,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 public class ShoppingActivity extends AppCompatActivity {
@@ -39,40 +36,28 @@ public class ShoppingActivity extends AppCompatActivity {
     // RecyclerView
     @BindView(R.id.rv_commodity) RecyclerView rv_commodity;
     // Adapter
-    ShoppingAdapter shoppingAdapter;
+    CommodityAdapter commodityAdapter;
     // 返回
     @OnClick(R.id.iv_back) void onBack() {
         onBackPressed();
     }
     // 购买
     @OnClick(R.id.btn_submit) void onSubmit() {
-        String shoppingList = shoppingAdapter.getShoppingList();
+        //JsonArray purchasedItemCardJsonArray = commodityAdapter.getPurchasedItemCardJsonArray();
+        List<JsonObject> purchasedItemCardList = commodityAdapter.getPurchasedItemCardList();
         // 检查是否选中了商品
-        if (shoppingList.equals("[]")) {
-            showToast("请选择商品");
+        if (purchasedItemCardList.isEmpty()) {
+            ToastUtils.showShort("请选择商品");
             return;
         }
 
-
-        //showKeyboard(false);
-
         Intent intent = new Intent(this, ConfirmPurchaseActivity.class);
-        intent.putExtra("shoppingList", shoppingList);
+        intent.putExtra("purchasedItemCardList", GsonUtils.toJson(purchasedItemCardList));
         startActivity(intent);
     }
 
 
 
-    /**
-     * 隐藏键盘
-     */
-    protected void hideInput() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        View v = getWindow().peekDecorView();
-        if (null != v) {
-            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-        }
-    }
 
 
     @Override
@@ -90,48 +75,33 @@ public class ShoppingActivity extends AppCompatActivity {
     void initView() {
         // title
         tv_title.setText("购买");
-        // 请求数据
-        OkGo.<String>get(Urls.CommodityServlet)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        Type type = new TypeToken<List<Commodity>>(){}.getType();
-                        Gson gson = new Gson();
-                        List<Commodity> commodityList = gson.fromJson(response.body(), type);
-                        // 初始化 adapter
-                        initAdapter(commodityList);
 
-                        // 初始化 RecyclerView
-                        initRecyclerView();
-                    }
-                });
-    }
-
-    /**
-     * 给 Adapter 设置数据集
-     * @param commodityList
-     */
-    void initAdapter(List<Commodity> commodityList) {
-        // ShoppingAdapter
-        shoppingAdapter = new ShoppingAdapter(this, commodityList);
-    }
-
-    /**
-     * 初始化 RecyclerView
-     */
-    void initRecyclerView() {
         // 初始化 rv_commodity
-        rv_commodity.setHasFixedSize(true);                                                // RecyclerView 自适应尺寸
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);   // 布局管理器
         rv_commodity.setLayoutManager(layoutManager);                                      // 设置布局管理器
         SpacesItemDecoration spacesItemDecoration = new SpacesItemDecoration(24);           // 间距
         rv_commodity.addItemDecoration(spacesItemDecoration);                              // 添加各单元之间的间距
-        rv_commodity.setAdapter(shoppingAdapter);
+
+        // 请求数据
+        OkGo.<String>get(Urls.CommodityServlet)
+                .params("method", "refresh")
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        commodityAdapter = new CommodityAdapter(getContext(), GsonUtils.fromJson(response.body(), GsonUtils.getListType(JsonObject.class)));
+
+                        rv_commodity.setAdapter(commodityAdapter);
+                    }
+                });
     }
 
-    void showToast(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    private Context getContext() {
+        return this;
     }
+
+
+
+
 
 
 

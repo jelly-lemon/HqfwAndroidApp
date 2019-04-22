@@ -1,20 +1,18 @@
 package com.example.hqfwandroidapp.activity.login;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.hqfwandroidapp.R;
 
 public class RegisterActivity extends AppCompatActivity {
-    @BindView(R.id.tv_title) TextView tv_title; // 标题
+    @BindView(R.id.tv_title_discovery) TextView tv_title; // 标题
 
     @OnClick(R.id.iv_back) void onBack() {
         onBackPressed();    // 按下返回键

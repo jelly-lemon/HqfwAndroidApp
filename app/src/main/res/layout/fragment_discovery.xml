@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
-        android:layout_height="36dp"
+        android:layout_height="@dimen/toolbar_height"
         android:background="@color/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:text="@string/title_discovery"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="@dimen/title_text_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -30,8 +30,8 @@
 
         <ImageView
             android:id="@+id/iv_add"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
+            android:layout_width="@dimen/tool_icon_size"
+            android:layout_height="@dimen/tool_icon_size"
             android:layout_marginEnd="8dp"
             android:background="@drawable/ic_add_white_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -39,19 +39,19 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/button"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_marginEnd="8dp"
+            android:id="@+id/iv_filter"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="8dp"
             android:background="@drawable/ic_filter"
             app:layout_constraintBottom_toBottomOf="@+id/iv_add"
-            app:layout_constraintEnd_toStartOf="@+id/iv_add"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/iv_add" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/rl_discovery"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -65,10 +65,10 @@
             android:id="@+id/rv_discovery"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#fff" />
+            android:background="@color/gray" />
 
 
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

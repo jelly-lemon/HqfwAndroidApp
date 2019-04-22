@@ -8,7 +8,7 @@ public class Urls {
 
     public static String LoginServlet = HOSTWEB + "/LoginServlet";
     public static String DiscoveryCardServlet = HOSTWEB + "/DiscoveryCardServlet";
-    public static String PublishDiscovery = HOSTWEB + "/PublishDiscoveryServlet";
+    public static String DiscoveryServlet = HOSTWEB + "/DiscoveryServlet";
     public static String CommodityServlet = HOSTWEB + "/CommodityServlet";
     public static String OrderFormServlet = HOSTWEB + "/OrderFormServlet";
     public static String CommentCardServlet = HOSTWEB + "/CommentCardServlet";

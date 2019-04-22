@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -13,22 +15,24 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.ColorUtils;
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.hqfwandroidapp.R;
 import com.example.hqfwandroidapp.adapter.CommentCardAdapter;
+import com.example.hqfwandroidapp.adapter.NCommentCardAdapter;
 import com.example.hqfwandroidapp.entity.Comment;
 import com.example.hqfwandroidapp.entity.CommentCard;
-import com.example.hqfwandroidapp.entity.DiscoveryCard;
 import com.example.hqfwandroidapp.utils.App;
-import com.example.hqfwandroidapp.utils.SpacesItemDecoration;
+import com.example.hqfwandroidapp.utils.DateTime;
 import com.example.hqfwandroidapp.utils.Urls;
 import com.example.ninegridview.adapter.NineGridViewAdapter;
 import com.example.ninegridview.entity.ImageInfo;
@@ -36,11 +40,11 @@ import com.example.ninegridview.ui.NineGridView;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 
@@ -54,22 +58,19 @@ public class DiscoveryDetailActivity extends AppCompatActivity {
         onBackPressed();
     }
     // 标题
-    @BindView(R.id.tv_title) TextView tv_title;
-
+    @BindView(R.id.tv_title_discovery) TextView tv_title;
     // 消息部分
-    DiscoveryCard discoveryCard;
+    JsonObject discoveryCard;
     // 头像
     @BindView(R.id.iv_head_discovery) ImageView iv_head_discovery;
     // 点击头像，进入个人资料详情页
     @OnClick(R.id.iv_head_discovery) void startPersonDetailActivity() {
         Intent intent = new Intent(this, PersonDetailActivity.class);
-        intent.putExtra("user", GsonUtils.toJson(discoveryCard.getUser()));
+        intent.putExtra("user", GsonUtils.toJson(discoveryCard));
         startActivity(intent);
     }
     // 名字
     @BindView(R.id.tv_name_discovery) TextView tv_name_discovery;
-    // 角色
-    @BindView(R.id.tv_role_discovery) TextView tv_role_discovery;
     // 日期时间
     @BindView(R.id.tv_date_time_discovery) TextView tv_date_time_discovery;
     // 标签
@@ -95,19 +96,22 @@ public class DiscoveryDetailActivity extends AppCompatActivity {
     @BindView(R.id.tv_contact_phone) TextView tv_contact_phone;
 
     // 评论部分
-    @BindView(R.id.smart_refresh_layout_comment) SmartRefreshLayout smart_refresh_layout_comment;
-    @BindView(R.id.rv_comment_card) RecyclerView rv_comment_card;
-    CommentCardAdapter commentCardAdapter;
+    // 刷新
+    //@BindView(R.id.rl_comment) SwipeRefreshLayout rl_comment;
+    // 评论列表
+    @BindView(R.id.rv_comment) RecyclerView rv_comment;
+    // 适配器
+    NCommentCardAdapter commentCardAdapter = new NCommentCardAdapter(R.layout.item_comment);;
     // 输入框
     @BindView(R.id.et_comment) EditText et_comment;
     // 发送评论
-    @OnClick(R.id.btn_submit_comment) void submit() {
+    @OnClick(R.id.tv_submit_comment) void submit() {
         if (et_comment.getText().toString().isEmpty()) {
             ToastUtils.showShort("请输入评论内容");
         }
 
         Comment comment = new Comment();
-        comment.setDiscoveryID(discoveryCard.getDiscovery().getDiscoveryID());
+        comment.setDiscoveryID(discoveryCard.get("discoveryID").getAsInt());
         comment.setSenderPhone(App.getUser().getPhone());
         comment.setContent(et_comment.getText().toString());
 
@@ -118,9 +122,13 @@ public class DiscoveryDetailActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Response<String> response) {
                         et_comment.setText("");
-                        ToastUtils.showShort("评论成功");
+                        //ToastUtils.showShort("评论成功");
                         KeyboardUtils.hideSoftInput(getActivity());
-                        smart_refresh_layout_comment.autoLoadMore();
+
+                        // 加载新评论
+                        commentCardAdapter.setEnableLoadMore(true);
+                        loadMore();
+                        //commentCardAdapter.notifyLoadMoreToLoading();
                     }
                 });
     }
@@ -142,25 +150,23 @@ public class DiscoveryDetailActivity extends AppCompatActivity {
     void initView() {
         tv_title.setText("详情");
 
-        discoveryCard = new Gson().fromJson(getIntent().getStringExtra("discoveryCard"), DiscoveryCard.class);
-
+        // 发现详情
+        // 对象
+        discoveryCard = GsonUtils.fromJson(getIntent().getStringExtra("discoveryCard"), JsonObject.class);
         // 头像
-        Glide.with(this).load(Urls.HOST + discoveryCard.getUser().getHeadURL()).into(iv_head_discovery);
+        Glide.with(this).load(Urls.HOST + discoveryCard.get("headURL").getAsString()).into(iv_head_discovery);
         // 名字
-        tv_name_discovery.setText(discoveryCard.getUser().getName());
-        // 角色
-        tv_role_discovery.setText(discoveryCard.getUser().getRole());
+        tv_name_discovery.setText(discoveryCard.get("name").getAsString());
         // 时间
-        tv_date_time_discovery.setText(discoveryCard.getDiscovery().getDateTime().toString());
+        tv_date_time_discovery.setText(DateTime.getFormatDateTime(discoveryCard.get("dateTime").getAsString()));
         // 标签
-        tv_tag_discovery.setText(discoveryCard.getDiscovery().getTag());
+        tv_tag_discovery.setText(discoveryCard.get("tag").getAsString());
         // 内容
-        tv_content_discovery.setText(discoveryCard.getDiscovery().getContent());
+        tv_content_discovery.setText(discoveryCard.get("content").getAsString());
         // 九宫格图片
         List<ImageInfo> imageInfoList = new ArrayList<>();
-        Gson gson = new Gson();
-        JsonArray jsonArray = gson.fromJson(discoveryCard.getDiscovery().getImgURL(), JsonArray.class);
-        for (JsonElement jsonElement : jsonArray) {
+        JsonArray imgURL = GsonUtils.fromJson(discoveryCard.get("imgURL").getAsString(), JsonArray.class);
+        for (JsonElement jsonElement : imgURL) {
             String url = Urls.HOST + jsonElement.getAsString();
             ImageInfo imageInfo = new ImageInfo();
             imageInfo.setThumbnailUrl(url);
@@ -168,84 +174,95 @@ public class DiscoveryDetailActivity extends AppCompatActivity {
             // 添加到线性表中
             imageInfoList.add(imageInfo);
         }
-        // 适配器
-        NineGridViewAdapter nineGridViewAdapter = new NineGridViewAdapter(this, imageInfoList);
-        // 九宫格图片加载器设置配置好了的适配器
-        nine_grid_view_discovery.setAdapter(nineGridViewAdapter);
+        NineGridViewAdapter nineGridViewAdapter = new NineGridViewAdapter(this, imageInfoList);// 适配器
+        nine_grid_view_discovery.setAdapter(nineGridViewAdapter);// 九宫格图片加载器设置配置好了的适配器
         // qq
-        tv_contact_qq.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
-        tv_contact_qq.getPaint().setAntiAlias(true);//抗锯齿
-        tv_contact_qq.setText(discoveryCard.getDiscovery().getContactQQ().isEmpty() ? "无" : discoveryCard.getDiscovery().getContactQQ());
+        if (discoveryCard.get("contactQQ").getAsString().isEmpty()) {
+            tv_contact_qq.setText("无");
+            // 不能有点击事件
+            tv_contact_qq.setClickable(false);
+        } else {
+            tv_contact_qq.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); //下划线
+            tv_contact_qq.getPaint().setAntiAlias(true);//抗锯齿
+            tv_contact_qq.setText(discoveryCard.get("contactQQ").getAsString());
+            tv_contact_qq.setTextColor(ColorUtils.getColor(R.color.blue));
+            // 并且可以点击
+            tv_contact_qq.setClickable(true);
+        }
         // 电话
-        tv_contact_phone.setText(discoveryCard.getDiscovery().getContactPhone().isEmpty() ? "无" : discoveryCard.getDiscovery().getContactPhone());
+        tv_contact_phone.setText(discoveryCard.get("contactPhone").getAsString().isEmpty() ? "无" : discoveryCard.get("contactPhone").getAsString());
 
 
+        // 评论详情
+        // 评论列表
+        rv_comment.setLayoutManager(new LinearLayoutManager(this));
+        rv_comment.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        //rv_comment.nested
 
-
-        // 评论区
-        commentCardAdapter = new CommentCardAdapter(this, new ArrayList<>());
-        // 回收视图
-        // 布局管理器
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        rv_comment_card.setLayoutManager(layoutManager);
-        // 间距
-        //SpacesItemDecoration spacesItemDecoration = new SpacesItemDecoration(24);
-        //rv_comment_card.addItemDecoration(spacesItemDecoration);
-        rv_comment_card.setAdapter(commentCardAdapter);
-        // 关闭滑动
-        rv_comment_card.setNestedScrollingEnabled(false);
-
-
-        smart_refresh_layout_comment.setOnLoadMoreListener(new OnLoadMoreListener() {
+        // 适配器
+        commentCardAdapter.bindToRecyclerView(rv_comment);
+        commentCardAdapter.setEmptyView(R.layout.view_no_comment);
+        commentCardAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                loadMoreComment();
+            public void onLoadMoreRequested() {
+                loadMore();
+            }
+        }, rv_comment);
+        loadMore();
+
+
+
+
+
+
+        /*// 刷新
+        rl_comment.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
             }
         });
-        // 自动加载更多
-        smart_refresh_layout_comment.autoLoadMore();
-
-
-
+        // 自动刷新
+        rl_comment.setRefreshing(true);
+        refresh();*/
     }
 
     /**
      * 获取几条评论
      */
-    void refreshComment() {
+    /*void refresh() {
         OkGo.<String>get(Urls.CommentCardServlet)
                 .params("method", "refresh")
-                .params("discoveryID", discoveryCard.getDiscovery().getDiscoveryID())
+                .params("discoveryID", discoveryCard.get("discoveryID").getAsString())
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        Type type = new TypeToken<List<CommentCard>>(){}.getType();
-                        List<CommentCard> commentCardList = new Gson().fromJson(response.body(), type);
-
-                        commentCardAdapter.addList(commentCardList);
+                        List<JsonObject> commentCardList = GsonUtils.fromJson(response.body(), GsonUtils.getListType(JsonObject.class));
+                        // 设置新数据
+                        commentCardAdapter.setNewData(commentCardList);
+                        // 结束刷新
+                        rl_comment.setRefreshing(false);
                     }
                 });
-    }
+    }*/
 
 
-    void loadMoreComment() {
+    void loadMore() {
         OkGo.<String>get(Urls.CommentCardServlet)
                 .params("method", "loadMore")
-                .params("discoveryID", discoveryCard.getDiscovery().getDiscoveryID())
-                .params("start", commentCardAdapter.getItemCount())
+                .params("discoveryID", discoveryCard.get("discoveryID").getAsString())
+                .params("start", commentCardAdapter.getData().size())
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        Type type = new TypeToken<List<CommentCard>>(){}.getType();
-                        List<CommentCard> commentCardList = new Gson().fromJson(response.body(), type);
+                        List<JsonObject> commentCardList = GsonUtils.fromJson(response.body(), GsonUtils.getListType(JsonObject.class));
 
                         if (commentCardList.isEmpty()) {
-                            //smart_refresh_layout_comment.finishLoadMoreWithNoMoreData();
-                            ToastUtils.showShort("没有更多");
+                            commentCardAdapter.loadMoreEnd();
                         } else {
-                            commentCardAdapter.addList(commentCardList);
+                            commentCardAdapter.addData(commentCardList);
+                            commentCardAdapter.loadMoreComplete();
                         }
-                        smart_refresh_layout_comment.finishLoadMore();
                     }
                 });
     }

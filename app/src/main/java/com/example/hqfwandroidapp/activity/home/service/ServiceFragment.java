@@ -20,8 +20,7 @@ import butterknife.OnClick;
 import me.yokeyword.fragmentation.SupportFragment;
 
 public class ServiceFragment extends SupportFragment {
-    @BindView(R.id.tv_title) TextView tv_title;  // 标题
-    //@BindView(R.id.btn_add) Button btn_add; // 添加按钮
+    @BindView(R.id.tv_title_discovery) TextView tv_title;  // 标题
     // ViewPager
     @BindView(R.id.viewPager) ViewPager viewPager;
     // tabLayout

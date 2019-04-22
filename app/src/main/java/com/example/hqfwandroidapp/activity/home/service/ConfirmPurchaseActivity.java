@@ -23,8 +23,6 @@ import com.example.hqfwandroidapp.adapter.PurchasedItemCardAdapter;
 import com.example.hqfwandroidapp.utils.App;
 import com.example.hqfwandroidapp.utils.SpacesItemDecoration;
 import com.example.hqfwandroidapp.utils.Urls;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -33,13 +31,12 @@ import com.lzy.okgo.model.Response;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 
 public class ConfirmPurchaseActivity extends AppCompatActivity {
     // title
-    @BindView(R.id.tv_title) TextView tv_title;
+    @BindView(R.id.tv_title_discovery) TextView tv_title;
     // 返回按钮
     @OnClick(R.id.iv_back) void onBack() {
         onBackPressed();

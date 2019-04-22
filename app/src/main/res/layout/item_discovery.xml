@@ -5,7 +5,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:padding="8dp"
+    android:background="@color/white">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_head_discovery"
@@ -22,6 +23,8 @@
         android:layout_marginStart="8dp"
         android:text="@string/app_name"
         android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/iv_head_discovery"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,7 +44,7 @@
         android:textColor="@color/black"
         android:layout_marginTop="8dp"
         android:text="@string/discovery_content"
-        android:textSize="@dimen/discovery_text_size"
+        android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_head_discovery" />
@@ -63,24 +66,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_content_discovery">
 
     </com.example.ninegridview.ui.NineGridView>
-
-    <TextView
-        android:id="@+id/tv_role_discovery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:background="@drawable/corner_rect_solid"
-        android:paddingLeft="@dimen/role_padding"
-        android:paddingRight="@dimen/role_padding"
-        android:text="@string/discovery_role"
-        android:textColor="@color/white"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tv_name_discovery"
-        app:layout_constraintStart_toEndOf="@+id/tv_name_discovery" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

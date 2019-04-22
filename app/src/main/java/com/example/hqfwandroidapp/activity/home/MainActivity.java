@@ -29,38 +29,11 @@ public class MainActivity extends SupportActivity {
 
 
 
-        // 正在加载
-        showLoading();
-        // 自动登录过程
-        //App.user.autoLogin(this);
-
-
-
-
-        //sendCode(this);
-        //UMSGUI.showProfilePage();
-    }
-
-    private void finishLoading(boolean result) {
-        // TODO 登录成功
-
-        // TODO 登录失败
-
     }
 
 
-    private void showLoading() {
-        // TODO 显示正在加载
 
-    }
 
-    private void refresh() {
-
-    }
-
-    private void loginSuccess() {
-
-    }
 
 
 

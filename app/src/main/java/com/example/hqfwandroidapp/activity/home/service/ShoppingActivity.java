@@ -18,7 +18,6 @@ import com.example.hqfwandroidapp.R;
 import com.example.hqfwandroidapp.adapter.CommodityAdapter;
 import com.example.hqfwandroidapp.utils.SpacesItemDecoration;
 import com.example.hqfwandroidapp.utils.Urls;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -32,7 +31,7 @@ import java.util.List;
 
 public class ShoppingActivity extends AppCompatActivity {
     // 标题
-    @BindView(R.id.tv_title) TextView tv_title;
+    @BindView(R.id.tv_title_discovery) TextView tv_title;
     // RecyclerView
     @BindView(R.id.rv_commodity) RecyclerView rv_commodity;
     // Adapter

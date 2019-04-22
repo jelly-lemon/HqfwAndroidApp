@@ -20,7 +20,7 @@ import com.google.gson.Gson;
  */
 public class PersonDetailActivity extends AppCompatActivity {
     // 标题
-    @BindView(R.id.tv_title) TextView tv_title;
+    @BindView(R.id.tv_title_discovery) TextView tv_title;
     // 头像
     @BindView(R.id.iv_head_discovery) ImageView iv_head;
     // 名字

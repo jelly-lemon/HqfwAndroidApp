@@ -14,7 +14,7 @@ import com.example.hqfwandroidapp.R;
 
 public class FindPasswordActivity extends AppCompatActivity {
 
-    @BindView(R.id.tv_title) TextView tv_title;                 // 标题
+    @BindView(R.id.tv_title_discovery) TextView tv_title;                 // 标题
     @BindView(R.id.edt_phone) EditText edt_phone;               // 电话号码
     @BindView(R.id.edt_code) EditText edt_code;                 // 验证码输入框
     @BindView(R.id.edt_new_password) EditText edt_new_password; // 输入新密码

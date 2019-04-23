@@ -7,18 +7,21 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.ToastUtils;
+import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.cuit.pswkeyboard.OnPasswordInputFinish;
+import com.cuit.pswkeyboard.widget.EnterPasswordPopupWindow;
 import com.example.hqfwandroidapp.R;
-import com.example.hqfwandroidapp.adapter.OrderFormAdapter;
+import com.example.hqfwandroidapp.adapter.OrderFormCardAdapter;
+import com.example.hqfwandroidapp.utils.App;
 import com.example.hqfwandroidapp.utils.SpacesItemDecoration;
 import com.example.hqfwandroidapp.utils.Urls;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -28,6 +31,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,11 +42,11 @@ import me.yokeyword.fragmentation.SupportFragment;
 
 public class AllOrderFormFragment extends SupportFragment {
     // recycler view
-    @BindView(R.id.rv_all_order_form) RecyclerView rv_all_order_form;
+    @BindView(R.id.rv_allOrderForm) RecyclerView rv_allOrderForm;
     // adapter
-    private OrderFormAdapter orderFormAdapter;
-    // smart refresh layout
-    @BindView(R.id.refreshLayout) RefreshLayout refreshLayout;
+    private OrderFormCardAdapter orderFormCardAdapter;
+    // refresh layout
+    @BindView(R.id.rl_allOrderForm) SwipeRefreshLayout rl_allOrderForm;
 
 
 
@@ -64,60 +68,85 @@ public class AllOrderFormFragment extends SupportFragment {
      * @param view
      */
     private void initView(View view) {
-        // 初始化 rv_commodity
-        // 布局管理器
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        rv_all_order_form.setLayoutManager(layoutManager);
-        // 间距
-        SpacesItemDecoration spacesItemDecoration = new SpacesItemDecoration(24);
-        rv_all_order_form.addItemDecoration(spacesItemDecoration);
-        // 适配器
-        orderFormAdapter = new OrderFormAdapter(getContext(), new ArrayList<>());
-        rv_all_order_form.setAdapter(orderFormAdapter);
+        // 初始化 rv_allOrderForm
+        rv_allOrderForm.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv_allOrderForm.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        rv_allOrderForm.addItemDecoration(new SpacesItemDecoration(24));
 
-        // refresh layout
-        refreshLayout.setOnRefreshListener((RefreshLayout refreshLayout) -> {
-            // 获取数据
-            OkGo.<String>get(Urls.OrderFormServlet)
-                    .params("method", "refresh")
-                    .execute(new StringCallback() {
-                        @Override
-                        public void onSuccess(Response<String> response) {
-                            // 设置数据集
-                            orderFormAdapter.setData(GsonUtils.fromJson(response.body(), GsonUtils.getListType(JsonObject.class)));
-                            // finish
-                            refreshLayout.finishRefresh();
-                        }
-                    });
-        });
-        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+        // 适配器
+        orderFormCardAdapter = new OrderFormCardAdapter(R.layout.card_order_form);
+        orderFormCardAdapter.bindToRecyclerView(rv_allOrderForm);
+        orderFormCardAdapter.setEmptyView(R.layout.view_empty_no_data);
+        orderFormCardAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                // 获取数据
-                OkGo.<String>get(Urls.OrderFormServlet)
-                        .params("method", "loadMore")
-                        .params("start", orderFormAdapter.getItemCount())
-                        .execute(new StringCallback() {
-                            @Override
-                            public void onSuccess(Response<String> response) {
-                                //JsonArray jsonArray = GsonUtils.fromJson(response.body(), JsonArray.class);
-                                List<JsonObject> jsonObjectList = GsonUtils.fromJson(response.body(), GsonUtils.getListType(JsonObject.class));
-                                if (jsonObjectList.isEmpty()) {
-                                    refreshLayout.finishLoadMoreWithNoMoreData();
-                                } else {
-                                    // 添加数据
-                                    orderFormAdapter.addDate(jsonObjectList);
-                                    refreshLayout.finishLoadMore();
-                                }
-                            }
-                        });
+            public void onLoadMoreRequested() {
+                loadMore();
+            }
+        }, rv_allOrderForm);
+        orderFormCardAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                JsonObject orderFormCard = (JsonObject)adapter.getItem(position);
+                switch (orderFormCard.get("orderFormStatus").getAsString()) {
+                    case "等待付款": {
+                        // 调用支付窗口
+                        pay(orderFormCard);
+                        break;
+                    }
+                    case "交易完成": {
+                        break;
+                    }
+                }
             }
         });
 
-        // 自动刷新一次
-        refreshLayout.autoRefresh();
-
+        // refresh layout
+        rl_allOrderForm.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refresh();
+            }
+        });
+        rl_allOrderForm.setRefreshing(true);
+        refresh();
     }
+
+
+    private void refresh() {
+        // 获取数据
+        OkGo.<String>get(Urls.OrderFormServlet)
+                .params("method", "refresh")
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        // 设置数据集
+                        orderFormCardAdapter.setNewData(GsonUtils.fromJson(response.body(), GsonUtils.getListType(JsonObject.class)));
+                        // finish
+                        rl_allOrderForm.setRefreshing(false);
+                    }
+                });
+    }
+
+    private void loadMore() {
+        // 获取数据
+        OkGo.<String>get(Urls.OrderFormServlet)
+                .params("method", "loadMore")
+                .params("start", orderFormCardAdapter.getData().size())
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        List<JsonObject> jsonObjectList = GsonUtils.fromJson(response.body(), GsonUtils.getListType(JsonObject.class));
+                        if (jsonObjectList.isEmpty()) {
+                            orderFormCardAdapter.loadMoreEnd();
+                        } else {
+                            // 添加数据
+                            orderFormCardAdapter.addData(jsonObjectList);
+                            orderFormCardAdapter.loadMoreComplete();
+                        }
+                    }
+                });
+    }
+
 
 
     /**
@@ -134,7 +163,8 @@ public class AllOrderFormFragment extends SupportFragment {
     @Subscribe(threadMode = ThreadMode.MAIN_ORDERED)
     public void onMessageEvent(String msg) {
         if (msg.equals("ConfirmPurchaseActivity:close")) {
-            refreshLayout.autoRefresh();
+            rl_allOrderForm.setRefreshing(true);
+            refresh();
         }
     }
 
@@ -152,5 +182,37 @@ public class AllOrderFormFragment extends SupportFragment {
         EventBus.getDefault().unregister(this);
     }
 
+    private void pay(JsonObject orderFormCard) {
+        // 调用支付窗口
+        EnterPasswordPopupWindow enterPasswordPopupWindow = new EnterPasswordPopupWindow(getContext());// 输入密码窗口
+        enterPasswordPopupWindow.setMoney(orderFormCard.get("totalPrice").getAsFloat());// 金额
+        Glide.with(_mActivity).load(Urls.HOST + App.getUser().getHeadURL()).into(enterPasswordPopupWindow.getImgHead());// 头像
+        // 输入密码回调
+        enterPasswordPopupWindow.setOnFinishInput(new OnPasswordInputFinish() {
+            @Override
+            public void inputFinish(String password) {
+                if (password.equals("123456")) {
+                    OkGo.<String>post(Urls.OrderFormServlet)
+                            .params("method", "paySuccess")
+                            .params("orderFormID", orderFormCard.get("orderFormID").getAsFloat())
+                            .execute(new StringCallback() {
+                                @Override
+                                public void onSuccess(Response<String> response) {
+                                    ToastUtils.showShort("支付成功");
+                                    // 刷新内容
+                                    rl_allOrderForm.setRefreshing(true);
+                                    refresh();
+                                    // 支付窗口消失
+                                    enterPasswordPopupWindow.dismiss();
+                                }
+                            });
+                } else {
+                    ToastUtils.showShort("密码错误，请重新输入");
+                }
+            }
+        });
+        // 显示支付窗口
+        enterPasswordPopupWindow.show(_mActivity.findViewById(R.id.fl_container));
+    }
 
 }

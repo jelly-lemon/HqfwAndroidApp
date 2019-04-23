@@ -30,7 +30,6 @@ public class OrderFormAdapter extends RecyclerView.Adapter<OrderFormAdapter.View
     // 上下文
     private Context context;
     // 数据集
-    //private JsonArray jsonArray;
     private List<JsonObject> jsonObjectList;
 
     public OrderFormAdapter(Context context, List<JsonObject> jsonObjectList) {
@@ -51,7 +50,7 @@ public class OrderFormAdapter extends RecyclerView.Adapter<OrderFormAdapter.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         JsonObject jsonObject = jsonObjectList.get(position);
 
-        // id
+        /*// id
         holder.tv_order_form_id.setText(jsonObject.get("orderFormID").getAsString());
         // dateTime
         holder.tv_date_time.setText(jsonObject.get("dateTime").getAsString());
@@ -100,7 +99,7 @@ public class OrderFormAdapter extends RecyclerView.Adapter<OrderFormAdapter.View
                         holder.purchasedItemCardAdapter = new PurchasedItemCardAdapter(context, GsonUtils.fromJson(response.body(), GsonUtils.getListType(JsonObject.class)));
                         holder.rv_purchased_item.setAdapter(holder.purchasedItemCardAdapter);
                     }
-                });
+                });*/
     }
 
     @Override
@@ -119,7 +118,7 @@ public class OrderFormAdapter extends RecyclerView.Adapter<OrderFormAdapter.View
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        // id
+        /*// id
         @BindView(R.id.tv_bill_number)
         TextView tv_order_form_id;
         // date time
@@ -137,7 +136,7 @@ public class OrderFormAdapter extends RecyclerView.Adapter<OrderFormAdapter.View
         // 每一项商品的 recycler view
         @BindView(R.id.rv_purchased_item) RecyclerView rv_purchased_item;
         // adapter
-        private PurchasedItemCardAdapter purchasedItemCardAdapter;
+        private PurchasedItemCardAdapter purchasedItemCardAdapter;*/
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

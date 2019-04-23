@@ -1,10 +1,8 @@
 package com.example.hqfwandroidapp.activity.home.discovery;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,27 +26,20 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.hqfwandroidapp.R;
 import com.example.hqfwandroidapp.adapter.CommentCardAdapter;
-import com.example.hqfwandroidapp.adapter.NCommentCardAdapter;
 import com.example.hqfwandroidapp.entity.Comment;
-import com.example.hqfwandroidapp.entity.CommentCard;
 import com.example.hqfwandroidapp.utils.App;
 import com.example.hqfwandroidapp.utils.DateTime;
 import com.example.hqfwandroidapp.utils.Urls;
 import com.example.ninegridview.adapter.NineGridViewAdapter;
 import com.example.ninegridview.entity.ImageInfo;
 import com.example.ninegridview.ui.NineGridView;
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,12 +87,10 @@ public class DiscoveryDetailActivity extends AppCompatActivity {
     @BindView(R.id.tv_contact_phone) TextView tv_contact_phone;
 
     // 评论部分
-    // 刷新
-    //@BindView(R.id.rl_comment) SwipeRefreshLayout rl_comment;
     // 评论列表
     @BindView(R.id.rv_comment) RecyclerView rv_comment;
     // 适配器
-    NCommentCardAdapter commentCardAdapter = new NCommentCardAdapter(R.layout.item_comment);;
+    CommentCardAdapter commentCardAdapter = new CommentCardAdapter(R.layout.item_comment);
     // 输入框
     @BindView(R.id.et_comment) EditText et_comment;
     // 发送评论
@@ -122,13 +111,11 @@ public class DiscoveryDetailActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Response<String> response) {
                         et_comment.setText("");
-                        //ToastUtils.showShort("评论成功");
+                        // 隐藏键盘
                         KeyboardUtils.hideSoftInput(getActivity());
-
                         // 加载新评论
                         commentCardAdapter.setEnableLoadMore(true);
                         loadMore();
-                        //commentCardAdapter.notifyLoadMoreToLoading();
                     }
                 });
     }
@@ -197,7 +184,6 @@ public class DiscoveryDetailActivity extends AppCompatActivity {
         // 评论列表
         rv_comment.setLayoutManager(new LinearLayoutManager(this));
         rv_comment.setOverScrollMode(View.OVER_SCROLL_NEVER);
-        //rv_comment.nested
 
         // 适配器
         commentCardAdapter.bindToRecyclerView(rv_comment);
@@ -208,43 +194,11 @@ public class DiscoveryDetailActivity extends AppCompatActivity {
                 loadMore();
             }
         }, rv_comment);
+
+        // 首先获取几条数据
         loadMore();
-
-
-
-
-
-
-        /*// 刷新
-        rl_comment.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refresh();
-            }
-        });
-        // 自动刷新
-        rl_comment.setRefreshing(true);
-        refresh();*/
     }
 
-    /**
-     * 获取几条评论
-     */
-    /*void refresh() {
-        OkGo.<String>get(Urls.CommentCardServlet)
-                .params("method", "refresh")
-                .params("discoveryID", discoveryCard.get("discoveryID").getAsString())
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        List<JsonObject> commentCardList = GsonUtils.fromJson(response.body(), GsonUtils.getListType(JsonObject.class));
-                        // 设置新数据
-                        commentCardAdapter.setNewData(commentCardList);
-                        // 结束刷新
-                        rl_comment.setRefreshing(false);
-                    }
-                });
-    }*/
 
 
     void loadMore() {

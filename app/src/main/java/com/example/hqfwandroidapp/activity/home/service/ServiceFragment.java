@@ -63,10 +63,9 @@ public class ServiceFragment extends SupportFragment {
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
         // ViewPager 初始化
-        String[] title = {"所有订单", "待付款订单", "水电费"};
+        String[] title = {"普通订单",  "水电费"};
         viewPager.setAdapter(new ServiceFragmentPagerAdapter(getChildFragmentManager(), title));
         // TabLayout 添加 tab
-        tabLayout.addTab(tabLayout.newTab());
         tabLayout.addTab(tabLayout.newTab());
         tabLayout.addTab(tabLayout.newTab());
         // TabLayout 设置 ViewPager

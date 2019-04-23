@@ -72,7 +72,7 @@ public class App extends Application {
     private void initFragmentation() {
         // 初始化 Fragmentation
         Fragmentation.builder()
-                .stackViewMode(Fragmentation.BUBBLE)
+                .stackViewMode(Fragmentation.SHAKE)
                 .debug(BuildConfig.DEBUG)
                 .install();
     }

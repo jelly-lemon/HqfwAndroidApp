@@ -1,20 +1,16 @@
 package com.example.hqfwandroidapp.adapter.view;
 
 import android.content.Intent;
-import android.text.format.DateUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-
-import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.GsonUtils;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.hqfwandroidapp.R;
-import com.example.hqfwandroidapp.activity.home.discovery.PersonDetailActivity;
+
+import com.example.hqfwandroidapp.activity.home.person.UserInfoActivity;
 import com.example.hqfwandroidapp.utils.Urls;
 import com.example.ninegridview.adapter.NineGridViewAdapter;
 import com.example.ninegridview.entity.ImageInfo;
@@ -23,7 +19,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -55,7 +50,7 @@ public class DiscoveryCardAdapter extends BaseQuickAdapter<JsonObject, BaseViewH
             @Override
             public void onClick(View v) {
                 // 启动 PersonDetailActivity
-                Intent intent = new Intent(mContext, PersonDetailActivity.class);
+                Intent intent = new Intent(mContext, UserInfoActivity.class);
                 intent.putExtra("user", GsonUtils.toJson(discoveryCard));
                 mContext.startActivity(intent);
             }

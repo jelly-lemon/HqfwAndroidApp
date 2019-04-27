@@ -25,8 +25,8 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.hqfwandroidapp.R;
+import com.example.hqfwandroidapp.activity.home.person.UserInfoActivity;
 import com.example.hqfwandroidapp.adapter.view.CommentCardAdapter;
-import com.example.hqfwandroidapp.entity.Comment;
 import com.example.hqfwandroidapp.utils.App;
 import com.example.hqfwandroidapp.utils.DateTimeUtil;
 import com.example.hqfwandroidapp.utils.Urls;
@@ -54,9 +54,10 @@ public class DiscoveryDetailActivity extends AppCompatActivity {
     JsonObject discoveryCard;
     // 头像
     @BindView(R.id.iv_head_discovery) ImageView iv_head_discovery;
+
     // 点击头像，进入个人资料详情页
     @OnClick(R.id.iv_head_discovery) void startPersonDetailActivity() {
-        Intent intent = new Intent(this, PersonDetailActivity.class);
+        Intent intent = new Intent(this, UserInfoActivity.class);
         intent.putExtra("user", GsonUtils.toJson(discoveryCard));
         startActivity(intent);
     }
@@ -90,7 +91,7 @@ public class DiscoveryDetailActivity extends AppCompatActivity {
     // 评论列表
     @BindView(R.id.rv_comment) RecyclerView rv_comment;
     // 适配器
-    CommentCardAdapter commentCardAdapter = new CommentCardAdapter(R.layout.item_comment);
+    CommentCardAdapter commentCardAdapter;
     // 输入框
     @BindView(R.id.et_comment) EditText et_comment;
     // 发送评论
@@ -99,14 +100,14 @@ public class DiscoveryDetailActivity extends AppCompatActivity {
             ToastUtils.showShort("请输入评论内容");
         }
 
-        Comment comment = new Comment();
-        comment.setDiscoveryID(discoveryCard.get("discoveryID").getAsInt());
-        comment.setSenderPhone(App.user.getPhone());
-        comment.setContent(et_comment.getText().toString());
+        JsonObject comment = new JsonObject();
+        comment.addProperty("discoveryID", discoveryCard.get("discoveryID").getAsString());
+        comment.addProperty("senderPhone", App.user.getPhone());
+        comment.addProperty("content", et_comment.getText().toString());
 
         OkGo.<String>post(Urls.CommentServlet)
                 .params("method", "insert")
-                .params("comment", GsonUtils.toJson(comment))
+                .params("comment", comment.toString())
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -186,8 +187,9 @@ public class DiscoveryDetailActivity extends AppCompatActivity {
         rv_comment.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
         // 适配器
+        commentCardAdapter = new CommentCardAdapter(R.layout.item_comment);
         commentCardAdapter.bindToRecyclerView(rv_comment);
-        commentCardAdapter.setEmptyView(R.layout.view_no_comment);
+        commentCardAdapter.setEmptyView(R.layout.widget_no_comment);
         commentCardAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {

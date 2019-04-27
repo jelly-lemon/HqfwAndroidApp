@@ -24,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class OrderFormDetailAty extends AppCompatActivity {
+public class OrderFormCardDetailAty extends AppCompatActivity {
     @OnClick(R.id.iv_back_toolbar) void onBack() {
         onBackPressed();
     }
@@ -49,7 +49,7 @@ public class OrderFormDetailAty extends AppCompatActivity {
         rv_purchasedItem.setLayoutManager(new LinearLayoutManager(this));
         rv_purchasedItem.setOverScrollMode(View.OVER_SCROLL_NEVER);
 
-        PurchasedItemCardAdapter purchasedItemCardAdapter = new PurchasedItemCardAdapter(R.layout.item_purchased_item);
+        PurchasedItemCardAdapter purchasedItemCardAdapter = new PurchasedItemCardAdapter(R.layout.item_purchaseditem);
         purchasedItemCardAdapter.bindToRecyclerView(rv_purchasedItem);
 
         refresh(purchasedItemCardAdapter, orderFormCard);

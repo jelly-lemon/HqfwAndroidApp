@@ -4,21 +4,14 @@ import android.app.Application;
 import android.content.Context;
 
 
-import com.example.hqfwandroidapp.R;
+
 import com.example.hqfwandroidapp.entity.User;
-/*import com.example.ninegridviewapp.ui.NineGridView;
-import com.lzy.imagepicker.ImagePicker;
-import com.lzy.imagepicker.view.CropImageView;*/
+
 import com.example.ninegridview.ui.NineGridView;
-import com.google.gson.JsonObject;
+
 import com.lzy.okgo.OkGo;
 import com.mob.MobSDK;
-import com.mob.ums.gui.pickers.ImagePicker;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
-import com.scwang.smartrefresh.layout.api.RefreshHeader;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+
 
 import java.util.concurrent.TimeUnit;
 
@@ -40,10 +33,10 @@ public class App extends Application {
         initMob();              // 初始化 MobSDK
         initNineGridView();     // 初始化九宫格图片加载器
         initImagePicker();      // 初始化微信图片加载器
-        initSmartRefreshLayout();
+        //initSmartRefreshLayout();
     }
 
-    private void initSmartRefreshLayout() {
+    /*private void initSmartRefreshLayout() {
         //设置全局的Header构建器
         SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
             @Override
@@ -52,7 +45,7 @@ public class App extends Application {
             }
         });
 
-    }
+    }*/
 
 
     private void initOkGo() {

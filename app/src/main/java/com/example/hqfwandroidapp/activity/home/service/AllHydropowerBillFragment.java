@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.ToastUtils;
@@ -26,11 +27,7 @@ import com.google.gson.JsonObject;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -39,8 +36,9 @@ import me.yokeyword.fragmentation.SupportFragment;
 
 public class AllHydropowerBillFragment extends SupportFragment {
 
-    @BindView(R.id.rv_hydropower_bill) RecyclerView rv_hydropower_bill;
-    @BindView(R.id.smartRefreshLayout) SmartRefreshLayout smartRefreshLayout;
+    @BindView(R.id.rv_hydropowerBill) RecyclerView rv_hydropowerBill;
+    @BindView(R.id.rl_hydropowerBill) SwipeRefreshLayout rl_hydropowerBill;
+
     private HydropowerBillAdapter hydropowerBillAdapter;
 
 
@@ -57,7 +55,13 @@ public class AllHydropowerBillFragment extends SupportFragment {
     }
 
     private void initView(View view) {
-        hydropowerBillAdapter = new HydropowerBillAdapter(R.layout.card_hydropower_bill, new ArrayList<>());
+        rv_hydropowerBill.setLayoutManager(new LinearLayoutManager(_mActivity));
+        rv_hydropowerBill.addItemDecoration( new SpacesItemDecoration(24));
+        rv_hydropowerBill.setOverScrollMode(View.OVER_SCROLL_NEVER);
+
+        hydropowerBillAdapter = new HydropowerBillAdapter(R.layout.card_hydropowerbill);
+        hydropowerBillAdapter.bindToRecyclerView(rv_hydropowerBill);
+        hydropowerBillAdapter.setEmptyView(R.layout.widget_empty_no_data);
         hydropowerBillAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -77,58 +81,60 @@ public class AllHydropowerBillFragment extends SupportFragment {
                 }
             }
         });
-
-        rv_hydropower_bill.setLayoutManager(new LinearLayoutManager(_mActivity));
-        rv_hydropower_bill.addItemDecoration( new SpacesItemDecoration(24));
-        rv_hydropower_bill.setAdapter(hydropowerBillAdapter);
-
-        smartRefreshLayout.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+        hydropowerBillAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                OkGo.<String>get(Urls.HydropowerBillServlet)
-                        .params("method", "refresh")
-                        .params("room", App.user.getBuilding()+"-"+App.user.getRoomNumber())
-                        .execute(new StringCallback() {
-                            @Override
-                            public void onSuccess(Response<String> response) {
-                                List<JsonObject> hydropowerBillList = GsonUtils.fromJson(response.body(), GsonUtils.getListType(JsonObject.class));
-                                // 设置数据集
-                                hydropowerBillAdapter.setNewData(hydropowerBillList);
-                                // 结束刷新
-                                smartRefreshLayout.finishRefresh();
-                                // 如果为空，显示指定页面
-                                if (hydropowerBillList.isEmpty()) {
-                                    View emptyView = getLayoutInflater().inflate(R.layout.view_empty_no_data, (ViewGroup)rv_hydropower_bill.getParent(), false);
-                                    hydropowerBillAdapter.setEmptyView(emptyView);
-                                }
-                            }
-                        });
-
+            public void onLoadMoreRequested() {
+                loadMore();
             }
+        }, rv_hydropowerBill);
+
+        rl_hydropowerBill.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                OkGo.<String>get(Urls.HydropowerBillServlet)
-                        .params("method", "loadMore")
-                        .params("start", hydropowerBillAdapter.getItemCount())
-                        .params("room", App.user.getBuilding()+"-"+App.user.getRoomNumber())
-                        .execute(new StringCallback() {
-                            @Override
-                            public void onSuccess(Response<String> response) {
-                                // 得到数据集
-                                List<JsonObject> jsonObjectList = GsonUtils.fromJson(response.body(), GsonUtils.getListType(JsonObject.class));
-                                if (jsonObjectList.isEmpty()) {
-                                    smartRefreshLayout.finishLoadMoreWithNoMoreData();
-                                } else {
-                                    hydropowerBillAdapter.addData(jsonObjectList);
-                                    smartRefreshLayout.finishLoadMore();
-                                }
-                            }
-                        });
+            public void onRefresh() {
+                refresh();
             }
-
-
         });
-        smartRefreshLayout.autoRefresh();
+
+
+        rl_hydropowerBill.setRefreshing(true);
+        refresh();
+
+    }
+
+    private void refresh() {
+        OkGo.<String>get(Urls.HydropowerBillServlet)
+                .params("method", "refresh")
+                .params("room", App.user.getBuilding()+"-"+App.user.getRoomNumber())
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        List<JsonObject> hydropowerBillList = GsonUtils.fromJson(response.body(), GsonUtils.getListType(JsonObject.class));
+                        // 设置数据集
+                        hydropowerBillAdapter.setNewData(hydropowerBillList);
+                        // 结束刷新
+                        rl_hydropowerBill.setRefreshing(false);
+                    }
+                });
+    }
+
+    private void loadMore() {
+        OkGo.<String>get(Urls.HydropowerBillServlet)
+                .params("method", "loadMore")
+                .params("start", hydropowerBillAdapter.getItemCount())
+                .params("room", App.user.getBuilding()+"-"+App.user.getRoomNumber())
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        // 得到数据集
+                        List<JsonObject> hydropowerBillList = GsonUtils.fromJson(response.body(), GsonUtils.getListType(JsonObject.class));
+                        if (hydropowerBillList.isEmpty()) {
+                            hydropowerBillAdapter.loadMoreEnd();
+                        } else {
+                            hydropowerBillAdapter.addData(hydropowerBillList);
+                            hydropowerBillAdapter.loadMoreComplete();
+                        }
+                    }
+                });
     }
 
     /**
@@ -167,7 +173,7 @@ public class AllHydropowerBillFragment extends SupportFragment {
                                 public void onSuccess(Response<String> response) {
                                     ToastUtils.showShort("支付成功");
                                     // 刷新内容
-                                    smartRefreshLayout.autoRefresh();
+                                    refresh();
                                     // 支付窗口消失
                                     enterPasswordPopupWindow.dismiss();
                                     // 去详情页

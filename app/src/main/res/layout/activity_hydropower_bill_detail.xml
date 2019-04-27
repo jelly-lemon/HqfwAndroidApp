@@ -56,7 +56,7 @@
 
         <include
             android:id="@+id/include16"
-            layout="@layout/item_hydropower_bill"
+            layout="@layout/item_hydropowerbill"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"

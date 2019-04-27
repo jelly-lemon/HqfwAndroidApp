@@ -74,9 +74,9 @@ public class OrderFormCardFragment extends SupportFragment {
         rv_allOrderForm.addItemDecoration(new SpacesItemDecoration(24));
 
         // 适配器
-        orderFormCardAdapter = new OrderFormCardAdapter(R.layout.card_order_form);
+        orderFormCardAdapter = new OrderFormCardAdapter(R.layout.card_orderform);
         orderFormCardAdapter.bindToRecyclerView(rv_allOrderForm);
-        orderFormCardAdapter.setEmptyView(R.layout.view_empty_no_data);
+        orderFormCardAdapter.setEmptyView(R.layout.widget_empty_no_data);
         orderFormCardAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
@@ -95,7 +95,7 @@ public class OrderFormCardFragment extends SupportFragment {
                     }
                     case "交易完成": {
                         // 进入详情页面
-                        Intent intent = new Intent(getContext(), OrderFormDetailAty.class);
+                        Intent intent = new Intent(getContext(), OrderFormCardDetailAty.class);
                         intent.putExtra("orderFormCard", orderFormCard.toString());
                         startActivity(intent);
                         break;
@@ -118,7 +118,7 @@ public class OrderFormCardFragment extends SupportFragment {
 
     private void refresh() {
         // 获取数据
-        OkGo.<String>get(Urls.OrderFormServlet)
+        OkGo.<String>get(Urls.OrderFormCardServlet)
                 .params("method", "refresh")
                 .execute(new StringCallback() {
                     @Override
@@ -133,7 +133,7 @@ public class OrderFormCardFragment extends SupportFragment {
 
     private void loadMore() {
         // 获取数据
-        OkGo.<String>get(Urls.OrderFormServlet)
+        OkGo.<String>get(Urls.OrderFormCardServlet)
                 .params("method", "loadMore")
                 .params("start", orderFormCardAdapter.getData().size())
                 .execute(new StringCallback() {

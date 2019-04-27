@@ -14,8 +14,10 @@ import java.util.List;
 
 
 public class HydropowerBillAdapter extends BaseQuickAdapter<JsonObject, BaseViewHolder> {
-    public HydropowerBillAdapter(int layoutResId, @Nullable List<JsonObject> data) {
-        super(layoutResId, data);
+
+
+    public HydropowerBillAdapter(int layoutResId) {
+        super(layoutResId);
     }
 
     @Override

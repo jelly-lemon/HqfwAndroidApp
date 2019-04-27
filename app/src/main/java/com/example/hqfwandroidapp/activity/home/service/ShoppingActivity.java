@@ -81,7 +81,7 @@ public class ShoppingActivity extends AppCompatActivity {
 
         commodityAdapter = new CommodityAdapter(R.layout.card_commodity_shopping);
         commodityAdapter.bindToRecyclerView(rv_commodity);
-        commodityAdapter.setEmptyView(R.layout.view_empty_no_data);
+        commodityAdapter.setEmptyView(R.layout.widget_empty_no_data);
 
 
         // 请求数据

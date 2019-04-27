@@ -61,7 +61,7 @@ public class OrderFormCardAdapter extends BaseQuickAdapter<JsonObject, BaseViewH
         rv_purchasedItemCard_orderFormCard.setOverScrollMode(View.OVER_SCROLL_NEVER);
         rv_purchasedItemCard_orderFormCard.setNestedScrollingEnabled(false);
 
-        PurchasedItemCardAdapter purchasedItemCardAdapter = new PurchasedItemCardAdapter(R.layout.item_purchased_item);
+        PurchasedItemCardAdapter purchasedItemCardAdapter = new PurchasedItemCardAdapter(R.layout.item_purchaseditem);
         purchasedItemCardAdapter.bindToRecyclerView(rv_purchasedItemCard_orderFormCard);
 
         OkGo.<String>get(Urls.PurchasedItemCardServlet)

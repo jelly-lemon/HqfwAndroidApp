@@ -16,7 +16,7 @@ public class CommentCardAdapter extends BaseQuickAdapter<JsonObject, BaseViewHol
 
     @Override
     protected void convert(BaseViewHolder helper, JsonObject CommentCard) {
-        helper.setText(R.id.tv_name_comment, CommentCard.get("senderName").getAsString());
+        helper.setText(R.id.tv_name_comment, CommentCard.get("name").getAsString());
         helper.setText(R.id.tv_date_time_comment, DateTimeUtil.getFormatDateTime(CommentCard.get("dateTime").getAsString()));
         helper.setText(R.id.tv_content_comment, CommentCard.get("content").getAsString());
     }

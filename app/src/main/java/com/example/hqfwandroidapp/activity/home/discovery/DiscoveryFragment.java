@@ -2,6 +2,7 @@ package com.example.hqfwandroidapp.activity.home.discovery;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,17 +10,18 @@ import android.widget.TextView;
 
 
 import com.blankj.utilcode.util.GsonUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.hqfwandroidapp.R;
 
 import com.example.hqfwandroidapp.adapter.view.DiscoveryCardAdapter;
+import com.example.hqfwandroidapp.utils.CustomDrawerLayout;
 import com.example.hqfwandroidapp.utils.ItemDecoration;
 import com.example.hqfwandroidapp.utils.Urls;
 import com.google.gson.JsonObject;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -29,6 +31,8 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -51,6 +55,9 @@ public class DiscoveryFragment extends SupportFragment{
     // 回收视图适配器
     private DiscoveryCardAdapter discoveryCardAdapter;
 
+    @BindView(R.id.dl_discovery) CustomDrawerLayout dl_discovery;
+
+
     /**
      * 启动 PublishDiscoveryActivity
      */
@@ -59,10 +66,19 @@ public class DiscoveryFragment extends SupportFragment{
         startActivity(intent);  // 启动 Activity
     }
 
-    @OnClick(R.id.iv_filter) void filter() {
-        ToastUtils.showShort("暂未实现");
+    @OnClick(R.id.iv_filter) void startFilter() {
+        dl_discovery.openDrawer(GravityCompat.START);
     }
 
+    @Override
+    public boolean onBackPressedSupport() {
+        if (dl_discovery.isDrawerOpen(GravityCompat.START)) {
+            dl_discovery.closeDrawer(GravityCompat.START);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     @Nullable
     @Override
@@ -96,9 +112,12 @@ public class DiscoveryFragment extends SupportFragment{
         // 标题
         tv_title_toolbar.setText("发现");
 
+        //禁止手势滑动
+        dl_discovery.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
         // 适配器
         discoveryCardAdapter = new DiscoveryCardAdapter(R.layout.item_discovery);
-        View view = LayoutInflater.from(_mActivity).inflate(R.layout.view_empty_no_data, (ViewGroup) rv_discovery.getParent(), false);
+        View view = LayoutInflater.from(_mActivity).inflate(R.layout.widget_empty_no_data, (ViewGroup) rv_discovery.getParent(), false);
         discoveryCardAdapter.setEmptyView(view);
         discoveryCardAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override

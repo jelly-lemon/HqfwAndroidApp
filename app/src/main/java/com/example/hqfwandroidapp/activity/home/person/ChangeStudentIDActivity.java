@@ -1,4 +1,4 @@
-package com.example.hqfwandroidapp.activity.home.service;
+package com.example.hqfwandroidapp.activity.home.person;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.example.hqfwandroidapp.R;
 
-public class OrderFormDetailActivity extends AppCompatActivity {
+public class ChangeStudentIDActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_form_detail);
+        setContentView(R.layout.activity_change_student_id);
     }
 }

@@ -14,12 +14,12 @@ import com.example.hqfwandroidapp.R;
 
 public class FindPasswordActivity extends AppCompatActivity {
 
-    @BindView(R.id.tv_title_discovery) TextView tv_title;                 // 标题
+    @BindView(R.id.tv_title_toolbar) TextView tv_title_toolbar;                 // 标题
     @BindView(R.id.edt_phone) EditText edt_phone;               // 电话号码
     @BindView(R.id.edt_code) EditText edt_code;                 // 验证码输入框
     @BindView(R.id.edt_new_password) EditText edt_new_password; // 输入新密码
     // 返回
-    @OnClick(R.id.iv_back) void goBack() {
+    @OnClick(R.id.iv_back_toolbar) void goBack() {
         onBackPressed();    // 返回
     }
     // 提交
@@ -48,7 +48,7 @@ public class FindPasswordActivity extends AppCompatActivity {
     private void initUI() {
         //ActionBar actionBar = getSupportActionBar();
         //actionBar.setDisplayHomeAsUpEnabled(true);
-        tv_title.setText("找回密码"); // 设置标题
+        tv_title_toolbar.setText("找回密码"); // 设置标题
     }
 
     /*@Override

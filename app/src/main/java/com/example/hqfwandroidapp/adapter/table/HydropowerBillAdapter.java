@@ -1,4 +1,4 @@
-package com.example.hqfwandroidapp.adapter;
+package com.example.hqfwandroidapp.adapter.table;
 
 import androidx.annotation.Nullable;
 

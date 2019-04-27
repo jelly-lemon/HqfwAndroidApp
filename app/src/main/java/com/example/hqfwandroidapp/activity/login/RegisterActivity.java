@@ -12,9 +12,9 @@ import android.widget.Toast;
 import com.example.hqfwandroidapp.R;
 
 public class RegisterActivity extends AppCompatActivity {
-    @BindView(R.id.tv_title_discovery) TextView tv_title; // 标题
+    @BindView(R.id.tv_title_toolbar) TextView tv_title_toolbar; // 标题
 
-    @OnClick(R.id.iv_back) void onBack() {
+    @OnClick(R.id.iv_back_toolbar) void onBack() {
         onBackPressed();    // 按下返回键
     }
 
@@ -44,7 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
         /*ActionBar actionBar = getSupportActionBar();
         // 显示返回箭头 <--
         actionBar.setDisplayHomeAsUpEnabled(true);*/
-        tv_title.setText("注册");
+        tv_title_toolbar.setText("注册");
     }
 
 

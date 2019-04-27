@@ -15,7 +15,7 @@
 
 
         <TextView
-            android:id="@+id/tv_title"
+            android:id="@+id/tv_title_toolbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/title_discovery"
@@ -29,7 +29,7 @@
 
 
         <ImageView
-            android:id="@+id/iv_add"
+            android:id="@+id/iv_add_toolbar"
             android:layout_width="@dimen/tool_icon_size"
             android:layout_height="@dimen/tool_icon_size"
             android:layout_marginEnd="8dp"
@@ -44,9 +44,9 @@
             android:layout_height="36dp"
             android:layout_marginStart="8dp"
             android:background="@drawable/ic_filter"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_add"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_add_toolbar"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/iv_add" />
+            app:layout_constraintTop_toTopOf="@+id/iv_add_toolbar" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

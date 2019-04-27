@@ -8,16 +8,27 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.example.hqfwandroidapp.R;
 import com.example.hqfwandroidapp.activity.home.MainActivity;
-import com.example.hqfwandroidapp.presenter.LoginPresenter;
+import com.example.hqfwandroidapp.entity.User;
+
+import com.example.hqfwandroidapp.utils.App;
 import com.example.hqfwandroidapp.utils.SaveSharedPreference;
+import com.example.hqfwandroidapp.utils.Urls;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class LoginActivity extends AppCompatActivity implements com.example.hqfwandroidapp.interfaces.ILoginActivity {
+public class LoginActivity extends AppCompatActivity {
 
 
     @BindView(R.id.et_phone_login) EditText et_phone_login;                // 电话
@@ -26,7 +37,7 @@ public class LoginActivity extends AppCompatActivity implements com.example.hqfw
     @BindView(R.id.tv_register) TextView tv_register;                // 注册
 
 
-    private LoginPresenter mLoginPresenter = new LoginPresenter(this);  // 中间人
+    //private LoginPresenter mLoginPresenter = new LoginPresenter(this);  // 中间人
 
 
     // QQ 登录
@@ -34,7 +45,6 @@ public class LoginActivity extends AppCompatActivity implements com.example.hqfw
         // TODO QQ 登录
         showToast("暂未实现");
     }
-
 
     // 微信登录
     @OnClick(R.id.iv_wechat) void goWechatLogin() {
@@ -58,7 +68,7 @@ public class LoginActivity extends AppCompatActivity implements com.example.hqfw
             return;
         }
 
-        mLoginPresenter.checkAccount(phone, password);
+        checkAccount(phone, password);
     }
 
     // 注册
@@ -86,7 +96,7 @@ public class LoginActivity extends AppCompatActivity implements com.example.hqfw
 
 
     // 气泡显示
-    @Override
+
     public void showToast(String msg) {
         Toast toast = Toast.makeText(this, msg, Toast.LENGTH_SHORT);
         toast.show();
@@ -95,7 +105,7 @@ public class LoginActivity extends AppCompatActivity implements com.example.hqfw
     /**
      * 跳转到 MainActivity
      */
-    @Override
+
     public void goToMainActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -103,7 +113,7 @@ public class LoginActivity extends AppCompatActivity implements com.example.hqfw
     }
 
     // 保存账号密码
-    @Override
+
     public void saveAccount(String phone, String password) {
         SaveSharedPreference.saveAccount(this, phone, password);
     }
@@ -123,7 +133,65 @@ public class LoginActivity extends AppCompatActivity implements com.example.hqfw
                 showToast("请输入密码");
                 return;
             }
-            mLoginPresenter.checkAccount(phone, password);
+            checkAccount(phone, password);
         }
+    }
+
+    /**
+     * 检查账号密码
+     * @param phone 号码
+     * @param password  密码
+     */
+    public void checkAccount(String phone, String password) {
+        OkGo.<String>get(Urls.UsersServlet)
+                .params("method", "login")
+                .params("phone", phone)
+                .params("password", password)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        try {
+                            JsonObject result = GsonUtils.fromJson(response.body(), JsonObject.class);
+
+                            // 在这里判断服务器返回的消息
+                            String msg = result.get("msg").getAsString();
+                            // 判断消息类型
+                            switch (msg) {
+                                // 1 == 正确，允许登录
+                                case "登录成功": {
+                                    User user = new User();
+                                    user.setName(result.get("name").getAsString());
+                                    user.setBuilding(result.get("building").getAsString());
+                                    user.setGender(result.get("gender").getAsString());
+                                    user.setHeadURL(result.get("headURL").getAsString());
+                                    user.setPassword(result.get("password").getAsString());
+                                    user.setPhone(result.get("phone").getAsString());
+                                    user.setRole(result.get("role").getAsString());
+                                    user.setRoomNumber(result.get("roomNumber").getAsString());
+                                    user.setStudentID(result.get("studentID").getAsString());
+
+
+
+                                    App.user = user;
+                                    // 跳转页面之前存储密码
+                                    saveAccount(phone, password);
+                                    goToMainActivity();
+                                    break;
+                                }
+                                default:{
+                                    ToastUtils.showShort(msg);
+                                    break;
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    @Override
+                    public void onError(Response<String> response) {
+                        super.onError(response);
+                        ToastUtils.showShort("body:" + response.body() + " code:" + response.code());
+                    }
+                });
     }
 }

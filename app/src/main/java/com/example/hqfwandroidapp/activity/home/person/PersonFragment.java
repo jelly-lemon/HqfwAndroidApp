@@ -23,6 +23,7 @@ import butterknife.OnClick;
 import me.yokeyword.fragmentation.SupportFragment;
 
 public class PersonFragment extends SupportFragment {
+    @BindView(R.id.tv_title_toolbar) TextView tv_title_toolbar;
 
     // role
     @BindView(R.id.tv_role_person) TextView tv_role_person;
@@ -39,10 +40,7 @@ public class PersonFragment extends SupportFragment {
     @BindView(R.id.tv_phone_person) TextView tv_phone_person;
     // studentID
     @BindView(R.id.tv_student_id_person)TextView tv_studentID;
-    // building
-    //@BindView(R.id.tv_building)TextView tv_building;
-    // roomNumber
-    //@BindView(R.id.tv_roomNumber)TextView tv_roomNumber;
+
     @BindView(R.id.tv_address_person) TextView tv_address_person;
 
 
@@ -52,7 +50,7 @@ public class PersonFragment extends SupportFragment {
      */
     @OnClick(R.id.btn_logout_person) void logout() {
         // 销毁 user 对象
-        App.setUser(null);
+        App.user = null;
         // 密码置为空
         SaveSharedPreference.setPassword(getContext(), "");
         // 转到登录页面
@@ -84,24 +82,27 @@ public class PersonFragment extends SupportFragment {
 
 
     public void initView(View view) {
-        Glide.with(this).load(Urls.HOST + App.getUser().getHeadURL())
+        tv_title_toolbar.setText("个人");
+
+
+        Glide.with(this).load(Urls.HOST + App.user.getHeadURL())
                 .placeholder(R.drawable.ic_default_image_black_24dp)
                 .error(R.drawable.ic_broken_image_black_24dp)
                 .into(iv_head_person);  // 加载头像
 
         // name
-        tv_name.setText(App.getUser().getName());
+        tv_name.setText(App.user.getName());
         // role
-        tv_role_person.setText(App.getUser().getRole());
+        tv_role_person.setText(App.user.getRole());
         // phone
-        tv_phone_person.setText(App.getUser().getPhone());
+        tv_phone_person.setText(App.user.getPhone());
         // studentID
-        tv_studentID.setText(App.getUser().getStudentID());
+        tv_studentID.setText(App.user.getStudentID());
         // building
         //tv_building.setText(App.getUser().getBuilding());
         // roomNumber
         //tv_roomNumber.setText(App.getUser().getRoomNumber());
-        tv_address_person.setText(App.getUser().getBuilding() + "栋" + App.getUser().getRoomNumber() + "房间");
+        tv_address_person.setText(App.user.getBuilding() + "栋" + App.user.getRoomNumber() + "房间");
 
     }
 

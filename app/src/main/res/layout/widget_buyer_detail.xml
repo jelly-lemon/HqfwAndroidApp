@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="昵称:"
-        app:layout_constraintStart_toStartOf="@+id/textView32"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView32" />
 
     <TextView
@@ -48,10 +48,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="58dp" />
+        app:layout_constraintGuide_begin="40dp" />
 
     <TextView
-        android:id="@+id/tv_name_buyer"
+        android:id="@+id/tv_buyerName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="xxx"
@@ -59,7 +59,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline" />
 
     <TextView
-        android:id="@+id/tv_phone_buyer"
+        android:id="@+id/tv_buyerPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="183xxxx1234"

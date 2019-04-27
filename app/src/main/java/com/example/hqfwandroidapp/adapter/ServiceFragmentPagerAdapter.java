@@ -1,6 +1,6 @@
 package com.example.hqfwandroidapp.adapter;
 
-import com.example.hqfwandroidapp.activity.home.service.AllOrderFormFragment;
+import com.example.hqfwandroidapp.activity.home.service.OrderFormCardFragment;
 import com.example.hqfwandroidapp.activity.home.service.AllHydropowerBillFragment;
 
 import androidx.annotation.NonNull;
@@ -31,7 +31,7 @@ public class ServiceFragmentPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case NORMALORDERFORM:{
-                return AllOrderFormFragment.newInstance();
+                return OrderFormCardFragment.newInstance();
             }
             case HYDROPOWERBILL: {
                 return AllHydropowerBillFragment.newInstance();

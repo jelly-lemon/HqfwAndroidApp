@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="订单编号:"
-        app:layout_constraintStart_toStartOf="@+id/textView22"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
     <TextView
@@ -67,10 +67,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="94dp" />
+        app:layout_constraintGuide_begin="81dp" />
 
     <TextView
-        android:id="@+id/tv_bill_number"
+        android:id="@+id/tv_orderFormID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="xxxxxxx"
@@ -78,7 +78,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView24" />
 
     <TextView
-        android:id="@+id/tv_wechat_deal_number"
+        android:id="@+id/tv_wechatDealID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="xxxxxxxxxx"
@@ -86,7 +86,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView26" />
 
     <TextView
-        android:id="@+id/tv_create_date_time"
+        android:id="@+id/tv_createDateTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="2019-xx-xx 18:xx:xx"
@@ -94,7 +94,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView28" />
 
     <TextView
-        android:id="@+id/tv_deal_date_time"
+        android:id="@+id/tv_dealDateTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="2019-xx-xx 19:xx:xx"

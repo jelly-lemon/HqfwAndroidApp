@@ -6,7 +6,7 @@ import com.example.hqfwandroidapp.R;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class DateTime {
+public class DateTimeUtil {
     public static String getFormatDateTime(String dateTime) {
         // 时间
         try {

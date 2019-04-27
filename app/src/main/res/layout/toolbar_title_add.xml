@@ -7,7 +7,7 @@
     android:background="@color/colorPrimary">
 
     <TextView
-        android:id="@+id/tv_title_discovery"
+        android:id="@+id/tv_title_toolbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/title_discovery"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/iv_add"
+        android:id="@+id/iv_add_toolbar"
         android:layout_width="@dimen/tool_icon_size"
         android:layout_height="@dimen/tool_icon_size"
         android:layout_marginEnd="8dp"

@@ -1,4 +1,4 @@
-package com.example.hqfwandroidapp.adapter;
+package com.example.hqfwandroidapp.adapter.view;
 
 import android.content.Intent;
 import android.text.format.DateUtils;

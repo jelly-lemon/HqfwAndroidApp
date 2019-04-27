@@ -1,6 +1,7 @@
 package com.example.hqfwandroidapp.activity.home.service;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cuit.pswkeyboard.OnPasswordInputFinish;
 import com.cuit.pswkeyboard.widget.EnterPasswordPopupWindow;
 import com.example.hqfwandroidapp.R;
-import com.example.hqfwandroidapp.adapter.OrderFormCardAdapter;
+import com.example.hqfwandroidapp.adapter.view.OrderFormCardAdapter;
 import com.example.hqfwandroidapp.utils.App;
 import com.example.hqfwandroidapp.utils.SpacesItemDecoration;
 import com.example.hqfwandroidapp.utils.Urls;
@@ -33,14 +34,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.yokeyword.fragmentation.SupportFragment;
 
-public class AllOrderFormFragment extends SupportFragment {
+public class OrderFormCardFragment extends SupportFragment {
     // recycler view
     @BindView(R.id.rv_allOrderForm) RecyclerView rv_allOrderForm;
     // adapter
@@ -54,7 +54,7 @@ public class AllOrderFormFragment extends SupportFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // 加载视图
-        View view = inflater.inflate(R.layout.fragment_all_order_form, container, false);
+        View view = inflater.inflate(R.layout.fragment_order_form_card, container, false);
         // 绑定变量
         ButterKnife.bind(this, view);
         // 初始化视图
@@ -94,6 +94,10 @@ public class AllOrderFormFragment extends SupportFragment {
                         break;
                     }
                     case "交易完成": {
+                        // 进入详情页面
+                        Intent intent = new Intent(getContext(), OrderFormDetailAty.class);
+                        intent.putExtra("orderFormCard", orderFormCard.toString());
+                        startActivity(intent);
                         break;
                     }
                 }
@@ -135,12 +139,12 @@ public class AllOrderFormFragment extends SupportFragment {
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        List<JsonObject> jsonObjectList = GsonUtils.fromJson(response.body(), GsonUtils.getListType(JsonObject.class));
-                        if (jsonObjectList.isEmpty()) {
+                        List<JsonObject> orderFormCardList = GsonUtils.fromJson(response.body(), GsonUtils.getListType(JsonObject.class));
+                        if (orderFormCardList.isEmpty()) {
                             orderFormCardAdapter.loadMoreEnd();
                         } else {
                             // 添加数据
-                            orderFormCardAdapter.addData(jsonObjectList);
+                            orderFormCardAdapter.addData(orderFormCardList);
                             orderFormCardAdapter.loadMoreComplete();
                         }
                     }
@@ -153,9 +157,9 @@ public class AllOrderFormFragment extends SupportFragment {
      * 创建实例
      * @return 一个实例
      */
-    public static AllOrderFormFragment newInstance() {
-        AllOrderFormFragment allOrderFormFragment = new AllOrderFormFragment();
-        return allOrderFormFragment;
+    public static OrderFormCardFragment newInstance() {
+        OrderFormCardFragment orderFormCardFragment = new OrderFormCardFragment();
+        return orderFormCardFragment;
     }
 
 
@@ -186,7 +190,7 @@ public class AllOrderFormFragment extends SupportFragment {
         // 调用支付窗口
         EnterPasswordPopupWindow enterPasswordPopupWindow = new EnterPasswordPopupWindow(getContext());// 输入密码窗口
         enterPasswordPopupWindow.setMoney(orderFormCard.get("totalPrice").getAsFloat());// 金额
-        Glide.with(_mActivity).load(Urls.HOST + App.getUser().getHeadURL()).into(enterPasswordPopupWindow.getImgHead());// 头像
+        Glide.with(_mActivity).load(Urls.HOST + App.user.getHeadURL()).into(enterPasswordPopupWindow.getImgHead());// 头像
         // 输入密码回调
         enterPasswordPopupWindow.setOnFinishInput(new OnPasswordInputFinish() {
             @Override
@@ -214,5 +218,7 @@ public class AllOrderFormFragment extends SupportFragment {
         // 显示支付窗口
         enterPasswordPopupWindow.show(_mActivity.findViewById(R.id.fl_container));
     }
+
+
 
 }

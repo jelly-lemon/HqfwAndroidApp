@@ -1,4 +1,4 @@
-package com.example.hqfwandroidapp.adapter;
+package com.example.hqfwandroidapp.adapter.view;
 
 import android.view.View;
 
@@ -30,9 +30,9 @@ public class OrderFormCardAdapter extends BaseQuickAdapter<JsonObject, BaseViewH
 
 
         // id
-        helper.setText(R.id.tv_orderFormID, orderFormCard.get("orderFormID").getAsString());
+        //helper.setText(R.id.tv_orderFormID, orderFormCard.get("orderFormID").getAsString());
         // dateTime
-        helper.setText(R.id.tv_dateTime, orderFormCard.get("dateTime").getAsString());
+        //helper.setText(R.id.tv_createDateTime, orderFormCard.get("createDateTime").getAsString());
         // total price
         helper.setText(R.id.tv_totalPrice, orderFormCard.get("totalPrice").getAsString());
         // name
@@ -61,7 +61,7 @@ public class OrderFormCardAdapter extends BaseQuickAdapter<JsonObject, BaseViewH
         rv_purchasedItemCard_orderFormCard.setOverScrollMode(View.OVER_SCROLL_NEVER);
         rv_purchasedItemCard_orderFormCard.setNestedScrollingEnabled(false);
 
-        NPurchasedItemCardAdapter purchasedItemCardAdapter = new NPurchasedItemCardAdapter(R.layout.item_purchased_item);
+        PurchasedItemCardAdapter purchasedItemCardAdapter = new PurchasedItemCardAdapter(R.layout.item_purchased_item);
         purchasedItemCardAdapter.bindToRecyclerView(rv_purchasedItemCard_orderFormCard);
 
         OkGo.<String>get(Urls.PurchasedItemCardServlet)

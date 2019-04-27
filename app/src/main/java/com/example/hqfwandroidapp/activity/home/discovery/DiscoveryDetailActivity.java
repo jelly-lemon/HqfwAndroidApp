@@ -25,10 +25,10 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.hqfwandroidapp.R;
-import com.example.hqfwandroidapp.adapter.CommentCardAdapter;
+import com.example.hqfwandroidapp.adapter.view.CommentCardAdapter;
 import com.example.hqfwandroidapp.entity.Comment;
 import com.example.hqfwandroidapp.utils.App;
-import com.example.hqfwandroidapp.utils.DateTime;
+import com.example.hqfwandroidapp.utils.DateTimeUtil;
 import com.example.hqfwandroidapp.utils.Urls;
 import com.example.ninegridview.adapter.NineGridViewAdapter;
 import com.example.ninegridview.entity.ImageInfo;
@@ -45,11 +45,11 @@ import java.util.List;
 
 public class DiscoveryDetailActivity extends AppCompatActivity {
     // 返回
-    @OnClick(R.id.iv_back) void onBack() {
+    @OnClick(R.id.iv_back_toolbar) void onBack() {
         onBackPressed();
     }
     // 标题
-    @BindView(R.id.tv_title_discovery) TextView tv_title;
+    @BindView(R.id.tv_title_toolbar) TextView tv_title_toolbar;
     // 消息部分
     JsonObject discoveryCard;
     // 头像
@@ -101,7 +101,7 @@ public class DiscoveryDetailActivity extends AppCompatActivity {
 
         Comment comment = new Comment();
         comment.setDiscoveryID(discoveryCard.get("discoveryID").getAsInt());
-        comment.setSenderPhone(App.getUser().getPhone());
+        comment.setSenderPhone(App.user.getPhone());
         comment.setContent(et_comment.getText().toString());
 
         OkGo.<String>post(Urls.CommentServlet)
@@ -135,7 +135,7 @@ public class DiscoveryDetailActivity extends AppCompatActivity {
     }
 
     void initView() {
-        tv_title.setText("详情");
+        tv_title_toolbar.setText("详情");
 
         // 发现详情
         // 对象
@@ -145,7 +145,7 @@ public class DiscoveryDetailActivity extends AppCompatActivity {
         // 名字
         tv_name_discovery.setText(discoveryCard.get("name").getAsString());
         // 时间
-        tv_date_time_discovery.setText(DateTime.getFormatDateTime(discoveryCard.get("dateTime").getAsString()));
+        tv_date_time_discovery.setText(DateTimeUtil.getFormatDateTime(discoveryCard.get("dateTime").getAsString()));
         // 标签
         tv_tag_discovery.setText(discoveryCard.get("tag").getAsString());
         // 内容

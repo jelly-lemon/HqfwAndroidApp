@@ -13,7 +13,7 @@ import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.hqfwandroidapp.R;
 
-import com.example.hqfwandroidapp.adapter.DiscoveryCardAdapter;
+import com.example.hqfwandroidapp.adapter.view.DiscoveryCardAdapter;
 import com.example.hqfwandroidapp.utils.ItemDecoration;
 import com.example.hqfwandroidapp.utils.Urls;
 import com.google.gson.JsonObject;
@@ -47,14 +47,14 @@ public class DiscoveryFragment extends SupportFragment{
     // 列表
     @BindView(R.id.rv_discovery) RecyclerView rv_discovery;
     // 标题
-    @BindView(R.id.tv_title) TextView tv_title;
+    @BindView(R.id.tv_title_toolbar) TextView tv_title_toolbar;
     // 回收视图适配器
     private DiscoveryCardAdapter discoveryCardAdapter;
 
     /**
      * 启动 PublishDiscoveryActivity
      */
-    @OnClick(R.id.iv_add) void startPublishDiscoveryActivity() {
+    @OnClick(R.id.iv_add_toolbar) void startPublishDiscoveryActivity() {
         Intent intent = new Intent(getContext(), PublishDiscoveryActivity.class);   // 创建意图
         startActivity(intent);  // 启动 Activity
     }
@@ -94,7 +94,7 @@ public class DiscoveryFragment extends SupportFragment{
      */
     private void initView() {
         // 标题
-        tv_title.setText("发现");
+        tv_title_toolbar.setText("发现");
 
         // 适配器
         discoveryCardAdapter = new DiscoveryCardAdapter(R.layout.item_discovery);

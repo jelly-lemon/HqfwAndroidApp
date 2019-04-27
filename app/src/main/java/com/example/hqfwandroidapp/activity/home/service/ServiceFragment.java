@@ -20,13 +20,13 @@ import butterknife.OnClick;
 import me.yokeyword.fragmentation.SupportFragment;
 
 public class ServiceFragment extends SupportFragment {
-    @BindView(R.id.tv_title_discovery) TextView tv_title;  // 标题
+    @BindView(R.id.tv_title_toolbar) TextView tv_title_toolbar;  // 标题
     // ViewPager
     @BindView(R.id.viewPager) ViewPager viewPager;
     // tabLayout
     @BindView(R.id.tabLayout) TabLayout tabLayout;
     // 添加按钮
-    @OnClick(R.id.iv_add) void goToShoppingActivity() {
+    @OnClick(R.id.iv_add_toolbar) void goToShoppingActivity() {
         Intent intent = new Intent(getContext(), ShoppingActivity.class);
         startActivity(intent);
     }
@@ -51,7 +51,7 @@ public class ServiceFragment extends SupportFragment {
      * 初始化视图
      */
     void initView() {
-        tv_title.setText("缴费服务");   // 标题
+        tv_title_toolbar.setText("缴费服务");   // 标题
 
     }
 

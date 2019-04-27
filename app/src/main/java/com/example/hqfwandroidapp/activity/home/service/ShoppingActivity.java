@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.example.hqfwandroidapp.R;
-import com.example.hqfwandroidapp.adapter.CommodityAdapter;
+import com.example.hqfwandroidapp.adapter.table.CommodityAdapter;
 import com.example.hqfwandroidapp.utils.SpacesItemDecoration;
 import com.example.hqfwandroidapp.utils.Urls;
 import com.google.gson.JsonObject;
@@ -31,13 +31,13 @@ import java.util.List;
 
 public class ShoppingActivity extends AppCompatActivity {
     // 标题
-    @BindView(R.id.tv_title_discovery) TextView tv_title;
+    @BindView(R.id.tv_title_toolbar) TextView tv_title_toolbar;
     // RecyclerView
     @BindView(R.id.rv_commodity) RecyclerView rv_commodity;
     // Adapter
     CommodityAdapter commodityAdapter;
     // 返回
-    @OnClick(R.id.iv_back) void onBack() {
+    @OnClick(R.id.iv_back_toolbar) void onBack() {
         onBackPressed();
     }
     // 购买
@@ -73,13 +73,16 @@ public class ShoppingActivity extends AppCompatActivity {
 
     void initView() {
         // title
-        tv_title.setText("购买");
+        tv_title_toolbar.setText("购买");
 
         // 初始化 rv_commodity
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);   // 布局管理器
-        rv_commodity.setLayoutManager(layoutManager);                                      // 设置布局管理器
-        SpacesItemDecoration spacesItemDecoration = new SpacesItemDecoration(24);           // 间距
-        rv_commodity.addItemDecoration(spacesItemDecoration);                              // 添加各单元之间的间距
+        rv_commodity.setLayoutManager(new LinearLayoutManager(this));                                      // 设置布局管理器
+        rv_commodity.addItemDecoration(new SpacesItemDecoration(24));                              // 添加各单元之间的间距
+
+        commodityAdapter = new CommodityAdapter(R.layout.card_commodity_shopping);
+        commodityAdapter.bindToRecyclerView(rv_commodity);
+        commodityAdapter.setEmptyView(R.layout.view_empty_no_data);
+
 
         // 请求数据
         OkGo.<String>get(Urls.CommodityServlet)
@@ -87,9 +90,9 @@ public class ShoppingActivity extends AppCompatActivity {
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        commodityAdapter = new CommodityAdapter(getContext(), GsonUtils.fromJson(response.body(), GsonUtils.getListType(JsonObject.class)));
+                        //commodityAdapter = new CommodityAdapter(getContext(), GsonUtils.fromJson(response.body(), GsonUtils.getListType(JsonObject.class)));
 
-                        rv_commodity.setAdapter(commodityAdapter);
+                        commodityAdapter.setNewData(GsonUtils.fromJson(response.body(), GsonUtils.getListType(JsonObject.class)));
                     }
                 });
     }

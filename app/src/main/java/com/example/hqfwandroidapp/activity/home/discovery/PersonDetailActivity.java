@@ -20,7 +20,7 @@ import com.google.gson.Gson;
  */
 public class PersonDetailActivity extends AppCompatActivity {
     // 标题
-    @BindView(R.id.tv_title_discovery) TextView tv_title;
+    @BindView(R.id.tv_title_toolbar) TextView tv_title_toolbar;
     // 头像
     @BindView(R.id.iv_head_discovery) ImageView iv_head;
     // 名字
@@ -32,7 +32,7 @@ public class PersonDetailActivity extends AppCompatActivity {
     /**
      * 点击返回
      */
-    @OnClick(R.id.iv_back) void onBack() {
+    @OnClick(R.id.iv_back_toolbar) void onBack() {
         onBackPressed();
     }
 
@@ -50,7 +50,7 @@ public class PersonDetailActivity extends AppCompatActivity {
         Gson gson = new Gson();
         user = gson.fromJson(getIntent().getStringExtra("user"), User.class);
 
-        tv_title.setText("个人资料");
+        tv_title_toolbar.setText("个人资料");
         Glide.with(this).load(Urls.HOST + user.getHeadURL()).into(iv_head);
         tv_name.setText(user.getName());
 

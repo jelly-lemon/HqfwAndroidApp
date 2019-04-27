@@ -1,4 +1,4 @@
-package com.example.hqfwandroidapp.adapter;
+package com.example.hqfwandroidapp.adapter.view;
 
 
 import android.widget.ImageView;
@@ -11,8 +11,8 @@ import com.example.hqfwandroidapp.utils.Urls;
 import com.google.gson.JsonObject;
 
 
-public class NPurchasedItemCardAdapter extends BaseQuickAdapter<JsonObject, BaseViewHolder> {
-    public NPurchasedItemCardAdapter(int layoutResId) {
+public class PurchasedItemCardAdapter extends BaseQuickAdapter<JsonObject, BaseViewHolder> {
+    public PurchasedItemCardAdapter(int layoutResId) {
         super(layoutResId);
     }
 

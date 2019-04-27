@@ -18,7 +18,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.cuit.pswkeyboard.OnPasswordInputFinish;
 import com.cuit.pswkeyboard.widget.EnterPasswordPopupWindow;
 import com.example.hqfwandroidapp.R;
-import com.example.hqfwandroidapp.adapter.HydropowerBillAdapter;
+import com.example.hqfwandroidapp.adapter.table.HydropowerBillAdapter;
 import com.example.hqfwandroidapp.utils.App;
 import com.example.hqfwandroidapp.utils.SpacesItemDecoration;
 import com.example.hqfwandroidapp.utils.Urls;
@@ -29,8 +29,6 @@ import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +87,7 @@ public class AllHydropowerBillFragment extends SupportFragment {
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 OkGo.<String>get(Urls.HydropowerBillServlet)
                         .params("method", "refresh")
-                        .params("room", App.getUser().getBuilding()+"-"+App.getUser().getRoomNumber())
+                        .params("room", App.user.getBuilding()+"-"+App.user.getRoomNumber())
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {
@@ -112,7 +110,7 @@ public class AllHydropowerBillFragment extends SupportFragment {
                 OkGo.<String>get(Urls.HydropowerBillServlet)
                         .params("method", "loadMore")
                         .params("start", hydropowerBillAdapter.getItemCount())
-                        .params("room", App.getUser().getBuilding()+"-"+App.getUser().getRoomNumber())
+                        .params("room", App.user.getBuilding()+"-"+App.user.getRoomNumber())
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {
@@ -153,7 +151,7 @@ public class AllHydropowerBillFragment extends SupportFragment {
         // 调用支付窗口
         EnterPasswordPopupWindow enterPasswordPopupWindow = new EnterPasswordPopupWindow(getContext());// 输入密码窗口
         enterPasswordPopupWindow.setMoney(hydropowerBill.get("totalCost").getAsFloat());// 金额
-        Glide.with(_mActivity).load(Urls.HOST + App.getUser().getHeadURL()).into(enterPasswordPopupWindow.getImgHead());// 头像
+        Glide.with(_mActivity).load(Urls.HOST + App.user.getHeadURL()).into(enterPasswordPopupWindow.getImgHead());// 头像
         // 输入密码回调
         enterPasswordPopupWindow.setOnFinishInput(new OnPasswordInputFinish() {
             @Override
@@ -163,7 +161,7 @@ public class AllHydropowerBillFragment extends SupportFragment {
                             .params("method", "paySuccess")
                             .params("month", hydropowerBill.get("month").getAsString())
                             .params("room", hydropowerBill.get("room").getAsString())
-                            .params("buyerPhone", App.getUser().getPhone())
+                            .params("buyerPhone", App.user.getPhone())
                             .execute(new StringCallback() {
                                 @Override
                                 public void onSuccess(Response<String> response) {

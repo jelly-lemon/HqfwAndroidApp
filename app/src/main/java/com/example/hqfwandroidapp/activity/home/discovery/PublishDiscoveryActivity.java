@@ -12,20 +12,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.example.hqfwandroidapp.R;
-import com.example.hqfwandroidapp.entity.Discovery;
 import com.example.hqfwandroidapp.utils.App;
 import com.example.hqfwandroidapp.utils.GlideImageLoader;
 import com.example.hqfwandroidapp.utils.ImagePickerLoader;
 import com.example.hqfwandroidapp.utils.Urls;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.lwkandroid.imagepicker.ImagePicker;
 import com.lwkandroid.imagepicker.data.ImageBean;
@@ -51,7 +47,7 @@ public class PublishDiscoveryActivity extends AppCompatActivity{
     private final int REQUEST_CODE_PICKER = 100;    // ImagePicker 的请求代码
 
     // 标题
-    @BindView(R.id.tv_title_discovery) TextView tv_title;
+    @BindView(R.id.tv_title_toolbar) TextView tv_title_toolbar;
     // 九宫格图片选择器
     @BindView(R.id.nineGridView) NineGridView mNineGridView;
     // QQ
@@ -65,7 +61,7 @@ public class PublishDiscoveryActivity extends AppCompatActivity{
 
 
     // 返回按钮，点击返回
-    @OnClick(R.id.iv_back) void onBack() {
+    @OnClick(R.id.iv_back_toolbar) void onBack() {
         onBackPressed();
     }
 
@@ -88,7 +84,7 @@ public class PublishDiscoveryActivity extends AppCompatActivity{
 
         // 创建一个对象
         JsonObject discovery = new JsonObject();
-        discovery.addProperty("phone", App.getUser().getPhone());
+        discovery.addProperty("phone", App.user.getPhone());
         discovery.addProperty("content", et_content.getText().toString());
         discovery.addProperty("tag", spinner.getSelectedItem().toString());
         discovery.addProperty("contactQQ", et_contact_qq.getText().toString());
@@ -134,7 +130,7 @@ public class PublishDiscoveryActivity extends AppCompatActivity{
      * 初始化界面
      */
     void initView() {
-        tv_title.setText("发布信息");   // 标题
+        tv_title_toolbar.setText("发布信息");   // 标题
 
         // 九宫格图片
         //设置图片加载器，这个是必须的，不然图片无法显示

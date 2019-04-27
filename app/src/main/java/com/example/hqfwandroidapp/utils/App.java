@@ -10,6 +10,7 @@ import com.example.hqfwandroidapp.entity.User;
 import com.lzy.imagepicker.ImagePicker;
 import com.lzy.imagepicker.view.CropImageView;*/
 import com.example.ninegridview.ui.NineGridView;
+import com.google.gson.JsonObject;
 import com.lzy.okgo.OkGo;
 import com.mob.MobSDK;
 import com.mob.ums.gui.pickers.ImagePicker;
@@ -81,13 +82,7 @@ public class App extends Application {
         MobSDK.init(this);
     }
 
-    public static User getUser() {
-        return user;
-    }
 
-    public static void setUser(User user) {
-        App.user = user;
-    }
 
     private void initNineGridView() {
         NineGridView.setImageLoader(new NineGridViewGlideImageLoader());    // 为九宫格图片显示器设置图片加载器

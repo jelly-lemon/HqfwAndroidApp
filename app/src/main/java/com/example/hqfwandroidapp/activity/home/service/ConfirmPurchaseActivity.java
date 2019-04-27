@@ -9,6 +9,7 @@ import butterknife.OnClick;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -19,7 +20,7 @@ import com.bumptech.glide.Glide;
 import com.cuit.pswkeyboard.OnPasswordInputFinish;
 import com.cuit.pswkeyboard.widget.EnterPasswordPopupWindow;
 import com.example.hqfwandroidapp.R;
-import com.example.hqfwandroidapp.adapter.PurchasedItemCardAdapter;
+import com.example.hqfwandroidapp.adapter.view.PurchasedItemCardAdapter;
 import com.example.hqfwandroidapp.utils.App;
 import com.example.hqfwandroidapp.utils.SpacesItemDecoration;
 import com.example.hqfwandroidapp.utils.Urls;
@@ -36,9 +37,9 @@ import java.util.List;
 
 public class ConfirmPurchaseActivity extends AppCompatActivity {
     // title
-    @BindView(R.id.tv_title_discovery) TextView tv_title;
+    @BindView(R.id.tv_title_toolbar) TextView tv_title_toolbar;
     // 返回按钮
-    @OnClick(R.id.iv_back) void onBack() {
+    @OnClick(R.id.iv_back_toolbar) void onBack() {
         onBackPressed();
     }
     // receive name
@@ -50,6 +51,7 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
     // recycler view
     @BindView(R.id.rv_shopping_list) RecyclerView rv_shopping_list;
     // adapter
+    //private PurchasedItemCardAdapter purchasedItemCardAdapter;
     private PurchasedItemCardAdapter purchasedItemCardAdapter;
     // total price
     @BindView(R.id.tv_total_price) TextView tv_total_price;
@@ -62,7 +64,7 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
 
         // orderFrom
         JsonObject orderForm = new JsonObject();
-        orderForm.addProperty("buyerPhone", App.getUser().getPhone());
+        orderForm.addProperty("buyerPhone", App.user.getPhone());
         orderForm.addProperty("receivePhone", et_receive_phone.getText().toString());
         orderForm.addProperty("receiveName", et_receive_name.getText().toString());
         orderForm.addProperty("receiveAddress", ed_receive_address.getText().toString());
@@ -71,7 +73,7 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
 
         // 购买项记录
         List<JsonObject> purchasedItemList = new ArrayList<>();
-        for (JsonObject jsonObject : purchasedItemCardAdapter.getJsonObjectList()) {
+        for (JsonObject jsonObject : purchasedItemCardAdapter.getData()) {
             JsonObject purchasedItemCard = jsonObject.getAsJsonObject();
 
             JsonObject purchasedItem = new JsonObject();
@@ -97,16 +99,15 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
                         // 金额
                         enterPasswordPopupWindow.setMoney(orderForm.get("totalPrice").getAsFloat());
                         // 头像
-                        Glide.with(getActivityContext()).load(Urls.HOST + App.getUser().getHeadURL()).into(enterPasswordPopupWindow.getImgHead());
+                        Glide.with(getActivityContext()).load(Urls.HOST + App.user.getHeadURL()).into(enterPasswordPopupWindow.getImgHead());
                         // 输入密码回调
                         enterPasswordPopupWindow.setOnFinishInput(new OnPasswordInputFinish() {
                             @Override
                             public void inputFinish(String password) {
                                 if (password.equals("123456")) {
                                     OkGo.<String>post(Urls.OrderFormServlet)
-                                            .params("method", "update")
+                                            .params("method", "paySuccess")
                                             .params("orderFormID", orderFormID)
-                                            .params("orderFormStatus", "交易完成")
                                             .execute(new StringCallback() {
                                                 @Override
                                                 public void onSuccess(Response<String> response) {
@@ -145,23 +146,25 @@ public class ConfirmPurchaseActivity extends AppCompatActivity {
     // 初始化视图
     void initView() {
         // title
-        tv_title.setText("确认订单");
+        tv_title_toolbar.setText("确认订单");
         // get and set basic information
-        et_receive_name.setText(App.getUser().getName());
-        et_receive_phone.setText(App.getUser().getPhone());
-        ed_receive_address.setText(App.getUser().getBuilding() + "栋" + App.getUser().getRoomNumber() + "房间");
+        et_receive_name.setText(App.user.getName());
+        et_receive_phone.setText(App.user.getPhone());
+        ed_receive_address.setText(App.user.getBuilding() + "栋" + App.user.getRoomNumber() + "房间");
 
-        /*JsonArray purchasedItemCardJsonArray =
-                GsonUtils.fromJson(getIntent().getStringExtra("purchasedItemCardJsonArray"), JsonArray.class);
-        */
+
+
+
+        rv_shopping_list.setLayoutManager(new LinearLayoutManager(this));                                      // 设置布局管理器
+        rv_shopping_list.addItemDecoration(new SpacesItemDecoration(24));                              // 添加各单元之间的间距
+        rv_shopping_list.setOverScrollMode(View.OVER_SCROLL_NEVER);
+
+
         List<JsonObject> jsonObjectList = GsonUtils.fromJson(getIntent().getStringExtra("purchasedItemCardList"), GsonUtils.getListType(JsonObject.class));
-        purchasedItemCardAdapter = new PurchasedItemCardAdapter(this, jsonObjectList);
+        purchasedItemCardAdapter = new PurchasedItemCardAdapter(R.layout.card_commodity_confirm);
+        purchasedItemCardAdapter.setNewData(jsonObjectList);
+        purchasedItemCardAdapter.bindToRecyclerView(rv_shopping_list);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);   // 布局管理器
-        rv_shopping_list.setLayoutManager(layoutManager);                                      // 设置布局管理器
-        SpacesItemDecoration spacesItemDecoration = new SpacesItemDecoration(24);           // 间距
-        rv_shopping_list.addItemDecoration(spacesItemDecoration);                              // 添加各单元之间的间距
-        rv_shopping_list.setAdapter(purchasedItemCardAdapter);
 
         // 总金额
         float totalPrice = 0f;

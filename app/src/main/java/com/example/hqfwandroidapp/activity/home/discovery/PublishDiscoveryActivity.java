@@ -32,6 +32,7 @@ import com.lwkandroid.widget.ninegridview.NineGridView;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.nanchen.compresshelper.CompressHelper;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -72,8 +73,11 @@ public class PublishDiscoveryActivity extends AppCompatActivity{
         List<File> fileList = new ArrayList<>();    // 图片数组
         for (NineGridBean nineGridBean : nineGridBeanList) {
             String path = nineGridBean.getThumbUrl();   // 图片路径
-            File file = new File(path);
-            fileList.add(file);
+            File oldFile = new File(path);
+
+            // 图片压缩
+            File newFile = CompressHelper.getDefault(this).compressToFile(oldFile);
+            fileList.add(newFile);
         }
 
         // 检查

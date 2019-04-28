@@ -2,14 +2,15 @@ package com.example.hqfwandroidapp.activity.home.discovery;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 
 import com.blankj.utilcode.util.GsonUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.hqfwandroidapp.R;
 
@@ -27,12 +28,13 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -58,6 +60,10 @@ public class DiscoveryFragment extends SupportFragment{
     @BindView(R.id.dl_discovery) CustomDrawerLayout dl_discovery;
 
 
+    private List<String> selectedTagList = new ArrayList<>();
+
+
+
     /**
      * 启动 PublishDiscoveryActivity
      */
@@ -66,7 +72,7 @@ public class DiscoveryFragment extends SupportFragment{
         startActivity(intent);  // 启动 Activity
     }
 
-    @OnClick(R.id.iv_filter) void startFilter() {
+    @OnClick(R.id.iv_filter) void startFilterDrawer() {
         dl_discovery.openDrawer(GravityCompat.START);
     }
 
@@ -86,6 +92,10 @@ public class DiscoveryFragment extends SupportFragment{
         View view = inflater.inflate(R.layout.fragment_discovery, container, false);    // 加载视图
         // 对象和视图绑定
         ButterKnife.bind(this, view);
+
+
+        setSelectedFilterButton(view);
+
         // 初始化视图
         initView();
         return view;
@@ -112,8 +122,6 @@ public class DiscoveryFragment extends SupportFragment{
         // 标题
         tv_title_toolbar.setText("发现");
 
-        //禁止手势滑动
-        dl_discovery.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
         // 适配器
         discoveryCardAdapter = new DiscoveryCardAdapter(R.layout.item_discovery);
@@ -150,6 +158,7 @@ public class DiscoveryFragment extends SupportFragment{
                 refresh();
             }
         });
+
         rl_discovery.setRefreshing(true);// 自动刷新一次
         refresh();
     }
@@ -176,16 +185,55 @@ public class DiscoveryFragment extends SupportFragment{
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(String msg) {
         if (msg.equals("PublishDiscoveryActivity:success")) {
-            //ToastUtils.showShort("发布成功");
             // 自动刷新
             rl_discovery.setRefreshing(true);
             refresh();
         }
     }
 
+
+    private void setSelectedFilterButton(View view) {
+        List<Button> filterButtonList = new ArrayList<>();
+
+        filterButtonList.add(view.findViewById(R.id.btn_baoxiu_tag));
+        filterButtonList.add(view.findViewById(R.id.btn_jiaoyou_tag));
+        filterButtonList.add(view.findViewById(R.id.btn_tucao_tag));
+        filterButtonList.add(view.findViewById(R.id.btn_baoliao_tag));
+        filterButtonList.add(view.findViewById(R.id.btn_tousu_tag));
+        filterButtonList.add(view.findViewById(R.id.btn_woyaoqiugou_tag));
+        filterButtonList.add(view.findViewById(R.id.btn_shiwuzhaoling_tag));
+        filterButtonList.add(view.findViewById(R.id.btn_wupinchushou_tag));
+        filterButtonList.add(view.findViewById(R.id.btn_youqingtixing_tag));
+        filterButtonList.add(view.findViewById(R.id.btn_jishiqiuzhu_tag));
+
+        for (Button button : filterButtonList) {
+            button.setSelected(true);
+            selectedTagList.add(button.getText().toString());
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (button.isSelected()) {
+                        button.setSelected(false);
+                        selectedTagList.remove(button.getText().toString());
+                    } else {
+                        button.setSelected(true);
+                        selectedTagList.add(button.getText().toString());
+                    }
+                    refresh();
+                }
+            });
+        }
+    }
+
+
+
+
+
+
     private void refresh() {
         OkGo.<String>get(Urls.DiscoveryCardServlet)
                 .params("method", "refresh")
+                .params("selectedTagList", GsonUtils.toJson(selectedTagList))
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -200,6 +248,7 @@ public class DiscoveryFragment extends SupportFragment{
     private void loadMore() {
         OkGo.<String>get(Urls.DiscoveryCardServlet)
                 .params("method", "loadMore")
+                .params("selectedTagList", GsonUtils.toJson(selectedTagList))
                 .params("start", discoveryCardAdapter.getData().size())
                 .execute(new StringCallback() {
                     @Override

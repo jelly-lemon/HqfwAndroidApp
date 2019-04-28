@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/textView49"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:text="标签"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_baoxiu_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="报修"
+        android:background="@drawable/selector_btn_choose_tag"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView49" />
+
+    <Button
+        android:id="@+id/btn_jishiqiuzhu_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/selector_btn_choose_tag"
+        android:text="及时求助"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_wupinchushou_tag" />
+
+    <Button
+        android:id="@+id/btn_jiaoyou_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="交友"
+        android:background="@drawable/selector_btn_choose_tag"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btn_baoxiu_tag"
+        app:layout_constraintEnd_toStartOf="@+id/btn_baoxiu_tag" />
+
+    <Button
+        android:id="@+id/btn_tucao_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/selector_btn_choose_tag"
+        android:text="吐槽"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_baoxiu_tag" />
+
+    <Button
+        android:id="@+id/btn_baoliao_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/selector_btn_choose_tag"
+        android:text="爆料"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btn_tucao_tag"
+        app:layout_constraintEnd_toStartOf="@+id/btn_tucao_tag" />
+
+    <Button
+        android:id="@+id/btn_tousu_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/selector_btn_choose_tag"
+        android:text="投诉"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_tucao_tag" />
+
+    <Button
+        android:id="@+id/btn_shiwuzhaoling_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/selector_btn_choose_tag"
+        android:text="失物招领"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btn_tousu_tag"
+        app:layout_constraintEnd_toStartOf="@+id/btn_tousu_tag" />
+
+    <Button
+        android:id="@+id/btn_wupinchushou_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/selector_btn_choose_tag"
+        android:text="物品出售"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_tousu_tag" />
+
+    <Button
+        android:id="@+id/btn_woyaoqiugou_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/selector_btn_choose_tag"
+        android:text="我要求购"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btn_wupinchushou_tag"
+        app:layout_constraintEnd_toStartOf="@+id/btn_wupinchushou_tag" />
+
+    <Button
+        android:id="@+id/btn_youqingtixing_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/selector_btn_choose_tag"
+        android:text="友情提醒"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btn_jishiqiuzhu_tag"
+        app:layout_constraintEnd_toStartOf="@+id/btn_jishiqiuzhu_tag" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

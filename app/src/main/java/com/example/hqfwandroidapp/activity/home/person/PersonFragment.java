@@ -27,6 +27,7 @@ import com.lwkandroid.widget.ninegridview.NineGridBean;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.nanchen.compresshelper.CompressHelper;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -107,14 +108,17 @@ public class PersonFragment extends SupportFragment {
         if (requestCode == REQUEST_CODE_PICKER && resultCode == RESULT_OK && data != null)
         {
             List<ImageBean> list = data.getParcelableArrayListExtra(ImagePicker.INTENT_RESULT_DATA);
+
             ImageBean imageBean = list.get(0);
-            File headImg = new File(imageBean.getImagePath());
+
+            File headImg = CompressHelper.getDefault(getActivity()).compressToFile(new File(imageBean.getImagePath()));
 
 
 
 
             OkGo.<String>post(Urls.UsersServlet)
                     .params("phone", App.user.getPhone())
+                    .params("headURL", App.user.getHeadURL())
                     .params("headImg", headImg)
                     .execute(new StringCallback() {
                         @Override

@@ -2,7 +2,7 @@ package com.example.hqfwandroidapp.utils;
 
 
 public class Urls {
-    public static String HOST = "http://192.168.1.102:8080";
+    public static String HOST = "http://192.168.155.1:8080";
     private static String HOSTWEB = HOST + "/lmJavaEEWebAppHqfw";
 
     //public static String LoginServlet = HOSTWEB + "/LoginServlet";

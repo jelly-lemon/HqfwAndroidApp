@@ -63,8 +63,8 @@ public class OrderFormCardDetailAty extends AppCompatActivity {
         setText(R.id.tv_buyerName, orderFormCard.get("buyerName").getAsString());
         setText(R.id.tv_buyerPhone, orderFormCard.get("buyerPhone").getAsString());
 
-        setText(R.id.tv_orderFormID, orderFormCard.get("orderFormID").getAsString());
-        setText(R.id.tv_wechatDealID, orderFormCard.get("wechatDealID").getAsString());
+        setText(R.id.tv_billNumber_orderFormDetail, orderFormCard.get("orderFormID").getAsString());
+        setText(R.id.tv_wechatDealNumber_orderFormDetail, orderFormCard.get("wechatDealID").getAsString());
         setText(R.id.tv_createDateTime, orderFormCard.get("createDateTime").getAsString());
         setText(R.id.tv_dealDateTime, orderFormCard.get("dealDateTime").getAsString());
     }

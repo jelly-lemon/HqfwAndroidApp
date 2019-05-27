@@ -10,7 +10,7 @@ import com.example.hqfwandroidapp.entity.User;
 import com.example.ninegridview.ui.NineGridView;
 
 import com.lzy.okgo.OkGo;
-import com.mob.MobSDK;
+//import com.mob.MobSDK;
 
 
 import java.util.concurrent.TimeUnit;
@@ -30,7 +30,7 @@ public class App extends Application {
 
         initOkGo();             // 初始化 OkGo
         initFragmentation();    // 初始化 Fragmentation
-        initMob();              // 初始化 MobSDK
+        //initMob();              // 初始化 MobSDK
         initNineGridView();     // 初始化九宫格图片加载器
         initImagePicker();      // 初始化微信图片加载器
         //initSmartRefreshLayout();
@@ -71,9 +71,9 @@ public class App extends Application {
                 .install();
     }
 
-    private void initMob() {
+    /*private void initMob() {
         MobSDK.init(this);
-    }
+    }*/
 
 
 

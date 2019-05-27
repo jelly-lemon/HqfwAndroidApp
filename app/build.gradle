@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.mob.sdk' // mob 插件
+//apply plugin: 'com.mob.sdk' // mob 插件
 
-MobSDK {
+/*MobSDK {
     appKey "22a3dcda66160"          // 在 mob 注册的
     appSecret "a29752d35c1935b21bd8e6d94ad31cd2"
 
@@ -29,7 +29,7 @@ MobSDK {
 
     SMSSDK {}   // 短信
     PaySDK {}   // 支付
-}
+}*/
 
 android {
     compileOptions {

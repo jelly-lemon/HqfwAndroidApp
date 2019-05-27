@@ -10,9 +10,9 @@ import com.example.hqfwandroidapp.R;
 import java.util.HashMap;
 
 import androidx.annotation.Nullable;
-import cn.smssdk.EventHandler;
+/*import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
-import cn.smssdk.gui.RegisterPage;
+import cn.smssdk.gui.RegisterPage;*/
 import me.yokeyword.fragmentation.SupportActivity;
 
 
@@ -39,7 +39,7 @@ public class MainActivity extends SupportActivity {
 
 
     // 使用 Mob 提供的短信验证 UI
-    public void sendCode(Context context) {
+    /*public void sendCode(Context context) {
         RegisterPage page = new RegisterPage();
         //如果使用我们的ui，没有申请模板编号的情况下需传null
         page.setTempCode(null);
@@ -59,5 +59,5 @@ public class MainActivity extends SupportActivity {
             }
         });
         page.show(context);
-    }
+    }*/
 }

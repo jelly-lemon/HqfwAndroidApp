@@ -70,7 +70,7 @@
         app:layout_constraintGuide_begin="81dp" />
 
     <TextView
-        android:id="@+id/tv_orderFormID"
+        android:id="@+id/tv_billNumber_orderFormDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="xxxxxxx"
@@ -78,7 +78,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView24" />
 
     <TextView
-        android:id="@+id/tv_wechatDealID"
+        android:id="@+id/tv_wechatDealNumber_orderFormDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="xxxxxxxxxx"

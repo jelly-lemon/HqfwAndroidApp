@@ -68,11 +68,10 @@ public class HydropowerBillDetailActivity extends AppCompatActivity {
 
         setText(R.id.tv_buyerName, "TODO");
         setText(R.id.tv_buyerPhone, hydropowerBill.get("buyerPhone").getAsString());
-        setText(R.id.tv_orderFormID, hydropowerBill.get("orderFormID").getAsString());
-        setText(R.id.tv_wechatDealID, hydropowerBill.get("wechatDealID").getAsString());
+        setText(R.id.tv_billNumber_orderFormDetail, hydropowerBill.get("billNumber").getAsString());
+        setText(R.id.tv_wechatDealNumber_orderFormDetail, hydropowerBill.get("wechatDealNumber").getAsString());
         setText(R.id.tv_createDateTime, hydropowerBill.get("createDateTime").getAsString());
         setText(R.id.tv_dealDateTime, hydropowerBill.get("dealDateTime").getAsString());
-
     }
 
 

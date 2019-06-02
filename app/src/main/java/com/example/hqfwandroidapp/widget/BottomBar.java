@@ -18,9 +18,7 @@ import java.util.List;
 import androidx.core.view.ViewCompat;
 
 
-/**
- * Created by YoKeyword on 16/6/3.
- */
+
 public class BottomBar extends LinearLayout {
     private static final int TRANSLATE_DURATION_MILLIS = 200;
 

@@ -20,9 +20,7 @@ import androidx.annotation.DrawableRes;
 import androidx.core.content.ContextCompat;
 
 
-/**
- * Created by YoKeyword on 16/6/3.
- */
+
 public class BottomBarTab extends FrameLayout {
     private ImageView mIcon;
     private TextView mTvTitle;

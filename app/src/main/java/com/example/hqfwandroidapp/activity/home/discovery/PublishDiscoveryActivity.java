@@ -86,6 +86,24 @@ public class PublishDiscoveryActivity extends AppCompatActivity{
             return;
         }
 
+        String content = et_content.getText().toString();
+        List<String> words = new ArrayList<>();
+        words.add("共产党");
+        words.add("中共");
+        words.add("中国共产党");
+
+        int n = words.size();
+        for (int i = 0; i < n; i++) {
+            if (content.contains(words.get(i))) {
+
+                String str = String.format("内容包含敏感词\"%s\"，请重新输入！", words.get(i));
+                ToastUtils.showShort(str);
+                return;
+            }
+        }
+
+
+
         // 创建一个对象
         JsonObject discovery = new JsonObject();
         discovery.addProperty("phone", App.user.getPhone());
